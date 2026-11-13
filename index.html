@@ -165,7 +165,7 @@ const C=[
  pre:[['TV nowy · 0,5 W',{w:'0,5'}],['szybki start / sieć · 2 W',{w:'2'}],['starszy sprzęt · 10 W',{w:'10'}]],
  f:v=>{const e=v.w*8760/1000*v.n,y=e*v.p;return{l:[['Godzin w roku','8 760 h'],['Zużycie w roku',kwh(e)],['Przez 10 lat',zl(y*10)]],sk:'ROCZNIE',sv:y}},
  w:'moc [W] × 8 760 h ÷ 1000 × cena kWh',s:'Limit 0,5 W: unijne przepisy o ekoprojekcie dla trybu czuwania.'},
-{id:'czajnik',cat:0,t:'Czajnik: ile kosztuje jedno gotowanie wody',k:'czajnik woda herbata kawa gotowanie kuchnia',
+{id:'czajnik',nr:2,cat:0,t:'Czajnik: ile kosztuje jedno gotowanie wody',k:'czajnik woda herbata kawa gotowanie kuchnia',
  i:'Ile prądu bierze zagotowanie wody? Liczymy z fizyki: ogrzanie wody do 100°C plus straty czajnika.',
  in:[{id:'l',l:'Ile wody',v:'1',u:'l'},{id:'t0',l:'Temperatura wody z kranu',v:'15',u:'°C'},{id:'e',l:'Sprawność czajnika',v:'90',u:'%'},PRAD,{id:'d',l:'Ile gotowań dziennie',v:'4',u:''}],
  pre:[['szklanka · 0,25 l',{l:'0,25'}],['kubek · 0,4 l',{l:'0,4'}],['pełny · 1,7 l',{l:'1,7'}]],
@@ -216,7 +216,13 @@ const C=[
  i:'Porównanie paliwa i parkowania z biletem miesięcznym. Nie liczymy utraty wartości auta ani ubezpieczenia, więc auto wychodzi tu najtaniej, jak może.',
  in:[{id:'km',l:'Km autem w miesiącu',v:'500',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO,{id:'pk',l:'Parkowanie w miesiącu',v:'200',u:'zł'},{id:'bil',l:'Bilet miesięczny',v:'110',u:'zł'}],
  f:v=>{const a=v.km/100*v.sp*v.pb+v.pk,d=a-v.bil;return{l:[['Auto miesięcznie',zl(a)],['Bilet miesięcznie',zl(v.bil)],['Różnica miesięcznie',zl(d)]],sk:d>=0?'AUTO DROŻSZE/ROK':'AUTO TAŃSZE/ROK',sv:Math.abs(d)*12}},
- w:'km ÷ 100 × spalanie × cena paliwa + parking − bilet',s:'Wszystkie wartości domyślne to przykład.'}
+ w:'km ÷ 100 × spalanie × cena paliwa + parking − bilet',s:'Wszystkie wartości domyślne to przykład.'},
+{id:'zamiennik',cat:2,nr:3,t:'Zamiennik leku: ile oszczędzasz',k:'lek leki apteka zamiennik generyk ibuprofen paracetamol krople przeziębienie',
+ i:'Porównaj lek znanej marki z zamiennikiem o tej samej substancji i dawce. Wpisz ceny ze swojej apteki.',
+ in:[{id:'m',l:'Cena leku znanej marki',v:'49,50',u:'zł'},{id:'z',l:'Cena zamiennika',v:'11,30',u:'zł'},{id:'n',l:'Ile opakowań w roku',v:'2',u:''}],
+ pre:[['ibuprofen 200 mg · 50 tabl.',{m:'49,50',z:'11,30'}],['krople do nosa 0,1% · 10 ml',{m:'26,59',z:'13,79'}]],
+ f:v=>{const d=v.m-v.z;return{l:[['Taniej za opakowanie',zl(d)],['Taniej o',v.m>0?f1(d/v.m*100)+'%':'–']],sk:'OSZCZĘDNOŚĆ/ROK',sv:d*v.n}},
+ w:'(marka − zamiennik) ÷ marka × 100 = ile procent taniej',s:'Przykładowe ceny: lekinfo24.pl i gdziepolek.pl, listopad 2026 – w Twojej aptece mogą być inne. W aptece poproś o zamiennik. Lek bez recepty: przed użyciem przeczytaj ulotkę; bierzesz inne leki – zapytaj farmaceutę. To nie jest porada medyczna.'}
 ];
 let curCat=-1;
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
