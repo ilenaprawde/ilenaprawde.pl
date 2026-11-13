@@ -197,6 +197,13 @@ const C=[
  in:[{id:'mah',l:'Pojemność baterii',v:'5000',u:'mAh'},{id:'v',l:'Napięcie baterii',v:'3,85',u:'V'},{id:'s',l:'Straty ładowania',v:'20',u:'%'},PRAD,{id:'d',l:'Pełnych ładowań dziennie',v:'1',u:''}],
  f:v=>{const e=v.mah*v.v/1e6/(1-v.s/100),y=e*v.d*365*v.p;return{l:[['Energia na ładowanie',f2(e*1000)+' Wh'],['Jedno ładowanie',zl(e*v.p)],['Przez 10 lat',zl(y*10)]],sk:'ROCZNIE',sv:y}},
  w:'mAh × V ÷ 1 000 000 ÷ (1 − straty) × ładowania × 365 × cena kWh',s:'Straty ładowania to przykład.'},
+{id:'ogrzewanie',cat:0,nr:7,t:'Ogrzewanie domu: co najtańsze',k:'ogrzewanie dom gaz pompa ciepła pellet ekogroszek węgiel kocioł opał',
+ i:'Ile rocznie kosztuje ta sama ilość ciepła z różnych źródeł? Wpisz zapotrzebowanie domu i ceny w swojej okolicy.',
+ in:[{id:'q',l:'Ciepło na rok',v:'15000',u:'kWh'},{id:'ek',l:'Ekogroszek',v:'1500',u:'zł/t'},{id:'pe',l:'Pellet',v:'2200',u:'zł/t'},{id:'g',l:'Gaz z dystrybucją',v:'0,31',u:'zł/kWh'},{id:'pr',l:'Prąd z dystrybucją',v:'1,26',u:'zł/kWh'},{id:'sc',l:'Sprawność pompy ciepła (SCOP)',v:'3',u:''}],
+ f:v=>{const ek=v.q*v.ek/(7200*0.8),ga=v.q*v.g/0.95,po=v.sc>0?v.q*v.pr/v.sc:Infinity,pe=v.q*v.pe/(5000*0.9);
+  const all=[ek,ga,po,pe].filter(Number.isFinite),m=all.length?Math.min(...all):0,z=x=>Number.isFinite(x)?zl(x):'brak';
+  return{l:[['Ekogroszek rocznie',z(ek)],['Gaz rocznie',z(ga)],['Pompa ciepła rocznie',z(po)],['Pellet rocznie',z(pe)]],sk:'NAJTANIEJ/ROK',sv:m}},
+ w:'cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła',s:'Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.'},
 {id:'dojazd',cat:1,t:'Dojazd autem: ile kosztuje paliwo na trasie',k:'auto samochód dojazd trasa praca przedszkole szkoła paliwo benzyna km',
  i:'Koszt samego paliwa na stałej trasie, np. do pracy albo przedszkola. Bez serwisu, opon i ubezpieczenia.',
  in:[{id:'km',l:'Długość jednego przejazdu',v:'5',u:'km'},{id:'k',l:'Przejazdów dziennie',v:'4',u:''},{id:'dn',l:'Dni w miesiącu',v:'22',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO],
