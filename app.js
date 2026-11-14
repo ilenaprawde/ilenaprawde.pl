@@ -8,6 +8,8 @@ const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').re
 const calc=id=>KALK.find(c=>c.id===id);
 const url=(id,params)=>'/kalkulatory/'+id+'/'+(params&&Object.keys(params).length?'?'+new URLSearchParams(params).toString():'');
 const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
+const opub=o=>!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa));   // film widoczny dopiero od godziny publikacji
+const filmUrl=o=>'https://youtube.com/shorts/'+o.yt;
 const defaults=c=>{const v={};c.in.forEach(x=>v[x.id]=num(x.v));return v};
 
 /* ---------- wiersze (rachunki): odcinki od najnowszych + kalkulatory bez odcinka ---------- */
@@ -32,7 +34,11 @@ function home(){
   $('nowe').hidden=!ep.length;const w=$('wall');w.innerHTML='';
   ep.forEach((r,i)=>{const a=el('a','card');a.href=url(r.id,r.params);a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';
    const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];
-   const p=el('div','paper');p.appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));
+   const p=el('div','paper');const tr=el('div','tagrow');tr.appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));
+   const oo=ODCINKI.find(x=>x.nr===r.nr);
+   if(oo&&opub(oo)){const pl=el('span','play','▶');pl.setAttribute('role','link');pl.tabIndex=0;pl.title='Obejrzyj film #'+r.nr;pl.setAttribute('aria-label','Obejrzyj film #'+r.nr+' na YouTube');
+    const go=ev=>{ev.preventDefault();ev.stopPropagation();window.open(filmUrl(oo),'_blank','noopener')};pl.addEventListener('click',go);pl.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' ')go(ev)});tr.appendChild(pl)}
+   p.appendChild(tr);p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));
    p.appendChild(el('div','v c-'+r.kol,r.wynik));p.appendChild(el('small',null,r.podpis));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
   $('none').hidden=lista.length>0;$('roll').hidden=!lista.length;
   const box=$('rows');box.innerHTML='';const pokaz=rozwin?lista:lista.slice(0,10);
@@ -47,6 +53,11 @@ function home(){
 function kalk(c){
  const eps=ODCINKI.filter(o=>o.id===c.id).map(o=>o.nr).sort((a,b)=>b-a);
  const P=new URLSearchParams(location.search);
+ const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id&&opub(o)).sort((x,y)=>x.nr-y.nr);
+ if(fb&&fl.length){fl.forEach(o=>{const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
+   const im=document.createElement('img');im.src='/thumbs/odc0'+o.nr+'.jpg';im.alt='';im.width=60;im.height=77;im.loading='lazy';a.appendChild(im);
+   a.appendChild(el('span',null,'▶ OBEJRZYJ FILM #'+o.nr));fb.appendChild(a)});
+  const tk=el('p','small tk');const ta=el('a',null,'także na TikToku');ta.href='https://www.tiktok.com/@ilenaprawde';ta.target='_blank';ta.rel='noopener';tk.appendChild(ta);fb.appendChild(tk)}
  const asc=[...eps].sort((x,y)=>x-y);$('ktag').textContent=(asc.length?(asc.length>1?'ODC. '+asc.slice(0,-1).map(n=>'#'+n).join(', ')+' i #'+asc[asc.length-1]:'ODC. #'+asc[0])+' · ':'')+CATS[c.cat];
  const box=$('cf');box.innerHTML='';
  c.in.forEach(x=>{const d=el('div','f');const id='f_'+x.id;const lb=el('label');lb.htmlFor=id;lb.appendChild(el('span',null,x.l));d.appendChild(lb);

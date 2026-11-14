@@ -10,12 +10,13 @@ const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
 const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
 const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszkanie'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu (tekst), kolor kwoty (red = przepłacasz, green = oszczędzasz, ink = neutralnie), podpis pod kwotą,
+// yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
 // opcjonalnie: nazwa (inna niż krot kalkulatora) i params (wartości pól w linku, np. {m:'26,59',z:'13,79'}) – /nr otwiera kalkulator z tymi wartościami.
 const ODCINKI=[
-{nr:1,id:'czuwanie',wynik:'96 zł',kol:'red',podpis:'rocznie za nic'},
-{nr:2,id:'czajnik',wynik:'211 zł',kol:'red',podpis:'rocznie w parę'},
-{nr:3,id:'zamiennik',nazwa:'Zamiennik: ibuprofen',wynik:'−77%',kol:'green',podpis:'ten sam ibuprofen'},
-{nr:4,id:'zamiennik',nazwa:'Zamiennik: krople do nosa',wynik:'−48%',kol:'green',podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
+{nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',wynik:'96 zł',kol:'red',podpis:'rocznie za nic'},
+{nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',wynik:'211 zł',kol:'red',podpis:'rocznie w parę'},
+{nr:3,id:'zamiennik',yt:'aHd9EIZBv8s',pa:'2026-11-13T19:00:00+01:00',nazwa:'Zamiennik: ibuprofen',wynik:'−77%',kol:'green',podpis:'ten sam ibuprofen'},
+{nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',nazwa:'Zamiennik: krople do nosa',wynik:'−48%',kol:'green',podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
 {nr:5,id:'telefon',wynik:'9,66 zł',kol:'green',podpis:'za cały rok'},
 {nr:6,id:'lpg',wynik:'2 558 zł',kol:'green',podpis:'rocznie w kieszeni'},
 {nr:7,id:'ogrzewanie',wynik:'3 427 zł',kol:'red',podpis:'różnicy rocznie'}
