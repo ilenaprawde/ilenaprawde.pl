@@ -8,7 +8,7 @@ const zl=v=>f2(v)+' zł', kwh=v=>f2(v)+' kWh';
 const yrs=m=>m<24?f1(m)+' mies.':f1(m/12)+' lat';
 const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
 const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
-const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszkanie'];
+const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu (tekst), kolor kwoty (red = przepłacasz, green = oszczędzasz, ink = neutralnie), podpis pod kwotą,
 // yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
 // opcjonalnie: nazwa (inna niż krot kalkulatora) i params (wartości pól w linku, np. {m:'26,59',z:'13,79'}) – /nr otwiera kalkulator z tymi wartościami.
@@ -19,7 +19,8 @@ const ODCINKI=[
 {nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',nazwa:'Zamiennik: krople do nosa',wynik:'−48%',kol:'green',podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
 {nr:5,id:'telefon',wynik:'9,66 zł',kol:'green',podpis:'za cały rok'},
 {nr:6,id:'lpg',wynik:'2 558 zł',kol:'green',podpis:'rocznie w kieszeni'},
-{nr:7,id:'ogrzewanie',wynik:'3 427 zł',kol:'red',podpis:'różnicy rocznie'}
+{nr:7,id:'ogrzewanie',wynik:'3 427 zł',kol:'red',podpis:'różnicy rocznie'},
+{nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',wynik:'620 zł',kol:'red',podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}}
 ];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
@@ -92,7 +93,13 @@ const KALK=[
  in:[{id:'m',l:'Cena leku znanej marki',v:'49,50',u:'zł'},{id:'z',l:'Cena zamiennika',v:'11,30',u:'zł'},{id:'n',l:'Ile opakowań w roku',v:'2',u:''}],
  pre:[['ibuprofen 200 mg · 50 tabl.',{m:'49,50',z:'11,30'}],['krople do nosa 0,1% · 10 ml',{m:'26,59',z:'13,79'}]],
  f:v=>{const d=v.m-v.z;return{l:[['Taniej za opakowanie',zl(d)],['Taniej o',v.m>0?f1(d/v.m*100)+'%':'–']],sk:'OSZCZĘDNOŚĆ/ROK',sv:d*v.n}},
- w:'(marka − zamiennik) ÷ marka × 100 = ile procent taniej',s:'Źródła cen: lekinfo24.pl i gdziepolek.pl, listopad 2026 (ceny przykładowe, w Twojej aptece mogą być inne). W aptece poproś o zamiennik. To nie jest porada medyczna.'}
+ w:'(marka − zamiennik) ÷ marka × 100 = ile procent taniej',s:'Źródła cen: lekinfo24.pl i gdziepolek.pl, listopad 2026 (ceny przykładowe, w Twojej aptece mogą być inne). W aptece poproś o zamiennik. To nie jest porada medyczna.'},
+{id:'abonament',krot:'Abonament komórkowy',cat:6,t:'Abonament telefonu: ile płacisz za markę',k:'abonament telefon komórkowy internet gb operator play virgin mobile umowa aktywacja sieć',
+ i:'Porównaj dwie oferty abonamentu: koszt przez cały okres to abonament razy miesiące plus opłata aktywacyjna. Domyślnie: Play Oferta S (A) i Virgin Mobile S (B), ceny z listopada 2026, przykładowe.',
+ in:[{id:'aa',l:'Oferta A: abonament',v:'45',u:'zł/mies.'},{id:'ak',l:'Oferta A: aktywacja',v:'50',u:'zł'},{id:'am',l:'Oferta A: liczba miesięcy',v:'24',u:''},{id:'ba',l:'Oferta B: abonament',v:'20',u:'zł/mies.'},{id:'bk',l:'Oferta B: aktywacja',v:'30',u:'zł'},{id:'bm',l:'Oferta B: liczba miesięcy',v:'24',u:''}],
+ pre:[['Play S (A) vs Virgin Mobile S (B)',{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}]],
+ f:v=>{const A=v.aa*v.am+v.ak,B=v.ba*v.bm+v.bk,d=A-B,tan=d>=0?'B':'A',pr=(d>=0?A:B)>0?f1(Math.abs(d)/(d>=0?A:B)*100)+'%':'–';return{l:[['Koszt oferty A',zl(A)],['Koszt oferty B',zl(B)],['Taniej oferta '+tan+' o',pr]],sk:'RÓŻNICA',sv:Math.abs(d)}},
+ w:'abonament × miesiące + aktywacja; różnica = koszt A − koszt B; procent = różnica ÷ droższa oferta × 100',s:'Ceny z listopada 2026, przykładowe: Play Oferta S (45 zł po rabatach za e-fakturę i zgody, aktywacja 50 zł, umowa 24 mies.) i Virgin Mobile S (20 zł po rabatach, aktywacja 30 zł, bez umowy terminowej), bez telefonu. Virgin Mobile to marka Play (ta sama sieć). Po okresie umowy ceny mogą wzrosnąć. To nie jest porada.'}
 ];
 window.ILE={KALK,ODCINKI,CATS,num,f2,f1,zl,kwh,yrs};
 })();
