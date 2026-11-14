@@ -16,7 +16,7 @@ const ODCINKI=[
 {nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',tytul:'Czerwona dioda w TV zjada pieniądze? (96 zł)',wynik:'96 zł',kol:'red',podpis:'rocznie za nic'},
 {nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',tytul:'Pełny czajnik na jeden kubek? (211 zł)',wynik:'211 zł',kol:'red',podpis:'rocznie w parę'},
 {nr:3,id:'zamiennik',yt:'aHd9EIZBv8s',pa:'2026-11-13T19:00:00+01:00',tytul:'Ibuprofen: ile płacisz za markę? (−77%)',nazwa:'Zamiennik: ibuprofen',wynik:'−77%',kol:'green',podpis:'ten sam ibuprofen'},
-{nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',tytul:'Krople do nosa: ile za markę? (−48%)',nazwa:'Zamiennik: krople do nosa',wynik:'−48%',kol:'green',podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
+{nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',tytul:'Krople do nosa: ile płacisz za markę? (−48%)',nazwa:'Zamiennik: krople do nosa',wynik:'−48%',kol:'green',podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
 {nr:5,id:'telefon',pa:'2026-11-15T19:00:00+01:00',tytul:'Ładowanie telefonu: ile kosztuje? (9,66 zł)',wynik:'9,66 zł',kol:'green',podpis:'za cały rok'},
 {nr:6,id:'lpg',pa:'2026-11-16T19:00:00+01:00',tytul:'Benzyna czy gaz: ile oszczędzasz? (2 558 zł)',wynik:'2 558 zł',kol:'green',podpis:'rocznie w kieszeni'},
 {nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Czym najtaniej ogrzać dom? (3 427 zł)',wynik:'3 427 zł',kol:'red',podpis:'różnicy rocznie'},
