@@ -9,7 +9,7 @@ require('./dane.js');
 const { KALK, ODCINKI, CATS } = window.ILE;
 
 const ORIGIN = 'https://ilenaprawde.pl';
-const BEACON = `<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "433148455d314f7e988566097f1515ce"}'></script><!-- End Cloudflare Web Analytics -->`;
+const BEACON = `<!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1) --><script>(function(){try{if(navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 function head({ title, desc, canonical, robots }) {
