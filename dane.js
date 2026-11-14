@@ -91,7 +91,7 @@ const KALK=[
  in:[{id:'m',l:'Cena leku znanej marki',v:'49,50',u:'zł'},{id:'z',l:'Cena zamiennika',v:'11,30',u:'zł'},{id:'n',l:'Ile opakowań w roku',v:'2',u:''}],
  pre:[['ibuprofen 200 mg · 50 tabl.',{m:'49,50',z:'11,30'}],['krople do nosa 0,1% · 10 ml',{m:'26,59',z:'13,79'}]],
  f:v=>{const d=v.m-v.z;return{l:[['Taniej za opakowanie',zl(d)],['Taniej o',v.m>0?f1(d/v.m*100)+'%':'–']],sk:'OSZCZĘDNOŚĆ/ROK',sv:d*v.n}},
- w:'(marka − zamiennik) ÷ marka × 100 = ile procent taniej',s:'Przykładowe ceny: lekinfo24.pl i gdziepolek.pl, listopad 2026 – w Twojej aptece mogą być inne. W aptece poproś o zamiennik. Lek bez recepty: przed użyciem przeczytaj ulotkę; bierzesz inne leki – zapytaj farmaceutę. To nie jest porada medyczna.'}
+ w:'(marka − zamiennik) ÷ marka × 100 = ile procent taniej',s:'Źródła cen: lekinfo24.pl i gdziepolek.pl, listopad 2026 (ceny przykładowe, w Twojej aptece mogą być inne). W aptece poproś o zamiennik. To nie jest porada medyczna.'}
 ];
 window.ILE={KALK,ODCINKI,CATS,num,f2,f1,zl,kwh,yrs};
 })();

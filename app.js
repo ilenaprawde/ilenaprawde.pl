@@ -22,7 +22,7 @@ function wiersze(){
 function home(){
  const wsz=wiersze();let cat=-1,rozwin=false;
  const filtr=()=>{const ws=norm($('q').value.trim()).split(/\s+/).filter(Boolean);return wsz.filter(r=>(cat<0||r.cat===cat)&&ws.every(w=>norm(r.szukaj).includes(w)))};
- $('ile').textContent=wsz.length+' rachunków ze wzorem, źródłem i datą cen.';
+ $('ile').textContent=KALK.length+' kalkulatorów ze wzorem, źródłem i datą cen.';
  function chipy(){const box=$('cats');box.innerHTML='';
   [['Wszystkie',-1,wsz.length],...CATS.map((n,i)=>[n,i,wsz.filter(r=>r.cat===i).length])].forEach(([n,i,k])=>{
    if(i>=0&&!k)return;const b=el('button','chip',n+' · '+k);b.type='button';b.setAttribute('aria-pressed',String(i===cat));
@@ -47,7 +47,7 @@ function home(){
 function kalk(c){
  const eps=ODCINKI.filter(o=>o.id===c.id).map(o=>o.nr).sort((a,b)=>b-a);
  const P=new URLSearchParams(location.search);
- $('ktag').textContent=(eps.length?eps.map(n=>'#'+n).join(' ')+' · ':'')+CATS[c.cat];
+ const asc=[...eps].sort((x,y)=>x-y);$('ktag').textContent=(asc.length?(asc.length>1?'ODC. '+asc.slice(0,-1).map(n=>'#'+n).join(', ')+' i #'+asc[asc.length-1]:'ODC. #'+asc[0])+' · ':'')+CATS[c.cat];
  const box=$('cf');box.innerHTML='';
  c.in.forEach(x=>{const d=el('div','f');const id='f_'+x.id;const lb=el('label');lb.htmlFor=id;lb.appendChild(el('span',null,x.l));d.appendChild(lb);
   const w=el('div','fw');const inp=document.createElement('input');inp.id=id;inp.setAttribute('inputmode','decimal');inp.autocomplete='off';inp.value=P.has(x.id)?P.get(x.id):x.v;

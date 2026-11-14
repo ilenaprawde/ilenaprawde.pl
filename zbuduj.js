@@ -60,7 +60,7 @@ zapisz('index.html', head({ title: 'Ile Naprawdę – kalkulatory codziennych ko
 <main class="wrap">
 ${brand}
 <h1>Ile to <mark>naprawdę</mark> kosztuje?</h1>
-<p class="lead" id="ile">${KALK.length} rachunków ze wzorem, źródłem i datą cen.</p>
+<p class="lead" id="ile">${KALK.length} kalkulatorów ze wzorem, źródłem i datą cen.</p>
 <div class="search"><input id="q" type="search" placeholder="Szukaj: np. czajnik, LED" aria-label="Szukaj rachunku" autocomplete="off"></div>
 <div class="chips" id="cats" role="group" aria-label="Działy"></div>
 <section id="nowe" aria-labelledby="hn"><h2 class="sec" id="hn">NAJNOWSZE <span>z ostatnich filmów</span></h2><div class="wall" id="wall"></div></section>

@@ -15,7 +15,8 @@ a{color:var(--blue)}
 p{margin:0}
 .brandbar{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px}
 .brandbar a{font-weight:700;font-size:15px;letter-spacing:2px;color:var(--ink);text-decoration:none}
-.brandbar span{font-size:12px;color:var(--mut)}
+.brandbar span{font-size:12px;color:var(--mut);text-align:right}
+@media(max-width:420px){.brandbar{flex-wrap:wrap}.brandbar span{font-size:11px}}
 h1{font-weight:700;font-size:clamp(28px,8vw,40px);line-height:1.08;margin:0 0 8px;text-wrap:balance}
 mark{background:var(--hl);color:var(--ink);padding:0 6px}
 .lead{font-size:14px;margin:0 0 16px;color:var(--ink)}
@@ -27,7 +28,8 @@ input:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(-
 .chip{font:inherit;font-size:12.5px;background:var(--paper);color:var(--ink);border:1.5px dashed var(--ink);padding:6px 9px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--hl);border-style:solid}
 h2.sec{font-weight:700;font-size:14px;letter-spacing:2px;margin:0 0 16px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0}
+h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;text-align:right;min-width:0}
+@media(max-width:420px){h2.sec{flex-wrap:wrap}h2.sec span{font-size:11px}}
 .wall{display:grid;grid-template-columns:1fr 1fr;gap:20px 14px}
 @media(min-width:640px){.wall{grid-template-columns:1fr 1fr 1fr;gap:24px 18px}}
 .card{position:relative;display:block;color:var(--ink);text-decoration:none;filter:drop-shadow(0 6px 6px #0000002e);transition:transform .15s}
