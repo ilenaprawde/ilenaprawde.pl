@@ -9,6 +9,9 @@ require('./dane.js');
 const { KALK, ODCINKI, CATS } = window.ILE;
 
 const ORIGIN = 'https://ilenaprawde.pl';
+const crypto = require('crypto');
+const V = f => crypto.createHash('md5').update(fs.readFileSync(f)).digest('hex').slice(0, 8);   // znacznik wersji w adresach plików (omija stare pamięci podręczne)
+const VER = { css: V('strona.css'), dane: V('dane.js'), app: V('app.js') };
 const BEACON = `<!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1) --><script>(function(){try{if(navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -36,7 +39,7 @@ function head({ title, desc, canonical, robots }) {
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="${ORIGIN}/og-image.png">
-<link rel="stylesheet" href="/strona.css">
+<link rel="stylesheet" href="/strona.css?v=${VER.css}">
 </head>`;
 }
 
@@ -75,8 +78,8 @@ ${linki}
 ${stopka}
 ${stopka2}
 </main>
-<script src="/dane.js"></script>
-<script src="/app.js"></script>
+<script src="/dane.js?v=${VER.dane}"></script>
+<script src="/app.js?v=${VER.app}"></script>
 ${BEACON}
 </body>
 </html>
@@ -129,8 +132,8 @@ ${brand}
 ${stopka2}
 <noscript><p class="small">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 </main>
-<script src="/dane.js"></script>
-<script src="/app.js"></script>
+<script src="/dane.js?v=${VER.dane}"></script>
+<script src="/app.js?v=${VER.app}"></script>
 ${BEACON}
 </body>
 </html>
