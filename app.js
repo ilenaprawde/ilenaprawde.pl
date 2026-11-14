@@ -10,6 +10,9 @@ const url=(id,params)=>'/kalkulatory/'+id+'/'+(params&&Object.keys(params).lengt
 const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
 const opub=o=>!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa));   // film widoczny dopiero od godziny publikacji
 const filmUrl=o=>'https://youtube.com/shorts/'+o.yt;
+const dm=iso=>{const d=new Date(iso);return isNaN(d)?'':String(d.getDate())+'.'+String(d.getMonth()+1).padStart(2,'0')};   // 18.11
+const wkrotce=o=>'🎬 film #'+o.nr+' wkrótce'+(o.pa&&Date.now()<Date.parse(o.pa)?' · '+dm(o.pa):'');
+const opis=o=>o.tytul||o.nazwa||'';
 const defaults=c=>{const v={};c.in.forEach(x=>v[x.id]=num(x.v));return v};
 
 /* ---------- wiersze (rachunki): odcinki od najnowszych + kalkulatory bez odcinka ---------- */
@@ -36,10 +39,10 @@ function home(){
    const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];
    const p=el('div','paper');const tr=el('div','tagrow');tr.appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));
    const oo=ODCINKI.find(x=>x.nr===r.nr);
-   if(oo&&opub(oo)){const pl=el('span','play','▶');pl.setAttribute('role','link');pl.tabIndex=0;pl.title='Obejrzyj film #'+r.nr;pl.setAttribute('aria-label','Obejrzyj film #'+r.nr+' na YouTube');
+   if(oo&&opub(oo)){const pl=el('span','play','▶');pl.setAttribute('role','link');pl.tabIndex=0;pl.title='Obejrzyj film #'+r.nr+': '+opis(oo);pl.setAttribute('aria-label','Obejrzyj film #'+r.nr+': '+opis(oo)+' (YouTube)');
     const go=ev=>{ev.preventDefault();ev.stopPropagation();window.open(filmUrl(oo),'_blank','noopener')};pl.addEventListener('click',go);pl.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' ')go(ev)});tr.appendChild(pl)}
    p.appendChild(tr);p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));
-   p.appendChild(el('div','v c-'+r.kol,r.wynik));p.appendChild(el('small',null,r.podpis));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
+   p.appendChild(el('div','v c-'+r.kol,r.wynik));p.appendChild(el('small',null,r.podpis));if(oo&&!opub(oo))p.appendChild(el('div','soon',wkrotce(oo).replace('film #'+oo.nr+' ','')));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
   $('none').hidden=lista.length>0;$('roll').hidden=!lista.length;
   const box=$('rows');box.innerHTML='';const pokaz=rozwin?lista:lista.slice(0,10);
   pokaz.forEach(r=>{const a=el('a','row');a.href=url(r.id,r.params);a.appendChild(el('i',null,r.nr!=null?'#'+r.nr:''));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));a.appendChild(el('b',null,r.wynik));box.appendChild(a)});
@@ -53,11 +56,12 @@ function home(){
 function kalk(c){
  const eps=ODCINKI.filter(o=>o.id===c.id).map(o=>o.nr).sort((a,b)=>b-a);
  const P=new URLSearchParams(location.search);
- const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id&&opub(o)).sort((x,y)=>x.nr-y.nr);
- if(fb&&fl.length){fl.forEach(o=>{const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
+ const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);
+ if(fb&&fl.length){let jest=false;fl.forEach(o=>{if(opub(o)){jest=true;const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
    const im=document.createElement('img');im.src='/thumbs/odc0'+o.nr+'.jpg';im.alt='';im.width=60;im.height=77;im.loading='lazy';a.appendChild(im);
-   a.appendChild(el('span',null,'▶ OBEJRZYJ FILM #'+o.nr));fb.appendChild(a)});
-  const tk=el('p','small tk');const ta=el('a',null,'także na TikToku');ta.href='https://www.tiktok.com/@ilenaprawde';ta.target='_blank';ta.rel='noopener';tk.appendChild(ta);fb.appendChild(tk)}
+   const fx=el('span','fx');fx.appendChild(el('b',null,'▶ OBEJRZYJ FILM #'+o.nr));if(opis(o))fx.appendChild(el('small',null,opis(o)));a.appendChild(fx);fb.appendChild(a)}
+   else fb.appendChild(el('div','soonl',wkrotce(o)))});
+  if(jest){const tk=el('p','small tk');const ta=el('a',null,'także na TikToku');ta.href='https://www.tiktok.com/@ilenaprawde';ta.target='_blank';ta.rel='noopener';tk.appendChild(ta);fb.appendChild(tk)}}
  const asc=[...eps].sort((x,y)=>x-y);$('ktag').textContent=(asc.length?(asc.length>1?'ODC. '+asc.slice(0,-1).map(n=>'#'+n).join(', ')+' i #'+asc[asc.length-1]:'ODC. #'+asc[0])+' · ':'')+CATS[c.cat];
  const box=$('cf');box.innerHTML='';
  c.in.forEach(x=>{const d=el('div','f');const id='f_'+x.id;const lb=el('label');lb.htmlFor=id;lb.appendChild(el('span',null,x.l));d.appendChild(lb);

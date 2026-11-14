@@ -10,17 +10,17 @@ const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
 const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
 const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu (tekst), kolor kwoty (red = przepłacasz, green = oszczędzasz, ink = neutralnie), podpis pod kwotą,
-// yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
+// tytul = krótki tytuł odcinka (≤ 45 znaków) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
 // opcjonalnie: nazwa (inna niż krot kalkulatora) i params (wartości pól w linku, np. {m:'26,59',z:'13,79'}) – /nr otwiera kalkulator z tymi wartościami.
 const ODCINKI=[
-{nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',wynik:'96 zł',kol:'red',podpis:'rocznie za nic'},
-{nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',wynik:'211 zł',kol:'red',podpis:'rocznie w parę'},
-{nr:3,id:'zamiennik',yt:'aHd9EIZBv8s',pa:'2026-11-13T19:00:00+01:00',nazwa:'Zamiennik: ibuprofen',wynik:'−77%',kol:'green',podpis:'ten sam ibuprofen'},
-{nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',nazwa:'Zamiennik: krople do nosa',wynik:'−48%',kol:'green',podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
-{nr:5,id:'telefon',wynik:'9,66 zł',kol:'green',podpis:'za cały rok'},
-{nr:6,id:'lpg',wynik:'2 558 zł',kol:'green',podpis:'rocznie w kieszeni'},
-{nr:7,id:'ogrzewanie',wynik:'3 427 zł',kol:'red',podpis:'różnicy rocznie'},
-{nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',wynik:'620 zł',kol:'red',podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}}
+{nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',tytul:'Czerwona dioda w TV zjada pieniądze? (96 zł)',wynik:'96 zł',kol:'red',podpis:'rocznie za nic'},
+{nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',tytul:'Pełny czajnik na jeden kubek? (211 zł)',wynik:'211 zł',kol:'red',podpis:'rocznie w parę'},
+{nr:3,id:'zamiennik',yt:'aHd9EIZBv8s',pa:'2026-11-13T19:00:00+01:00',tytul:'Ibuprofen: ile płacisz za markę? (−77%)',nazwa:'Zamiennik: ibuprofen',wynik:'−77%',kol:'green',podpis:'ten sam ibuprofen'},
+{nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',tytul:'Krople do nosa: ile za markę? (−48%)',nazwa:'Zamiennik: krople do nosa',wynik:'−48%',kol:'green',podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
+{nr:5,id:'telefon',pa:'2026-11-15T19:00:00+01:00',tytul:'Ładowanie telefonu: ile kosztuje? (9,66 zł)',wynik:'9,66 zł',kol:'green',podpis:'za cały rok'},
+{nr:6,id:'lpg',pa:'2026-11-16T19:00:00+01:00',tytul:'Benzyna czy gaz: ile oszczędzasz? (2 558 zł)',wynik:'2 558 zł',kol:'green',podpis:'rocznie w kieszeni'},
+{nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Czym najtaniej ogrzać dom? (3 427 zł)',wynik:'3 427 zł',kol:'red',podpis:'różnicy rocznie'},
+{nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',tytul:'Abonament na telefon: za markę? (620 zł)',wynik:'620 zł',kol:'red',podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}}
 ];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
