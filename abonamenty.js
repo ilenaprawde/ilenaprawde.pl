@@ -7,6 +7,8 @@ const MIN='−',NB=' ';
 const fz=v=>{const x=Number.isInteger(v)?String(v):v.toFixed(2).replace('.',',');const[i,d]=x.split(',');return i.replace(/\B(?=(\d{3})+(?!\d))/g,NB)+(d?','+d:'')+NB+'zł'};
 const dt=iso=>{const d=new Date(iso);if(isNaN(d))return '?';return d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear()+', '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')};
 const STARE_H=36;
+// oficjalne mapy zasięgu operatorów (tylko linki, bez kopiowania); marki wchodzą pod swoją sieć
+const MAPY={'Play':'https://www.play.pl/pomoc/zasieg/mapa-zasiegu','Orange':'https://www.orange.pl/view/mapazasiegu','Plus':'https://www.plus.pl/mapa-zasiegu','T-Mobile':'https://www.t-mobile.pl/d/mapa-zasiegu'};
 let dane=null,siec='',bez=false;
 
 function stan(o){   // -> {ok:boolean, powody:[...]}
@@ -46,6 +48,7 @@ function rysuj(){
   if(o.koszt24_bez_limitu!=null&&!bez)a.appendChild(el('p','abx','Z internetem bez limitu od 4. mies. (+'+fz(o.dodatek_bez_limitu)+'/mies.): '+fz(o.koszt24_bez_limitu)+' za 24 mies.'));
   if(o.promo_pierwszy_miesiac!=null)a.appendChild(el('p','abx','Promocja: 1. miesiąc '+fz(o.promo_pierwszy_miesiac)+' – nie wliczona w koszt.'));
   (o.uwagi||[]).forEach(u=>a.appendChild(el('p','abu',u)));
+  if(MAPY[o.siec]){const mp=el('p','abu');const ma=el('a',null,'Sprawdź zasięg u siebie ↗');ma.href=MAPY[o.siec];ma.target='_blank';ma.rel='noopener';mp.appendChild(ma);mp.appendChild(document.createTextNode(' (mapa sieci '+o.siec+')'));a.appendChild(mp)}
   const f=el('div','abf');
   const l=el('a',null,'Oferta na stronie operatora ↗');l.href=o.url;l.target='_blank';l.rel='noopener';f.appendChild(l);
   f.appendChild(el('small',null,o.potwierdzone_recznie?'potwierdzone ręcznie: '+dt(o.potwierdzone_recznie+'T12:00:00+01:00').split(',')[0]+' · odczyt: '+dt(o.odczyt):'odczyt: '+dt(o.odczyt)));a.appendChild(f);
