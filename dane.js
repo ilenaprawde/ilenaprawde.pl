@@ -8,7 +8,7 @@ const zl=v=>f2(v)+' zł', kwh=v=>f2(v)+' kWh';
 const yrs=m=>m<24?f1(m)+' mies.':f1(m/12)+' lat';
 const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
 const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
-const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet'];
+const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet','Święta'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu: typ ('roznica' = ile można zyskać → zielone „−620 zł / 2 lata”; 'procent' → zielone „−77%”; 'koszt' → neutralne „96 zł / rok”), kwota (liczba), okres ('rok' | '2 lata' | 'sezon' …; zawsze widoczny), procent (opcjonalnie, liczba bez znaku), podpis pod kwotą,
 // kalkulatory bez odcinka: typ/okres wynikają z etykiety wyniku (sk), można je nadpisać polami typ/okres w KALK,
 // tytul = krótki tytuł odcinka (≤ 45 znaków) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
@@ -23,7 +23,8 @@ const ODCINKI=[
 {nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Czym najtaniej ogrzać dom? (3 427 zł)',typ:'roznica',kwota:3427,okres:'rok',procent:47,podpis:'różnicy rocznie'},
 {nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',tytul:'Abonament na telefon: za markę? (620 zł)',typ:'roznica',kwota:620,okres:'2 lata',procent:55,podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}},
 {nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
-{nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'}
+{nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
+{nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'}
 ];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
@@ -71,7 +72,7 @@ const KALK=[
   const all=[ek,ga,po,pe].filter(Number.isFinite),m=all.length?Math.min(...all):0,z=x=>Number.isFinite(x)?zl(x):'brak';
   return{l:[['Ekogroszek rocznie',z(ek)],['Gaz rocznie',z(ga)],['Pompa ciepła rocznie',z(po)],['Pellet rocznie',z(pe)]],sk:'NAJTANIEJ/ROK',sv:m}},
  w:'cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła',s:'Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.'},
-{id:'lampki',krot:'Lampki świąteczne',cat:0,nr:10,t:'Lampki świąteczne: ile kosztuje ich świecenie',k:'lampki choinkowe świąteczne led kurtyna żarówki choinka boże narodzenie prąd święta sezon',
+{id:'lampki',krot:'Lampki świąteczne',cat:7,nr:10,t:'Lampki świąteczne: ile kosztuje ich świecenie',k:'lampki choinkowe świąteczne led kurtyna żarówki choinka boże narodzenie prąd święta sezon',
  i:'Ile prądu zużyją lampki w całym sezonie, np. od 1 grudnia do 6 stycznia (37 dni)? Wpisz moc kompletu (z opisu produktu), godziny świecenia dziennie i cenę prądu.',
  in:[{id:'w',l:'Moc jednego kompletu',v:'27,7',u:'W'},{id:'n',l:'Liczba kompletów',v:'1',u:''},{id:'h',l:'Godziny świecenia dziennie',v:'24',u:'h'},{id:'d',l:'Liczba dni sezonu',v:'37',u:''},PRAD],
  pre:[['LED 100 diod · 6 W',{w:'6'}],['kurtyna 500 LED · 21,7 W',{w:'21,7'}],['stare żarówki 16 × 3 W · 48 W',{w:'48'}]],
@@ -84,6 +85,13 @@ const KALK=[
  in:[{id:'po',l:'Piekarnik: zużycie na porcję',v:'1,0',u:'kWh'},{id:'af',l:'Airfryer: zużycie na porcję',v:'0,3',u:'kWh'},{id:'n',l:'Ile razy w tygodniu',v:'4',u:''},PRAD],
  f:v=>{const cp=v.po*v.p,ca=v.af*v.p,d=cp-ca,r=d*v.n*52;return{l:[['Porcja w piekarniku',zl(cp)],['Porcja w airfryerze',zl(ca)],['Różnica na porcji',zl(d)],['Taniej o',cp>0?f1(d/cp*100)+'%':'–']],sk:d>=0?'OSZCZĘDNOŚĆ/ROK':'AIRFRYER DROŻSZY/ROK',sv:Math.abs(r)}},
  w:'(zużycie piekarnika − zużycie airfryera) × cena prądu × liczba porcji w tygodniu × 52; procent = różnica ÷ koszt piekarnika × 100',s:'Zużycie wg testu Stiftung Warentest (kurczak: airfryer 0,2–0,3 kWh, piekarnik 1,0–1,2 kWh; przyjęto 0,3 i 1,0). Przy dużych porcjach airfryer piecze w kilku cyklach – wpisz wtedy większe zużycie. Cena prądu 1,10 zł/kWh to przykład. To nie jest porada.'},
+{id:'choinka',krot:'Choinka żywa czy sztuczna',cat:7,nr:11,t:'Choinka żywa czy sztuczna: co wychodzi taniej',k:'choinka żywa sztuczna jodła świerk święta boże narodzenie wynajem sezon',
+ i:'Żywą choinkę kupujesz co roku, sztuczną raz na kilka lat. Porównaj koszt obu przez wybraną liczbę lat i zobacz, po ilu sezonach sztuczna się zwraca.',
+ in:[{id:'z',l:'Cena żywej choinki (co roku)',v:'130',u:'zł'},{id:'s',l:'Cena sztucznej choinki',v:'260',u:'zł'},{id:'l',l:'Ile lat posłuży sztuczna',v:'10',u:'lat'}],
+ pre:[['żywa tania · 80 zł',{z:'80'}],['żywa dobra · 130 zł',{z:'130'}],['żywa premium · 200 zł',{z:'200'}]],
+ f:v=>{const zy=v.z*v.l,d=zy-v.s,ob=v.z>0?Math.ceil(v.s/v.z-1e-9):NaN,sz=Number.isFinite(ob)?ob+(ob===1?' sezonie':' sezonach'):'–';
+  return{l:[['Żywa przez '+f1(v.l)+' lat',zl(zy)],['Sztuczna (raz)',zl(v.s)],['Różnica',zl(Math.abs(d))+(zy>0||v.s>0?' ('+f1(Math.abs(d)/Math.max(zy,v.s)*100)+'%)':'')],['Sztuczna zwraca się po',sz]],sk:d>=0?'SZTUCZNA TAŃSZA O':'ŻYWA TAŃSZA O',sv:Math.abs(d)}},
+ w:'żywa = cena × lata; sztuczna = cena jednorazowa; różnica = żywa − sztuczna; procent = różnica ÷ droższa × 100; zwrot po = cena sztucznej ÷ cena żywej (zaokrąglone w górę, w sezonach)',s:'Ceny z grudnia 2025 (ostatni sezon, przykładowe): żywa jodła kaukaska od 70 zł, dobrej klasy ok. 130 zł (Radio Kielce, Castorama), sztuczna 180 cm ok. 260 zł (sklep internetowy). Można też wypożyczyć jodłę w donicy: Castorama 75 zł za 2 tygodnie. Liczymy tylko pieniądze (bez ekologii i zapachu). To nie jest porada.'},
 {id:'dojazd',krot:'Dojazd autem',cat:2,t:'Dojazd autem: ile kosztuje paliwo na trasie',k:'auto samochód dojazd trasa praca przedszkole szkoła paliwo benzyna km',
  i:'Koszt samego paliwa na stałej trasie, np. do pracy albo przedszkola. Bez serwisu, opon i ubezpieczenia.',
  in:[{id:'km',l:'Długość jednego przejazdu',v:'5',u:'km'},{id:'k',l:'Przejazdów dziennie',v:'4',u:''},{id:'dn',l:'Dni w miesiącu',v:'22',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO],
