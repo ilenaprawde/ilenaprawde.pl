@@ -20,7 +20,8 @@ const ODCINKI=[
 {nr:5,id:'telefon',pa:'2026-11-15T19:00:00+01:00',tytul:'Ładowanie telefonu: ile kosztuje? (9,66 zł)',wynik:'9,66 zł',kol:'green',podpis:'za cały rok'},
 {nr:6,id:'lpg',pa:'2026-11-16T19:00:00+01:00',tytul:'Benzyna czy gaz: ile oszczędzasz? (2 558 zł)',wynik:'2 558 zł',kol:'green',podpis:'rocznie w kieszeni'},
 {nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Czym najtaniej ogrzać dom? (3 427 zł)',wynik:'3 427 zł',kol:'red',podpis:'różnicy rocznie'},
-{nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',tytul:'Abonament na telefon: za markę? (620 zł)',wynik:'620 zł',kol:'red',podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}}
+{nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',tytul:'Abonament na telefon: za markę? (620 zł)',wynik:'620 zł',kol:'red',podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}},
+{nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',wynik:'27,06 zł',kol:'red',podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}}
 ];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
@@ -68,6 +69,14 @@ const KALK=[
   const all=[ek,ga,po,pe].filter(Number.isFinite),m=all.length?Math.min(...all):0,z=x=>Number.isFinite(x)?zl(x):'brak';
   return{l:[['Ekogroszek rocznie',z(ek)],['Gaz rocznie',z(ga)],['Pompa ciepła rocznie',z(po)],['Pellet rocznie',z(pe)]],sk:'NAJTANIEJ/ROK',sv:m}},
  w:'cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła',s:'Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.'},
+{id:'lampki',krot:'Lampki świąteczne',cat:0,nr:10,t:'Lampki świąteczne: ile kosztuje ich świecenie',k:'lampki choinkowe świąteczne led kurtyna żarówki choinka boże narodzenie prąd święta sezon',
+ i:'Ile prądu zużyją lampki w całym sezonie, np. od 1 grudnia do 6 stycznia (37 dni)? Wpisz moc kompletu (z opisu produktu), godziny świecenia dziennie i cenę prądu.',
+ in:[{id:'w',l:'Moc jednego kompletu',v:'27,7',u:'W'},{id:'n',l:'Liczba kompletów',v:'1',u:''},{id:'h',l:'Godziny świecenia dziennie',v:'24',u:'h'},{id:'d',l:'Liczba dni sezonu',v:'37',u:''},PRAD],
+ pre:[['LED 100 diod · 6 W',{w:'6'}],['kurtyna 500 LED · 21,7 W',{w:'21,7'}],['stare żarówki 16 × 3 W · 48 W',{w:'48'}]],
+ f:v=>{const kw=v.w*v.n/1000,e=kw*v.h*v.d,c=e*v.p,max=kw*24*v.d*v.p,r=[['Zużycie w sezonie',kwh(e)]],x=v.h<24?v.h:6,cx=kw*x*v.d*v.p,df=max-cx;
+  r.push(['Gdyby świeciły całą dobę',zl(max)],['Tylko '+f1(x)+' h dziennie'+(v.h<24?'':' (przykład)'),zl(cx)],['Różnica',zl(df)+(max>0?' ('+f1(df/max*100)+'%)':'')]);
+  return{l:r,sk:'KOSZT/SEZON',sv:c}},
+ w:'moc (kW) × liczba kompletów × godziny dziennie × dni × cena prądu; różnica = koszt całą dobę − koszt przy podanych godzinach',s:'Moc wg opisów produktów: LED 100 diod 6 W (MediaMarkt), kurtyna 500 LED 21,7 W i 16 żarówek × 3 W (Murator Dom). Cena prądu 1,10 zł/kWh to przykład. Zużycie zależy od konkretnych lampek. To nie jest porada.'},
 {id:'dojazd',krot:'Dojazd autem',cat:2,t:'Dojazd autem: ile kosztuje paliwo na trasie',k:'auto samochód dojazd trasa praca przedszkole szkoła paliwo benzyna km',
  i:'Koszt samego paliwa na stałej trasie, np. do pracy albo przedszkola. Bez serwisu, opon i ubezpieczenia.',
  in:[{id:'km',l:'Długość jednego przejazdu',v:'5',u:'km'},{id:'k',l:'Przejazdów dziennie',v:'4',u:''},{id:'dn',l:'Dni w miesiącu',v:'22',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO],
