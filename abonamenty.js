@@ -61,7 +61,7 @@ function rysuj(){
  });
  if(bez)box.appendChild(el('p','abu','* cena bez rabatów wyliczona: cena po rabatach plus rabaty z opisu na stronie operatora (strona nie podaje jej wprost).'));
  const najt=lista.find(o=>klucz(o)!=null);
- $('wniosek').textContent=najt?'Najtańsza z '+dane.oferty.length+' sprawdzanych przez nas ofert'+(siec?' (w sieci '+siec+')':'')+': '+najt.marka+', '+fz(klucz(najt))+' za 24 mies. Na rynku mogą być tańsze oferty innych sieci.':'';
+ $('wniosek').textContent=najt?'Najtańsza z '+lista.length+(lista.length===1?' sprawdzanej przez nas oferty':' sprawdzanych przez nas ofert')+(siec?' w sieci '+siec:'')+': '+najt.marka+', '+fz(klucz(najt))+' za 24 mies. Na rynku mogą być tańsze oferty innych sieci.':'';
 }
 
 function chipy(){

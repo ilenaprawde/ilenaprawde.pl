@@ -173,7 +173,7 @@ ${brand}
 <div id="lista" aria-live="polite"></div>
 <p class="fine2">Promocje dla przenoszących numer i darmowe pierwsze miesiące to uwagi, nie cena bazowa – nie są wliczone w koszt 24 miesięcy. Wybierz „moja sieć”, by zobaczyć oferty w tej sieci (marki działają w sieci operatora: Virgin Mobile – Play, nju – Orange, Plush – Plus, Red Bull Mobile – T-Mobile). Najtańsza z sprawdzanych ofert, nie z całego rynku.</p>
 <p class="fine2">Mapy operatorów są orientacyjne; zasięg w budynku może być gorszy.</p>
-<p class="fine2">Ceny z oficjalnych stron operatorów, sprawdzane codziennie. Oferta oznaczona „do sprawdzenia” nie została dziś potwierdzona – pokazujemy ostatnią znaną wartość. To nie jest porada.</p>
+<p class="fine2">Ceny z oficjalnych stron operatorów, sprawdzane codziennie. Przy każdej ofercie podajemy datę ostatniego potwierdzenia ceny. To nie jest porada.</p>
 <a class="cmpl" href="/kalkulatory/abonament/">Policz własny abonament →</a>
 <noscript><p class="fine2">Porównywarka wymaga włączonego JavaScriptu (wczytuje ceny z pliku danych).</p></noscript>
 ${stopka}
