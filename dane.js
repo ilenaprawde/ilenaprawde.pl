@@ -21,11 +21,10 @@ const ODCINKI=[
 {nr:5,id:'telefon',pa:'2026-11-15T19:00:00+01:00',tytul:'Ładowanie telefonu: ile kosztuje? (9,66 zł)',typ:'koszt',kwota:9.66,okres:'rok',podpis:'za cały rok'},
 {nr:6,id:'lpg',pa:'2026-11-16T19:00:00+01:00',tytul:'Benzyna czy gaz: ile oszczędzasz? (2 558 zł)',typ:'roznica',kwota:2558,okres:'rok',procent:39,podpis:'rocznie w kieszeni'},
 {nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Czym najtaniej ogrzać dom? (3 427 zł)',typ:'roznica',kwota:3427,okres:'rok',procent:47,podpis:'różnicy rocznie'},
-{nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',tytul:'Abonament na telefon: za markę? (620 zł)',typ:'roznica',kwota:620,okres:'2 lata',procent:55,podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}},
+{nr:8,id:'abonament',href:'/abonamenty/',pa:'2026-11-18T19:00:00+01:00',tytul:'Ile przepłacasz w swojej sieci? (do 660 zł)',nazwa:'Abonament: ile przepłacasz w swojej sieci',typ:'roznica',kwota:660,okres:'2 lata',procent:37,podpis:'T-Mobile → Red Bull'},
 {nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
-{nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
-{nr:9,id:'abonament',href:'/abonamenty/',pa:'2026-11-19T19:00:00+01:00',tytul:'Ile przepłacasz w swojej sieci? (do 660 zł)',nazwa:'Abonament: ile przepłacasz w swojej sieci',typ:'roznica',kwota:660,okres:'2 lata',procent:37,podpis:'T-Mobile → Red Bull'}
+{nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'}
 ];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
