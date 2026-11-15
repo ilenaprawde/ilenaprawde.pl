@@ -143,12 +143,12 @@ ${BEACON}
 // ---------- krótkie adresy odcinków: /1 … /N ----------
 ODCINKI.forEach(o => {
   const q = o.params && Object.keys(o.params).length ? '?' + new URLSearchParams(o.params).toString() : '';
-  const dest = `/kalkulatory/${o.id}/${q}`;
+  const dest = o.href ? o.href : `/kalkulatory/${o.id}/${q}`;
   zapisz(`${o.nr}/index.html`, `<!doctype html>
 <html lang="pl"><head><meta charset="utf-8"><title>Ile Naprawdę – odcinek #${o.nr}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<link rel="canonical" href="${ORIGIN}/kalkulatory/${o.id}/">
+<link rel="canonical" href="${ORIGIN}${o.href || `/kalkulatory/${o.id}/`}">
 <meta http-equiv="refresh" content="0;url=${esc(dest)}">
 <script>location.replace(${JSON.stringify(dest)})</script>
 </head><body><p><a href="${esc(dest)}">Przejdź do kalkulatora odcinka #${o.nr}</a></p>${BEACON}</body></html>

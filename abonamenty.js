@@ -48,7 +48,7 @@ function rysuj(){
   (o.uwagi||[]).forEach(u=>a.appendChild(el('p','abu',u)));
   const f=el('div','abf');
   const l=el('a',null,'Oferta na stronie operatora ↗');l.href=o.url;l.target='_blank';l.rel='noopener';f.appendChild(l);
-  f.appendChild(el('small',null,'odczyt: '+dt(o.odczyt)));a.appendChild(f);
+  f.appendChild(el('small',null,o.potwierdzone_recznie?'potwierdzone ręcznie: '+dt(o.potwierdzone_recznie+'T12:00:00+01:00').split(',')[0]+' · odczyt: '+dt(o.odczyt):'odczyt: '+dt(o.odczyt)));a.appendChild(f);
   box.appendChild(a);
  });
  if(bez)box.appendChild(el('p','abu','* cena bez rabatów wyliczona: cena po rabatach plus rabaty z opisu na stronie operatora (strona nie podaje jej wprost).'));

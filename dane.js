@@ -12,7 +12,7 @@ const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszka
 // ODCINKI: nr, id kalkulatora, wynik z filmu: typ ('roznica' = ile można zyskać → zielone „−620 zł / 2 lata”; 'procent' → zielone „−77%”; 'koszt' → neutralne „96 zł / rok”), kwota (liczba), okres ('rok' | '2 lata' | 'sezon' …; zawsze widoczny), procent (opcjonalnie, liczba bez znaku), podpis pod kwotą,
 // kalkulatory bez odcinka: typ/okres wynikają z etykiety wyniku (sk), można je nadpisać polami typ/okres w KALK,
 // tytul = krótki tytuł odcinka (≤ 45 znaków) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
-// opcjonalnie: nazwa (inna niż krot kalkulatora) i params (wartości pól w linku, np. {m:'26,59',z:'13,79'}) – /nr otwiera kalkulator z tymi wartościami.
+// opcjonalnie: href (inny cel niż kalkulator, np. '/abonamenty/'), nazwa (inna niż krot kalkulatora) i params (wartości pól w linku, np. {m:'26,59',z:'13,79'}) – /nr otwiera kalkulator z tymi wartościami.
 const ODCINKI=[
 {nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',tytul:'Czerwona dioda w TV zjada pieniądze? (96 zł)',typ:'koszt',kwota:96,okres:'rok',podpis:'rocznie za nic'},
 {nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',tytul:'Pełny czajnik na jeden kubek? (211 zł)',typ:'roznica',kwota:211,okres:'rok',podpis:'rocznie w parę'},
@@ -24,7 +24,8 @@ const ODCINKI=[
 {nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',tytul:'Abonament na telefon: za markę? (620 zł)',typ:'roznica',kwota:620,okres:'2 lata',procent:55,podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}},
 {nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
-{nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'}
+{nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
+{nr:9,id:'abonament',href:'/abonamenty/',pa:'2026-11-19T19:00:00+01:00',tytul:'Ile przepłacasz w swojej sieci? (do 660 zł)',nazwa:'Abonament: ile przepłacasz w swojej sieci',typ:'roznica',kwota:660,okres:'2 lata',procent:37,podpis:'T-Mobile → Red Bull'}
 ];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',

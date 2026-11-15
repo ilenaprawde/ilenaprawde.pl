@@ -26,7 +26,7 @@ const defaults=c=>{const v={};c.in.forEach(x=>v[x.id]=num(x.v));return v};
 
 /* ---------- wiersze (rachunki): odcinki od najnowszych + kalkulatory bez odcinka ---------- */
 function wiersze(){
- const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{const c=calc(o.id);return{nr:o.nr,id:o.id,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
+ const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{const c=calc(o.id);return{nr:o.nr,id:o.id,href:o.href,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
  const uzyte=new Set(ODCINKI.map(o=>o.id));
  const bez=KALK.filter(c=>!uzyte.has(c.id)).map(c=>{const r=c.f(defaults(c));return{nr:null,id:c.id,nazwa:c.krot,cat:c.cat,w:wynik({typ:c.typ||typSk(r.sk),kwota:Math.round(r.sv*100)/100,okres:c.okres||okresSk(r.sk)}),podpis:'przykład',szukaj:c.t+' '+c.k+' '+CATS[c.cat]}});
  const cmp={nr:null,id:'__abonamenty',href:'/abonamenty/',nazwa:'Porównywarka abonamentów',cat:6,w:{am:'8 ofert',per:'/ 24 mies.',pr:'',kol:'ink'},podpis:'porównaj sieci',szukaj:'porównywarka abonamentów abonament telefon play virgin orange nju plus plush t-mobile red bull cena sieć'};
@@ -45,7 +45,7 @@ function home(){
  function rysuj(){
   const lista=filtr(),ep=lista.filter(r=>r.nr!=null).slice(0,6);
   $('nowe').hidden=!ep.length;const w=$('wall');w.innerHTML='';
-  ep.forEach((r,i)=>{const a=el('a','card');a.href=url(r.id,r.params);a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';
+  ep.forEach((r,i)=>{const a=el('a','card');a.href=r.href||url(r.id,r.params);a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';
    const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];
    const p=el('div','paper');const tr=el('div','tagrow');tr.appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));
    const oo=ODCINKI.find(x=>x.nr===r.nr);
