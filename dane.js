@@ -22,7 +22,8 @@ const ODCINKI=[
 {nr:6,id:'lpg',pa:'2026-11-16T19:00:00+01:00',tytul:'Benzyna czy gaz: ile oszczędzasz? (2 558 zł)',typ:'roznica',kwota:2558,okres:'rok',procent:39,podpis:'rocznie w kieszeni'},
 {nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Czym najtaniej ogrzać dom? (3 427 zł)',typ:'roznica',kwota:3427,okres:'rok',procent:47,podpis:'różnicy rocznie'},
 {nr:8,id:'abonament',pa:'2026-11-18T19:00:00+01:00',tytul:'Abonament na telefon: za markę? (620 zł)',typ:'roznica',kwota:620,okres:'2 lata',procent:55,podpis:'przez 2 lata za markę',params:{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}},
-{nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}}
+{nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
+{nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'}
 ];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
@@ -78,6 +79,11 @@ const KALK=[
   r.push(['Gdyby świeciły całą dobę',zl(max)],['Tylko '+f1(x)+' h dziennie'+(v.h<24?'':' (przykład)'),zl(cx)],['Różnica',zl(df)+(max>0?' ('+f1(df/max*100)+'%)':'')]);
   return{l:r,sk:'KOSZT/SEZON',sv:c}},
  w:'moc (kW) × liczba kompletów × godziny dziennie × dni × cena prądu; różnica = koszt całą dobę − koszt przy podanych godzinach',s:'Moc wg opisów produktów: LED 100 diod 6 W (MediaMarkt), kurtyna 500 LED 21,7 W i 16 żarówek × 3 W (Murator Dom). Cena prądu 1,10 zł/kWh to przykład. Zużycie zależy od konkretnych lampek. To nie jest porada.'},
+{id:'airfryer',krot:'Airfryer czy piekarnik',cat:0,nr:12,t:'Airfryer czy piekarnik: co zjada mniej prądu',k:'airfryer frytkownica beztłuszczowa piekarnik kuchnia gotowanie porcja prąd kurczak',
+ i:'Porównaj zużycie prądu na jedną porcję w piekarniku i w airfryerze (frytkownicy beztłuszczowej). Wpisz zużycie z własnych pomiarów albo z instrukcji.',
+ in:[{id:'po',l:'Piekarnik: zużycie na porcję',v:'1,0',u:'kWh'},{id:'af',l:'Airfryer: zużycie na porcję',v:'0,3',u:'kWh'},{id:'n',l:'Ile razy w tygodniu',v:'4',u:''},PRAD],
+ f:v=>{const cp=v.po*v.p,ca=v.af*v.p,d=cp-ca,r=d*v.n*52;return{l:[['Porcja w piekarniku',zl(cp)],['Porcja w airfryerze',zl(ca)],['Różnica na porcji',zl(d)],['Taniej o',cp>0?f1(d/cp*100)+'%':'–']],sk:d>=0?'OSZCZĘDNOŚĆ/ROK':'AIRFRYER DROŻSZY/ROK',sv:Math.abs(r)}},
+ w:'(zużycie piekarnika − zużycie airfryera) × cena prądu × liczba porcji w tygodniu × 52; procent = różnica ÷ koszt piekarnika × 100',s:'Zużycie wg testu Stiftung Warentest (kurczak: airfryer 0,2–0,3 kWh, piekarnik 1,0–1,2 kWh; przyjęto 0,3 i 1,0). Przy dużych porcjach airfryer piecze w kilku cyklach – wpisz wtedy większe zużycie. Cena prądu 1,10 zł/kWh to przykład. To nie jest porada.'},
 {id:'dojazd',krot:'Dojazd autem',cat:2,t:'Dojazd autem: ile kosztuje paliwo na trasie',k:'auto samochód dojazd trasa praca przedszkole szkoła paliwo benzyna km',
  i:'Koszt samego paliwa na stałej trasie, np. do pracy albo przedszkola. Bez serwisu, opon i ubezpieczenia.',
  in:[{id:'km',l:'Długość jednego przejazdu',v:'5',u:'km'},{id:'k',l:'Przejazdów dziennie',v:'4',u:''},{id:'dn',l:'Dni w miesiącu',v:'22',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO],
