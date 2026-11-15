@@ -25,9 +25,11 @@ const ODCINKI=[
 {nr:8,id:'abonament',href:'/abonamenty/',pa:'2026-11-18T19:00:00+01:00',tytul:'Ile przepłacasz w swojej sieci? (do 660 zł)',nazwa:'Abonament: ile przepłacasz w swojej sieci',typ:'roznica',kwota:660,okres:'2 lata',procent:37,podpis:'T-Mobile → Red Bull'},
 {nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
-{nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony: dwa komplety czy całoroczne? (1670 zł)',typ:'roznica',kwota:1670,okres:'6 lat',procent:37,podpis:'całoroczne vs zimowe + letnie'},
+{nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony: dwa komplety czy całoroczne? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
 {nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'}
 ];
+// ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
+const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
  i:'Ile rocznie kosztuje urządzenie, które tylko czuwa? Zwykłe czuwanie nowego sprzętu to najwyżej 0,5 W (limit UE).',
@@ -106,17 +108,33 @@ const KALK=[
  w:'spalanie × cena paliwa = koszt 100 km',s:'Cena paliwa to przykład.'},
 {id:'opony',krot:'Opony: dwa komplety czy całoroczne',cat:2,t:'Opony zimowe + letnie czy całoroczne: co wychodzi taniej',k:'opony zimowe letnie całoroczne wielosezonowe wymiana opon przechowalnia felgi auto samochód',
  i:'Dwa komplety (zimowe i letnie) czy jeden komplet całorocznych? Liczymy zakup, wymiany i przechowywanie przez wybraną liczbę lat. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze.',
- in:[{id:'km',l:'Przebieg rocznie',v:'10000',u:'km'},{id:'l',l:'Ile lat liczymy',v:'6',u:'lat'},{id:'cz',l:'Komplet zimowych',v:'1400',u:'zł'},{id:'cl',l:'Komplet letnich',v:'1200',u:'zł'},{id:'cc',l:'Komplet całorocznych',v:'1500',u:'zł'},
-  {id:'wy',l:'Wymiana opon z wyważeniem',v:'160',u:'zł'},{id:'pr',l:'Przechowywanie za sezon (przechowalnia ok. 150 zł)',v:'0',u:'zł'},
-  {id:'ts',l:'Trwałość sezonowych',v:'40000',u:'km'},{id:'ms',l:'Sezonowe – maks. lat',v:'6',u:'lat'},{id:'tc',l:'Trwałość całorocznych',v:'35000',u:'km'},{id:'mc',l:'Całoroczne – maks. lat',v:'8',u:'lat'},
-  {id:'fe',l:'Mam drugi komplet na felgach (wymiana kół zamiast opon)',v:'0',chk:true},{id:'wk',l:'Wymiana kół (gdy drugi komplet na felgach)',v:'80',u:'zł'}],
- pre:[['5 tys. km/rok',{km:'5000'}],['10 tys. km/rok',{km:'10000'}],['20 tys. km/rok',{km:'20000'}],['30 tys. km/rok',{km:'30000'}]],
- f:v=>{const sez=km=>{const k=km/2,z=k>0?Math.min(v.ms,v.ts/k):v.ms;return(v.cz+v.cl)*(v.l/z)+2*v.l*(v.fe?v.wk:v.wy)+2*v.l*v.pr},
-  cal=km=>{const z=km>0?Math.min(v.mc,v.tc/km):v.mc;return v.l/z*(v.cc+v.wy)},
-  s=sez(v.km),c=cal(v.km),d=s-c;let prog=null;for(let k=1000;k<=60000;k+=100){const a=sez(k)-cal(k),b=sez(k+100)-cal(k+100);if(a*b<=0&&a!==b){prog=Math.round((k+100*a/(a-b))/100)*100;break}}
-  return{l:[['Zimowe + letnie przez '+f1(v.l)+' lat',zl(s)],['Całoroczne przez '+f1(v.l)+' lat',zl(c)],['Różnica',zl(Math.abs(d))+(Math.max(s,c)>0?' ('+f1(Math.abs(d)/Math.max(s,c)*100)+'%)':'')],['Taniej wychodzą',d>=0?'całoroczne':'dwa komplety'],['Koszty równe przy',prog?'ok. '+prog.toLocaleString('pl-PL')+' km/rok':'brak (1–60 tys. km)']],sk:d>=0?'CAŁOROCZNE TAŃSZE O':'DWA KOMPLETY TAŃSZE O',sv:Math.abs(d)}},
- w:'sezonowe: komplet przejeżdża przebieg ÷ 2 rocznie; lata życia = min(maks. lat, trwałość ÷ km na komplet); koszt = (zimowe + letnie) × lata ÷ lata życia + 2 × lata × wymiana + 2 × lata × przechowanie. Całoroczne: lata życia = min(maks. lat, trwałość ÷ przebieg); koszt = lata ÷ lata życia × (cena + montaż). Różnica = sezonowe − całoroczne; procent = różnica ÷ droższa × 100',
- s:'Ceny orientacyjne z listopada 2026, opony 205/55 R16 ze średniej półki: zimowe ok. 350 zł/szt., letnie ok. 300 zł/szt., całoroczne ok. 375 zł/szt. (całoroczne 250–600 zł/szt. wg Interii). Wymiana 4 opon z wyważeniem ok. 160 zł (kb.pl 2026: 158 zł; Oponeo, winiety24: 128–216 zł). Przechowalnia średnio ok. 150 zł za sezon (kb.pl). Trwałość przykładowa. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze. To nie jest porada.'},
+ in:[{id:'km',l:'Przebieg rocznie',v:'10000',u:'km'},{id:'l',l:'Ile lat liczymy',v:'5',u:'lat'},
+  {id:'kl',l:'Klasa opon',v:'1',opt:[['Budżet',0],['Średnia',1],['Premium',2]]},
+  {id:'zc',l:'Zmień ceny ręcznie',v:'0',chk:true},
+  {id:'cz',l:'Komplet zimowych (4 szt.)',v:'1432',u:'zł',gdy:'zc'},{id:'cl',l:'Komplet letnich (4 szt.)',v:'1004',u:'zł',gdy:'zc'},{id:'cc',l:'Komplet całorocznych (4 szt.)',v:'1256',u:'zł',gdy:'zc'},
+  {id:'wy',l:'Wymiana opon z wyważeniem',v:'160',u:'zł',gdy:'zc'},
+  {id:'pt',l:'Przechowywanie',v:'0',opt:[['W domu',0],['Płatna przechowalnia',1]]},
+  {id:'pr',l:'Przechowalnia za sezon',v:'150',u:'zł',gdy:'pt=1'},
+  {id:'fe',l:'Mam drugi komplet na felgach',v:'0',chk:true},{id:'wk',l:'Wymiana kół (komplet na felgach)',v:'80',u:'zł',gdy:'fe'},
+  {id:'za',l:'Ustawienia zaawansowane',v:'0',chk:true,sek:true},
+  {id:'wi',l:'Wymiana opon po ilu latach (zalecane ok. 5, maks. 10 od produkcji)',v:'5',u:'lat',gdy:'za'},
+  {id:'ts',l:'Trwałość opon sezonowych',v:'40000',u:'km',gdy:'za'},{id:'tc',l:'Trwałość opon całorocznych',v:'35000',u:'km',gdy:'za'}],
+ pre:[['5 tys. km/rok',{km:'5000'}],['10 tys.',{km:'10000'}],['20 tys.',{km:'20000'}],['30 tys.',{km:'30000'}],['40 tys.',{km:'40000'}]],
+ zmiana:(id,ustaw)=>{if(id!=='kl'&&id!=='zc')return;const K=OPONY_KLASY[+document.getElementById('f_kl').value]||OPONY_KLASY[1];ustaw('cz',String(K[0]*4));ustaw('cl',String(K[1]*4));ustaw('cc',String(K[2]*4))},
+ f:v=>{const K=OPONY_KLASY[v.kl]||OPONY_KLASY[1],cz=v.zc?v.cz:K[0]*4,cl=v.zc?v.cl:K[1]*4,cc=v.zc?v.cc:K[2]*4,
+   wym=v.fe?v.wk:v.wy,pr=v.pt?v.pr:0,
+   ks=km=>v.l/Math.min(v.wi,km>0?v.ts/(km/2):Infinity),kc=km=>v.l/Math.min(v.wi,km>0?v.tc/km:Infinity),
+   sez=km=>(cz+cl)*ks(km)+2*v.l*wym+2*v.l*pr,cal=km=>kc(km)*(cc+v.wy);
+  const s=sez(v.km),c=cal(v.km),d=s-c,n=2*v.l;
+  let prog=null;for(let k=1000;k<80000;k+=500){const a=sez(k)-cal(k),b=sez(k+500)-cal(k+500);if(a*b<0||(b===0&&a!==0)){prog=Math.round((k+500*a/(a-b))/500)*500;break}}
+  const zawsze=sez(40000)-cal(40000)>0?'całoroczne tańsze przy każdym przebiegu':'dwa komplety tańsze przy każdym przebiegu';
+  const l=[['Dwa komplety: opony ('+f1(ks(v.km))+' × zima + lato)',zl((cz+cl)*ks(v.km))],[(v.fe?'Wymiany kół':'Wymiany opon')+' ('+f1(n)+' × '+zl(wym)+')',zl(n*wym)]];
+  if(pr>0)l.push(['Przechowalnia ('+f1(n)+' × '+zl(pr)+')',zl(n*pr)]);
+  l.push(['Dwa komplety razem',zl(s)],['Całoroczne ('+f1(kc(v.km))+' kpl. z montażem)',zl(c)],['Różnica',zl(Math.abs(d))+(Math.max(s,c)>0?' ('+f1(Math.abs(d)/Math.max(s,c)*100)+'%)':'')],
+   ['Taniej wychodzą',d>=0?'całoroczne':'dwa komplety'],['Koszty równe przy',prog?'ok. '+prog.toLocaleString('pl-PL')+' km/rok':zawsze]);
+  return{l:l.filter(x=>!/^0,00 zł/.test(x[1])),sk:d>=0?'CAŁOROCZNE TAŃSZE O':'DWA KOMPLETY TAŃSZE O',sv:Math.abs(d),pod:v.zc?'Ceny: Twoje (wpisane ręcznie).':'Ceny: mediana z oponeo.pl, 15.11.2026 (klasa '+['budżet','średnia','premium'][v.kl]+', 205/55 R16).'}},
+ w:'sezonowe: komplety = lata ÷ min(wymiana po latach, trwałość ÷ (przebieg ÷ 2)); koszt = (zimowe + letnie) × komplety + 2 × lata × wymiana + 2 × lata × przechowalnia. Całoroczne: komplety = lata ÷ min(wymiana po latach, trwałość ÷ przebieg); koszt = komplety × (cena + montaż). Zużycie liczone proporcjonalnie. Różnica = sezonowe − całoroczne; procent = różnica ÷ droższa × 100',
+ s:'Ceny opon 205/55 R16 za sztukę: mediana 6 ofert z oponeo.pl z 15.11.2026 – budżet (Dębica, Goodride, Kormoran): zimowe 268, letnie 225, całoroczne 252 zł; średnia (Kleber, Fulda, Hankook, Sava): 358 / 251 / 314 zł; premium (Michelin, Continental, Goodyear, Bridgestone): 420 / 338 / 397 zł. Wymiana 4 opon z wyważeniem ok. 160 zł (kb.pl 2026: 158 zł), przechowalnia ok. 150 zł za sezon (kb.pl). Producenci zalecają wymianę opon po ok. 5 latach, najpóźniej 10 lat od produkcji. Trwałość w km przykładowa. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze. To nie jest porada.'},
 {id:'lpg',krot:'Benzyna czy LPG',cat:2,t:'Benzyna czy LPG: kiedy instalacja się zwraca',k:'lpg gaz instalacja gazowa benzyna auto samochód zwrot',
  i:'Auto na gazie pali go więcej niż benzyny, ale gaz jest tańszy. Liczymy roczną oszczędność i zwrot instalacji.',
  in:[{id:'km',l:'Ile km rocznie',v:'15000',u:''},{id:'sb',l:'Spalanie benzyny',v:'7',u:'l/100 km'},PALIWO,{id:'sg',l:'Spalanie LPG',v:'8,5',u:'l/100 km'},{id:'pg',l:'Cena LPG',v:'3,10',u:'zł/l'},{id:'c',l:'Koszt instalacji',v:'3500',u:'zł'}],
