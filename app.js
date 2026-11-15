@@ -13,13 +13,22 @@ const filmUrl=o=>'https://youtube.com/shorts/'+o.yt;
 const dm=iso=>{const d=new Date(iso);return isNaN(d)?'':String(d.getDate())+'.'+String(d.getMonth()+1).padStart(2,'0')};   // 18.11
 const wkrotce=o=>'🎬 film #'+o.nr+' wkrótce'+(o.pa&&Date.now()<Date.parse(o.pa)?' · '+dm(o.pa):'');
 const opis=o=>o.tytul||o.nazwa||'';
+const MIN='−';
+const fk=v=>{const x=Number.isInteger(v)?String(v):v.toFixed(2).replace('.',','),[i,d]=x.split(',');return i.replace(/\B(?=(\d{3})+(?!\d))/g,' ')+(d?','+d:'')+' zł'};
+// wynik odcinka / kalkulatora: typ 'roznica' (zielone, z minusem), 'procent' (zielone), 'koszt' (neutralne, bez minusa); okres zawsze obok kwoty
+const wynik=o=>{const t=o.typ||'koszt',per=o.okres?'/ '+o.okres:'',pr=o.procent!=null&&t!=='procent'?MIN+(Number.isInteger(o.procent)?o.procent:String(o.procent).replace('.',','))+'%':'';
+ if(t==='procent')return{am:MIN+String(o.procent).replace('.',',')+'%',per:'',pr:'',kol:'green'};
+ if(t==='roznica')return{am:MIN+fk(o.kwota),per,pr,kol:'green'};
+ return{am:fk(o.kwota),per,pr:'',kol:'ink'}};
+const okresSk=sk=>/SEZON/.test(sk)?'sezon':'rok';
+const typSk=sk=>/OSZCZĘD/.test(sk)?'roznica':'koszt';
 const defaults=c=>{const v={};c.in.forEach(x=>v[x.id]=num(x.v));return v};
 
 /* ---------- wiersze (rachunki): odcinki od najnowszych + kalkulatory bez odcinka ---------- */
 function wiersze(){
- const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{const c=calc(o.id);return{nr:o.nr,id:o.id,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,wynik:o.wynik,kol:o.kol,podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
+ const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{const c=calc(o.id);return{nr:o.nr,id:o.id,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
  const uzyte=new Set(ODCINKI.map(o=>o.id));
- const bez=KALK.filter(c=>!uzyte.has(c.id)).map(c=>{const r=c.f(defaults(c));return{nr:null,id:c.id,nazwa:c.krot,cat:c.cat,wynik:zl(r.sv),kol:'ink',podpis:'przykład',szukaj:c.t+' '+c.k+' '+CATS[c.cat]}});
+ const bez=KALK.filter(c=>!uzyte.has(c.id)).map(c=>{const r=c.f(defaults(c));return{nr:null,id:c.id,nazwa:c.krot,cat:c.cat,w:wynik({typ:c.typ||typSk(r.sk),kwota:Math.round(r.sv*100)/100,okres:c.okres||okresSk(r.sk)}),podpis:'przykład',szukaj:c.t+' '+c.k+' '+CATS[c.cat]}});
  return eps.concat(bez);
 }
 
@@ -42,10 +51,10 @@ function home(){
    if(oo&&opub(oo)){const pl=el('span','play','▶');pl.setAttribute('role','link');pl.tabIndex=0;pl.title='Obejrzyj film #'+r.nr+': '+opis(oo);pl.setAttribute('aria-label','Obejrzyj film #'+r.nr+': '+opis(oo)+' (YouTube)');
     const go=ev=>{ev.preventDefault();ev.stopPropagation();window.open(filmUrl(oo),'_blank','noopener')};pl.addEventListener('click',go);pl.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' ')go(ev)});tr.appendChild(pl)}
    p.appendChild(tr);p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));
-   p.appendChild(el('div','v c-'+r.kol,r.wynik));p.appendChild(el('small',null,r.podpis));if(oo&&!opub(oo))p.appendChild(el('div','soon',wkrotce(oo).replace('film #'+oo.nr+' ','')));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
+   {const v=el('div','v c-'+r.w.kol);v.appendChild(el('span','am',r.w.am));if(r.w.per)v.appendChild(el('span','per',r.w.per));p.appendChild(v);if(r.w.pr)p.appendChild(el('div','pr c-'+r.w.kol,r.w.pr))}p.appendChild(el('small',null,r.podpis));if(oo&&!opub(oo))p.appendChild(el('div','soon',wkrotce(oo).replace('film #'+oo.nr+' ','')));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
   $('none').hidden=lista.length>0;$('roll').hidden=!lista.length;
   const box=$('rows');box.innerHTML='';const pokaz=rozwin?lista:lista.slice(0,10);
-  pokaz.forEach(r=>{const a=el('a','row');a.href=url(r.id,r.params);a.appendChild(el('i',null,r.nr!=null?'#'+r.nr:''));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));a.appendChild(el('b',null,r.wynik));box.appendChild(a)});
+  pokaz.forEach(r=>{const a=el('a','row');a.href=url(r.id,r.params);a.appendChild(el('i',null,r.nr!=null?'#'+r.nr:''));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));{const b=el('b','c-'+r.w.kol);b.appendChild(el('span','am',r.w.am+(r.w.per?' '+r.w.per:'')));if(r.w.pr)b.appendChild(el('span','pr',r.w.pr));a.appendChild(b)}box.appendChild(a)});
   const m=$('more');m.hidden=rozwin||lista.length<=10;m.textContent='POKAŻ WSZYSTKIE '+lista.length+' ↓'}
  $('more').onclick=()=>{rozwin=true;rysuj()};
  $('q').addEventListener('input',()=>{rozwin=false;rysuj()});
