@@ -112,3 +112,30 @@ h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;tex
 .card .soon{margin-top:8px;font-size:10px;color:var(--mut);letter-spacing:.3px;border-top:1px dashed var(--rule);padding-top:6px}
 
 [hidden]{display:none!important}
+
+/* ---------- porównywarka abonamentów (/abonamenty/) ---------- */
+.cmp h1{font-size:clamp(24px,7vw,34px)}
+.cmp .stan{font-size:12.5px;color:var(--mut);margin:0 0 14px}
+.cmp .opts{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:0 0 18px}
+.cmp .chips{margin:0}
+.cmp .tog{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer}
+.cmp .tog input{width:18px;height:18px;accent-color:var(--ink)}
+.cmp .wn{font-size:13.5px;font-weight:700;margin:0 0 14px;background:var(--paper);border:2px solid var(--ink);padding:10px 12px}
+.ab{background:var(--paper);padding:16px 14px 14px;margin:0 0 16px;border:1px solid var(--rule);box-shadow:0 5px 8px #0000001f}
+.ab.chk{border:2px dashed var(--amber)}
+.abh{display:flex;gap:10px;align-items:flex-start}
+.abn{font-weight:700;font-size:15px;color:var(--mut);min-width:24px}
+.abt{flex:1;min-width:0}.abt b{display:block;font-size:17px;line-height:1.2}.abt small{display:block;font-size:12px;color:var(--mut);line-height:1.35;margin-top:2px}
+.abk{text-align:right;flex:none}
+.abkv{display:block;font-weight:700;font-size:clamp(19px,5.6vw,24px);line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.abkl{display:block;font-size:11px;color:var(--mut);margin-top:2px}
+.abwarn{margin:10px 0 0;padding:8px 10px;background:#FEF3C7;border-left:4px solid var(--amber);font-size:12.5px;line-height:1.4}
+.abd{display:grid;grid-template-columns:minmax(0,42%) minmax(0,1fr);gap:4px 10px;margin:12px 0 4px;font-size:13px;border-top:2px dotted var(--rule);padding-top:10px}
+.abd dt{color:var(--mut);font-size:12px;line-height:1.35}.abd dd{margin:0;text-align:right;font-weight:600;min-width:0;line-height:1.35}
+.abx{font-size:12.5px;font-weight:600;margin:6px 0 0}
+.abu{font-size:12px;color:var(--mut);margin:6px 0 0;line-height:1.4}
+.abf{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:13px}
+.abf small{font-size:11px;color:var(--mut)}
+.cmp .fine2{font-size:12px;color:var(--mut);margin:14px 0 0;line-height:1.45}
+.cmpl{display:block;margin:14px 0 0;padding:10px 12px;border:2px solid var(--ink);background:var(--hl);color:var(--ink);font-weight:700;font-size:14px;text-decoration:none;text-align:center}
+[hidden]{display:none!important}

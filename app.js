@@ -29,7 +29,8 @@ function wiersze(){
  const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{const c=calc(o.id);return{nr:o.nr,id:o.id,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
  const uzyte=new Set(ODCINKI.map(o=>o.id));
  const bez=KALK.filter(c=>!uzyte.has(c.id)).map(c=>{const r=c.f(defaults(c));return{nr:null,id:c.id,nazwa:c.krot,cat:c.cat,w:wynik({typ:c.typ||typSk(r.sk),kwota:Math.round(r.sv*100)/100,okres:c.okres||okresSk(r.sk)}),podpis:'przykład',szukaj:c.t+' '+c.k+' '+CATS[c.cat]}});
- return eps.concat(bez);
+ const cmp={nr:null,id:'__abonamenty',href:'/abonamenty/',nazwa:'Porównywarka abonamentów',cat:6,w:{am:'8 ofert',per:'/ 24 mies.',pr:'',kol:'ink'},podpis:'porównaj sieci',szukaj:'porównywarka abonamentów abonament telefon play virgin orange nju plus plush t-mobile red bull cena sieć'};
+ return eps.concat(bez,[cmp]);
 }
 
 /* ---------- strona główna ---------- */
@@ -54,7 +55,7 @@ function home(){
    {const v=el('div','v c-'+r.w.kol);v.appendChild(el('span','am',r.w.am));if(r.w.per)v.appendChild(el('span','per',r.w.per));p.appendChild(v);if(r.w.pr)p.appendChild(el('div','pr c-'+r.w.kol,r.w.pr))}p.appendChild(el('small',null,r.podpis));if(oo&&!opub(oo))p.appendChild(el('div','soon',wkrotce(oo).replace('film #'+oo.nr+' ','')));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
   $('none').hidden=lista.length>0;$('roll').hidden=!lista.length;
   const box=$('rows');box.innerHTML='';const pokaz=rozwin?lista:lista.slice(0,10);
-  pokaz.forEach(r=>{const a=el('a','row');a.href=url(r.id,r.params);a.appendChild(el('i',null,r.nr!=null?'#'+r.nr:''));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));{const b=el('b','c-'+r.w.kol);b.appendChild(el('span','am',r.w.am+(r.w.per?' '+r.w.per:'')));if(r.w.pr)b.appendChild(el('span','pr',r.w.pr));a.appendChild(b)}box.appendChild(a)});
+  pokaz.forEach(r=>{const a=el('a','row');a.href=r.href||url(r.id,r.params);a.appendChild(el('i',null,r.nr!=null?'#'+r.nr:''));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));{const b=el('b','c-'+r.w.kol);b.appendChild(el('span','am',r.w.am+(r.w.per?' '+r.w.per:'')));if(r.w.pr)b.appendChild(el('span','pr',r.w.pr));a.appendChild(b)}box.appendChild(a)});
   const m=$('more');m.hidden=rozwin||lista.length<=10;m.textContent='POKAŻ WSZYSTKIE '+lista.length+' ↓'}
  $('more').onclick=()=>{rozwin=true;rysuj()};
  $('q').addEventListener('input',()=>{rozwin=false;rysuj()});
@@ -65,6 +66,7 @@ function home(){
 function kalk(c){
  const eps=ODCINKI.filter(o=>o.id===c.id).map(o=>o.nr).sort((a,b)=>b-a);
  const P=new URLSearchParams(location.search);
+ if(c.id==='abonament'){const ln=el('a','cmpl','Porównaj oferty wszystkich sieci →');ln.href='/abonamenty/';const sh=$('share');if(sh)sh.parentNode.insertBefore(ln,sh)}
  const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);
  if(fb&&fl.length){let jest=false;fl.forEach(o=>{if(opub(o)){jest=true;const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
    const im=document.createElement('img');im.src='/thumbs/odc0'+o.nr+'.jpg';im.alt='';im.width=60;im.height=77;im.loading='lazy';a.appendChild(im);

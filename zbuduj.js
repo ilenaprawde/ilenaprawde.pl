@@ -11,7 +11,7 @@ const { KALK, ODCINKI, CATS } = window.ILE;
 const ORIGIN = 'https://ilenaprawde.pl';
 const crypto = require('crypto');
 const V = f => crypto.createHash('md5').update(fs.readFileSync(f)).digest('hex').slice(0, 8);   // znacznik wersji w adresach plików (omija stare pamięci podręczne)
-const VER = { css: V('strona.css'), dane: V('dane.js'), app: V('app.js') };
+const VER = { css: V('strona.css'), dane: V('dane.js'), app: V('app.js'), ab: V('abonamenty.js') };
 const BEACON = `<!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1) --><script>(function(){try{if(navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -155,9 +155,47 @@ ODCINKI.forEach(o => {
 `);
 });
 
+// ---------- porównywarka abonamentów: /abonamenty/ (+ krótki adres /abonament) ----------
+const abDesc = 'Abonament na telefon: ile naprawdę przez 2 lata? Porównanie najtańszych abonamentów Play, Virgin Mobile, Orange, nju, Plus, Plush, T-Mobile i Red Bull Mobile. Ceny z oficjalnych stron, sprawdzane codziennie.';
+zapisz('abonamenty/index.html', head({ title: 'Abonament na telefon: ile naprawdę przez 2 lata? – Ile Naprawdę', desc: abDesc, canonical: ORIGIN + '/abonamenty/' }) + `
+<body data-strona="abonamenty" class="cmp">
+<main class="wrap">
+${brand}
+<a class="back" href="/">← wszystkie rachunki</a>
+<h1>Abonament na telefon: ile <mark>naprawdę</mark> przez 2 lata?</h1>
+<p class="stan" id="stan">Wczytuję ceny…</p>
+<p class="lead">Koszt 24 miesięcy = abonament × 24 + opłata aktywacyjna. Abonament bez telefonu, nowy numer, ceny po rabatach (e-faktura, zgody marketingowe), chyba że zaznaczysz inaczej.</p>
+<div class="opts">
+ <div class="chips" id="siec" role="group" aria-label="Moja sieć"></div>
+ <label class="tog"><input type="checkbox" id="bez"> pokaż ceny bez rabatów</label>
+</div>
+<p class="wn" id="wniosek"></p>
+<div id="lista" aria-live="polite"></div>
+<p class="fine2">Promocje dla przenoszących numer i darmowe pierwsze miesiące to uwagi, nie cena bazowa – nie są wliczone w koszt 24 miesięcy. Wybierz „moja sieć”, by zobaczyć oferty w tej sieci (marki działają w sieci operatora: Virgin Mobile – Play, nju – Orange, Plush – Plus, Red Bull Mobile – T-Mobile). Najtańsza z sprawdzanych ofert, nie z całego rynku.</p>
+<p class="fine2">Ceny z oficjalnych stron operatorów, sprawdzane codziennie. Oferta oznaczona „do sprawdzenia” nie została dziś potwierdzona – pokazujemy ostatnią znaną wartość. To nie jest porada.</p>
+<a class="cmpl" href="/kalkulatory/abonament/">Policz własny abonament →</a>
+<noscript><p class="fine2">Porównywarka wymaga włączonego JavaScriptu (wczytuje ceny z pliku danych).</p></noscript>
+${stopka}
+${stopka2}
+</main>
+<script src="/abonamenty.js?v=${VER.ab}"></script>
+${BEACON}
+</body>
+</html>
+`);
+zapisz('abonament/index.html', `<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><title>Ile Naprawdę – porównywarka abonamentów</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="${ORIGIN}/abonamenty/">
+<meta http-equiv="refresh" content="0;url=/abonamenty/">
+<script>location.replace('/abonamenty/'+location.search)</script>
+</head><body><p><a href="/abonamenty/">Przejdź do porównywarki abonamentów</a></p>${BEACON}</body></html>
+`);
+
 // ---------- sitemap.xml + robots.txt ----------
 const dzis = new Date().toISOString().slice(0, 10);
-const urls = [ORIGIN + '/', ...KALK.map(c => `${ORIGIN}/kalkulatory/${c.id}/`), ORIGIN + '/prywatnosc.html', ORIGIN + '/regulamin.html'];
+const urls = [ORIGIN + '/', ...KALK.map(c => `${ORIGIN}/kalkulatory/${c.id}/`), ORIGIN + '/abonamenty/', ORIGIN + '/prywatnosc.html', ORIGIN + '/regulamin.html'];
 zapisz('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `<url><loc>${u}</loc><lastmod>${dzis}</lastmod></url>`).join('\n')}
