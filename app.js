@@ -26,7 +26,7 @@ const defaults=c=>{const v={};c.in.forEach(x=>v[x.id]=num(x.v));return v};
 
 /* ---------- wiersze (rachunki): odcinki od najnowszych + kalkulatory bez odcinka ---------- */
 function wiersze(){
- const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{const c=calc(o.id);return{nr:o.nr,id:o.id,href:o.href,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
+ const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{if(o.plan)return{nr:o.nr,plan:true,pa:o.pa,nazwa:o.nazwa,cat:o.cat,szukaj:o.nazwa+' '+CATS[o.cat]+' '+o.nr};const c=calc(o.id);return{nr:o.nr,id:o.id,href:o.href,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
  const uzyte=new Set(ODCINKI.map(o=>o.id));
  const bez=KALK.filter(c=>!uzyte.has(c.id)).map(c=>{const r=c.f(defaults(c));return{nr:null,id:c.id,nazwa:c.krot,cat:c.cat,w:wynik({typ:c.typ||typSk(r.sk),kwota:Math.round(r.sv*100)/100,okres:c.okres||okresSk(r.sk)}),podpis:'przykład',szukaj:c.t+' '+c.k+' '+CATS[c.cat]}});
  const cmp={nr:null,id:'__abonamenty',href:'/abonamenty/',nazwa:'Porównywarka abonamentów',cat:6,w:{am:'8 ofert',per:'/ 24 mies.',pr:'',kol:'ink'},podpis:'porównaj sieci',szukaj:'porównywarka abonamentów abonament telefon play virgin orange nju plus plush t-mobile red bull cena sieć'};
@@ -45,7 +45,7 @@ function home(){
  function rysuj(){
   const lista=filtr(),ep=lista.filter(r=>r.nr!=null).slice(0,6);
   $('nowe').hidden=!ep.length;const w=$('wall');w.innerHTML='';
-  ep.forEach((r,i)=>{const a=el('a','card');a.href=r.href||url(r.id,r.params);a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';
+  ep.forEach((r,i)=>{if(r.plan){const a=el('div','card plan');a.setAttribute('aria-disabled','true');a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];const p=el('div','paper');p.appendChild(el('div','tagrow')).appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));const v=el('div','v c-ink');v.appendChild(el('span','am','wkrótce – '+dm(r.pa)));v.appendChild(el('span','arr','→'));p.appendChild(v);a.appendChild(pin);a.appendChild(p);w.appendChild(a);return}const a=el('a','card');a.href=r.href||url(r.id,r.params);a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';
    const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];
    const p=el('div','paper');const tr=el('div','tagrow');tr.appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));
    const oo=ODCINKI.find(x=>x.nr===r.nr);
@@ -55,7 +55,7 @@ function home(){
    {const v=el('div','v c-'+r.w.kol);v.appendChild(el('span','am',r.w.am));if(r.w.per)v.appendChild(el('span','per',r.w.per));p.appendChild(v);if(r.w.pr)p.appendChild(el('div','pr c-'+r.w.kol,r.w.pr))}p.appendChild(el('small',null,r.podpis));if(oo&&!opub(oo))p.appendChild(el('div','soon',wkrotce(oo).replace('film #'+oo.nr+' ','')));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
   $('none').hidden=lista.length>0;$('roll').hidden=!lista.length;
   const box=$('rows');box.innerHTML='';const pokaz=rozwin?lista:lista.slice(0,10);
-  pokaz.forEach(r=>{const a=el('a','row');a.href=r.href||url(r.id,r.params);a.appendChild(el('i',null,r.nr!=null?'#'+r.nr:''));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));{const b=el('b','c-'+r.w.kol);b.appendChild(el('span','am',r.w.am+(r.w.per?' '+r.w.per:'')));if(r.w.pr)b.appendChild(el('span','pr',r.w.pr));a.appendChild(b)}box.appendChild(a)});
+  pokaz.forEach(r=>{if(r.plan){const a=el('div','row plan');a.appendChild(el('i',null,'#'+r.nr));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));a.appendChild(el('b',null,'wkrótce – '+dm(r.pa)));box.appendChild(a);return}const a=el('a','row');a.href=r.href||url(r.id,r.params);a.appendChild(el('i',null,r.nr!=null?'#'+r.nr:''));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));{const b=el('b','c-'+r.w.kol);b.appendChild(el('span','am',r.w.am+(r.w.per?' '+r.w.per:'')));if(r.w.pr)b.appendChild(el('span','pr',r.w.pr));a.appendChild(b)}box.appendChild(a)});
   const m=$('more');m.hidden=rozwin||lista.length<=10;m.textContent='POKAŻ WSZYSTKIE '+lista.length+' ↓'}
  $('more').onclick=()=>{rozwin=true;rysuj()};
  $('q').addEventListener('input',()=>{rozwin=false;rysuj()});

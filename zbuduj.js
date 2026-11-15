@@ -141,7 +141,7 @@ ${BEACON}
 });
 
 // ---------- krótkie adresy odcinków: /1 … /N ----------
-ODCINKI.forEach(o => {
+ODCINKI.filter(o => !o.plan).forEach(o => {   // zapowiedzi (plan:true) nie mają jeszcze adresu /N
   const q = o.params && Object.keys(o.params).length ? '?' + new URLSearchParams(o.params).toString() : '';
   const dest = o.href ? o.href : `/kalkulatory/${o.id}/${q}`;
   zapisz(`${o.nr}/index.html`, `<!doctype html>
