@@ -1,0 +1,212 @@
+{
+ "wersja": 1,
+ "aktualizacja": "2026-11-15T09:33:52+01:00",
+ "oferty": [
+  {
+   "id": "virgin-s",
+   "marka": "Virgin Mobile",
+   "siec": "Play",
+   "plan": "Virgin Mobile S (nowy numer)",
+   "url": "https://virginmobile.pl/abonament",
+   "uwagi": [
+    "Marka Play – ta sama sieć i nadajniki."
+   ],
+   "cena": 20,
+   "bez": 30,
+   "bez_wyliczone": true,
+   "aktywacja": 30,
+   "gb": "20 GB na start, do 60 GB za staż",
+   "umowa": "bezterminowa",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "ostatni_ok": "2026-11-15T09:33:52+01:00",
+   "koszt24": 510,
+   "koszt24_bez": 750,
+   "status": "ok",
+   "powody": []
+  },
+  {
+   "id": "plush-s",
+   "marka": "Plush",
+   "siec": "Plus",
+   "plan": "Plush S (nowy numer)",
+   "url": "https://www.plush.pl/",
+   "uwagi": [
+    "Oficjalna strona plush.pl niedostępna z automatu (błąd certyfikatu) – dane z artykułu (czerwiec 2026), czekają na ręczne potwierdzenie."
+   ],
+   "cena": 25,
+   "bez": null,
+   "bez_wyliczone": false,
+   "aktywacja": 0,
+   "gb": "50 GB (podwojenie po 6 mies.)",
+   "umowa": "bezterminowa",
+   "promo_pierwszy_miesiac": null,
+   "dodatek_bez_limitu": null,
+   "ostatni_ok": null,
+   "zrodlo_zapasowe": "https://www.telepolis.pl/wiadomosci/plus-plush-abonament-nowa-oferta-esim-czerwiec-2026",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "proba_nieudana": [
+    "https://www.plush.pl/: URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.plush.pl'. (_ssl.c:1000)>"
+   ],
+   "nieudane_z_rzedu": 1,
+   "koszt24": 600,
+   "koszt24_bez": null,
+   "status": "do_sprawdzenia",
+   "powody": [
+    "nie udało się dziś odczytać strony operatora",
+    "dane czekają na ręczne potwierdzenie (oficjalnej strony nie da się odczytać automatem)"
+   ]
+  },
+  {
+   "id": "redbull",
+   "marka": "Red Bull Mobile",
+   "siec": "T-Mobile",
+   "plan": "Red Bull Mobile (subskrypcja, nowy numer)",
+   "url": "https://www.redbullmobile.pl/",
+   "uwagi": [
+    "Pierwszy miesiąc 15 zł (promocja) – w koszcie 24 mies. liczymy cenę podstawową."
+   ],
+   "cena": 30,
+   "bez": 35,
+   "bez_wyliczone": true,
+   "aktywacja": 0,
+   "gb": "3 mies. bez limitu, potem 60 GB / 30 dni",
+   "umowa": "bezterminowa",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "ostatni_ok": "2026-11-15T09:33:52+01:00",
+   "promo_pierwszy_miesiac": 15,
+   "dodatek_bez_limitu": 20,
+   "koszt24": 720,
+   "koszt24_bez": 840,
+   "koszt24_bez_limitu": 1140,
+   "status": "ok",
+   "powody": []
+  },
+  {
+   "id": "nju-mono",
+   "marka": "nju mobile",
+   "siec": "Orange",
+   "plan": "nju abonament mono (nowy numer)",
+   "url": "https://www.njumobile.pl/oferta/abonament-mono",
+   "uwagi": [
+    "Strona nie podaje ceny bez rabatów; opłata aktywacyjna 0 zł uwzględnia zniżki 20 zł (e-faktura) i 20 zł (zgody), z których można zrezygnować.",
+    "Promocja „3 mies. za 0 zł” dotyczy tylko przenoszących numer – nie wliczona."
+   ],
+   "cena": 31,
+   "bez": null,
+   "bez_wyliczone": false,
+   "aktywacja": 0,
+   "gb": "60 GB na start, do 180 GB za staż",
+   "umowa": "bezterminowa",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "ostatni_ok": "2026-11-15T09:33:52+01:00",
+   "koszt24": 744,
+   "koszt24_bez": null,
+   "status": "ok",
+   "powody": []
+  },
+  {
+   "id": "plus-s",
+   "marka": "Plus",
+   "siec": "Plus",
+   "plan": "Plus Oferta S 6 GB (nowy numer)",
+   "url": "https://www.plus.pl/abonament?process=acq",
+   "uwagi": [
+    "Opłaty aktywacyjnej Plusa nie ma na stronie oferty – do sprawdzenia ręcznie (koszt 24 mies. bez aktywacji).",
+    "Od 25. mies. cena rośnie; potem +5 zł co kolejne 12 mies."
+   ],
+   "cena": 40,
+   "bez": 50,
+   "bez_wyliczone": false,
+   "aktywacja": null,
+   "gb": "6 GB",
+   "umowa": "24 mies.",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "ostatni_ok": "2026-11-15T09:33:52+01:00",
+   "koszt24": 960,
+   "koszt24_bez": 1200,
+   "status": "do_sprawdzenia",
+   "powody": [
+    "opłata aktywacyjna czeka na ręczne sprawdzenie (koszt 24 mies. bez niej)"
+   ]
+  },
+  {
+   "id": "play-s",
+   "marka": "Play",
+   "siec": "Play",
+   "plan": "Play S (abonament, nowy numer)",
+   "url": "https://www.play.pl/oferta/play-abonament/nowy-numer",
+   "uwagi": [
+    "Cena S ładowana skryptem; Play często zwraca automatowi błąd zamiast oferty – wtedy pokazujemy wartość potwierdzoną ręcznie 15.11.2026 z oznaczeniem „do sprawdzenia”."
+   ],
+   "cena": 45,
+   "bez": 55,
+   "bez_wyliczone": true,
+   "aktywacja": 50,
+   "gb": "15 GB + 5 GB online",
+   "umowa": "24 mies.",
+   "promo_pierwszy_miesiac": null,
+   "dodatek_bez_limitu": null,
+   "ostatni_ok": null,
+   "zrodlo_zapasowe": "ręczne potwierdzenie na play.pl (15.11.2026)",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "proba_nieudana": [
+    "nie znaleziono wzorca pola „cena” na https://www.play.pl/oferta/play-abonament/nowy-numer",
+    "nie znaleziono wzorca pola „aktywacja” na https://www.play.pl/oferta/play-abonament/nowy-numer",
+    "nie znaleziono wzorca pola „gb” na https://www.play.pl/oferta/play-abonament/nowy-numer",
+    "nie znaleziono wzorca pola „umowa” na https://www.play.pl/oferta/play-abonament/nowy-numer"
+   ],
+   "nieudane_z_rzedu": 1,
+   "koszt24": 1130,
+   "koszt24_bez": 1370,
+   "status": "do_sprawdzenia",
+   "powody": [
+    "nie udało się dziś odczytać strony operatora"
+   ]
+  },
+  {
+   "id": "orange-xs",
+   "marka": "Orange",
+   "siec": "Orange",
+   "plan": "Orange Plan XS (nowy numer, online)",
+   "url": "https://www.orange.pl/abonament/nowy-numer",
+   "uwagi": [
+    "Plan XS: 15 GB + 5 GB za zakup online przez 24 mies., od 25. mies. 15 GB. Cena po 24 mies. nie jest podana na stronie."
+   ],
+   "cena": 45,
+   "bez": 55,
+   "bez_wyliczone": true,
+   "aktywacja": 60,
+   "gb": "20 GB (online)",
+   "umowa": "24 mies.",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "ostatni_ok": "2026-11-15T09:33:52+01:00",
+   "koszt24": 1140,
+   "koszt24_bez": 1380,
+   "status": "ok",
+   "powody": []
+  },
+  {
+   "id": "tmobile",
+   "marka": "T-Mobile",
+   "siec": "T-Mobile",
+   "plan": "T-Mobile Oferta Nielimitowana (pierwszy numer, online)",
+   "url": "https://www.t-mobile.pl/abonament-komorkowy",
+   "uwagi": [
+    "Cena bez rabatów to wyliczenie (strona jej nie podaje). Aktywacja 0 zł tylko przy umowie online.",
+    "Od 25. mies. 85 zł z rabatami, potem +10 zł co rok."
+   ],
+   "cena": 75,
+   "bez": 85,
+   "bez_wyliczone": true,
+   "aktywacja": 0,
+   "gb": "bez limitu",
+   "umowa": "24 mies.",
+   "odczyt": "2026-11-15T09:33:52+01:00",
+   "ostatni_ok": "2026-11-15T09:33:52+01:00",
+   "koszt24": 1800,
+   "koszt24_bez": 2040,
+   "status": "ok",
+   "powody": []
+  }
+ ]
+}
