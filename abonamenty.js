@@ -37,7 +37,12 @@ function rysuj(){
   kw.appendChild(el('span','abkv',k==null?'brak danych':fz(k)));
   kw.appendChild(el('span','abkl','za 24 mies.'+(bez?' (bez rabatów)':'')));
   h.appendChild(kw);a.appendChild(h);
-  if(!s.ok){const w=el('div','abwarn');w.appendChild(el('b',null,'DO SPRAWDZENIA'));w.appendChild(el('span',null,' – '+s.powody.join('; ')+'.'+(o.cena!=null?' Pokazana wartość to ostatnia znana, nie potwierdzona dziś.':'')));a.appendChild(w)}
+  const pd=o.potwierdzono?o.potwierdzono.split('-').reverse().join('.'):null;
+  const dni=o.potwierdzono?Math.floor((Date.now()-Date.parse(o.potwierdzono+'T12:00:00+01:00'))/864e5):null;
+  const stara=dni!=null&&dni>7;   // >7 dni bez potwierdzenia: czerwone ostrzeżenie
+  if(!s.ok||stara){const w=el('div','abwarn'+(stara?' abold':''));w.appendChild(el('b',null,'DO SPRAWDZENIA'));
+   const wygasl=(o.powody||[]).some(x=>/wygasło/.test(x));
+   w.appendChild(el('span',null,' – '+(pd?'cena z dnia '+pd:'brak daty potwierdzenia')+(wygasl?' (ręczne potwierdzenie wygasło).':' (dziś nie udało się odczytać strony operatora).')+(stara?' Cena może być nieaktualna.':'')));a.appendChild(w)}
   const cena=bez?o.bez:o.cena;
   const rows=[
    ['Cena za miesiąc'+(bez?' (bez rabatów)':' (po rabatach)'),cena==null?'brak danych'+(bez&&o.cena!=null?' (strona nie podaje)':''):fz(cena)+(bez&&o.bez_wyliczone?' *':'')],
@@ -51,7 +56,7 @@ function rysuj(){
   if(MAPY[o.siec]){const mp=el('p','abu');const ma=el('a',null,'Sprawdź zasięg u siebie ↗');ma.href=MAPY[o.siec];ma.target='_blank';ma.rel='noopener';mp.appendChild(ma);mp.appendChild(document.createTextNode(' (mapa sieci '+o.siec+')'));a.appendChild(mp)}
   const f=el('div','abf');
   const l=el('a',null,'Oferta na stronie operatora ↗');l.href=o.url;l.target='_blank';l.rel='noopener';f.appendChild(l);
-  f.appendChild(el('small',null,o.potwierdzone_recznie?'potwierdzone ręcznie: '+dt(o.potwierdzone_recznie+'T12:00:00+01:00').split(',')[0]+' · odczyt: '+dt(o.odczyt):'odczyt: '+dt(o.odczyt)));a.appendChild(f);
+  f.appendChild(el('small',null,(o.potwierdzono_zrodlo==='reczne'&&pd?'cena potwierdzona ręcznie '+pd:(pd?'cena potwierdzona '+pd:''))+' · odczyt: '+dt(o.odczyt)));a.appendChild(f);
   box.appendChild(a);
  });
  if(bez)box.appendChild(el('p','abu','* cena bez rabatów wyliczona: cena po rabatach plus rabaty z opisu na stronie operatora (strona nie podaje jej wprost).'));

@@ -23,7 +23,9 @@
    "koszt24": 510,
    "koszt24_bez": 750,
    "status": "ok",
-   "powody": []
+   "powody": [],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "auto"
   },
   {
    "id": "plush-s",
@@ -46,7 +48,9 @@
    "koszt24": 600,
    "koszt24_bez": 840,
    "status": "ok",
-   "powody": []
+   "powody": [],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "reczne"
   },
   {
    "id": "redbull",
@@ -70,7 +74,9 @@
    "koszt24_bez": 840,
    "koszt24_bez_limitu": 1140,
    "status": "ok",
-   "powody": []
+   "powody": [],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "auto"
   },
   {
    "id": "nju-mono",
@@ -94,7 +100,9 @@
    "koszt24": 744,
    "koszt24_bez": null,
    "status": "ok",
-   "powody": []
+   "powody": [],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "auto"
   },
   {
    "id": "plus-s",
@@ -118,7 +126,9 @@
    "koszt24": 1020,
    "koszt24_bez": 1260,
    "status": "ok",
-   "powody": []
+   "powody": [],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "auto"
   },
   {
    "id": "play-s",
@@ -151,7 +161,9 @@
    "status": "do_sprawdzenia",
    "powody": [
     "nie udało się dziś odczytać strony operatora"
-   ]
+   ],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "reczne"
   },
   {
    "id": "orange-xs",
@@ -174,7 +186,9 @@
    "koszt24": 1140,
    "koszt24_bez": 1380,
    "status": "ok",
-   "powody": []
+   "powody": [],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "auto"
   },
   {
    "id": "tmobile",
@@ -198,7 +212,9 @@
    "koszt24": 1800,
    "koszt24_bez": 2040,
    "status": "ok",
-   "powody": []
+   "powody": [],
+   "potwierdzono": "2026-11-15",
+   "potwierdzono_zrodlo": "auto"
   }
  ]
 }
