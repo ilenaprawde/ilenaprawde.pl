@@ -8,7 +8,7 @@ const zl=v=>f2(v)+' zł', kwh=v=>f2(v)+' kWh';
 const yrs=m=>m<24?f1(m)+' mies.':f1(m/12)+' lat';
 const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
 const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
-const CATS=['Prąd i dom','Apteka','Auto','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet','Święta'];
+const CATS=['Prąd i dom','Apteka','Samochód','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet','Święta'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu: typ ('roznica' = ile można zyskać → zielone „−620 zł / 2 lata”; 'procent' → zielone „−77%”; 'koszt' → neutralne „96 zł / rok”), kwota (liczba), okres ('rok' | '2 lata' | 'sezon' …; zawsze widoczny), procent (opcjonalnie, liczba bez znaku), podpis pod kwotą,
 // kalkulatory bez odcinka: typ/okres wynikają z etykiety wyniku (sk), można je nadpisać polami typ/okres w KALK,
 // tytul = krótki tytuł odcinka (≤ 45 znaków) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
@@ -25,7 +25,7 @@ const ODCINKI=[
 {nr:8,id:'abonament',href:'/abonamenty/',pa:'2026-11-18T19:00:00+01:00',tytul:'Ile przepłacasz w swojej sieci? (do 660 zł)',nazwa:'Abonament: ile przepłacasz w swojej sieci',typ:'roznica',kwota:660,okres:'2 lata',procent:37,podpis:'T-Mobile → Red Bull'},
 {nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
-{nr:9,plan:true,pa:'2026-11-19T19:00:00+01:00',nazwa:'Opony: zimowe + letnie czy wielosezonowe?',cat:2},
+{nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony: dwa komplety czy całoroczne? (1670 zł)',typ:'roznica',kwota:1670,okres:'6 lat',procent:37,podpis:'całoroczne vs zimowe + letnie'},
 {nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'}
 ];
 const KALK=[
@@ -104,6 +104,19 @@ const KALK=[
  in:[{id:'sp',l:'Spalanie',v:'7',u:'l/100 km'},PALIWO,{id:'km',l:'Ile km rocznie',v:'15000',u:''}],
  f:v=>{const c=v.sp*v.pb;return{l:[['Na 1 km',zl(c/100)],['Na 100 km',zl(c)],['Miesięcznie',zl(c*v.km/100/12)]],sk:'ROCZNIE',sv:c*v.km/100}},
  w:'spalanie × cena paliwa = koszt 100 km',s:'Cena paliwa to przykład.'},
+{id:'opony',krot:'Opony: dwa komplety czy całoroczne',cat:2,t:'Opony zimowe + letnie czy całoroczne: co wychodzi taniej',k:'opony zimowe letnie całoroczne wielosezonowe wymiana opon przechowalnia felgi auto samochód',
+ i:'Dwa komplety (zimowe i letnie) czy jeden komplet całorocznych? Liczymy zakup, wymiany i przechowywanie przez wybraną liczbę lat. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze.',
+ in:[{id:'km',l:'Przebieg rocznie',v:'10000',u:'km'},{id:'l',l:'Ile lat liczymy',v:'6',u:'lat'},{id:'cz',l:'Komplet zimowych',v:'1400',u:'zł'},{id:'cl',l:'Komplet letnich',v:'1200',u:'zł'},{id:'cc',l:'Komplet całorocznych',v:'1500',u:'zł'},
+  {id:'wy',l:'Wymiana opon z wyważeniem',v:'160',u:'zł'},{id:'pr',l:'Przechowywanie za sezon (przechowalnia ok. 150 zł)',v:'0',u:'zł'},
+  {id:'ts',l:'Trwałość sezonowych',v:'40000',u:'km'},{id:'ms',l:'Sezonowe – maks. lat',v:'6',u:'lat'},{id:'tc',l:'Trwałość całorocznych',v:'35000',u:'km'},{id:'mc',l:'Całoroczne – maks. lat',v:'8',u:'lat'},
+  {id:'fe',l:'Mam drugi komplet na felgach (wymiana kół zamiast opon)',v:'0',chk:true},{id:'wk',l:'Wymiana kół (gdy drugi komplet na felgach)',v:'80',u:'zł'}],
+ pre:[['5 tys. km/rok',{km:'5000'}],['10 tys. km/rok',{km:'10000'}],['20 tys. km/rok',{km:'20000'}],['30 tys. km/rok',{km:'30000'}]],
+ f:v=>{const sez=km=>{const k=km/2,z=k>0?Math.min(v.ms,v.ts/k):v.ms;return(v.cz+v.cl)*(v.l/z)+2*v.l*(v.fe?v.wk:v.wy)+2*v.l*v.pr},
+  cal=km=>{const z=km>0?Math.min(v.mc,v.tc/km):v.mc;return v.l/z*(v.cc+v.wy)},
+  s=sez(v.km),c=cal(v.km),d=s-c;let prog=null;for(let k=1000;k<=60000;k+=100){const a=sez(k)-cal(k),b=sez(k+100)-cal(k+100);if(a*b<=0&&a!==b){prog=Math.round((k+100*a/(a-b))/100)*100;break}}
+  return{l:[['Zimowe + letnie przez '+f1(v.l)+' lat',zl(s)],['Całoroczne przez '+f1(v.l)+' lat',zl(c)],['Różnica',zl(Math.abs(d))+(Math.max(s,c)>0?' ('+f1(Math.abs(d)/Math.max(s,c)*100)+'%)':'')],['Taniej wychodzą',d>=0?'całoroczne':'dwa komplety'],['Koszty wyrównują się przy',prog?'ok. '+prog.toLocaleString('pl-PL')+' km rocznie':'brak w zakresie 1–60 tys. km']],sk:d>=0?'CAŁOROCZNE TAŃSZE O':'DWA KOMPLETY TAŃSZE O',sv:Math.abs(d)}},
+ w:'sezonowe: komplet przejeżdża przebieg ÷ 2 rocznie; lata życia = min(maks. lat, trwałość ÷ km na komplet); koszt = (zimowe + letnie) × lata ÷ lata życia + 2 × lata × wymiana + 2 × lata × przechowanie. Całoroczne: lata życia = min(maks. lat, trwałość ÷ przebieg); koszt = lata ÷ lata życia × (cena + montaż). Różnica = sezonowe − całoroczne; procent = różnica ÷ droższa × 100',
+ s:'Ceny orientacyjne z listopada 2026, opony 205/55 R16 ze średniej półki: zimowe ok. 350 zł/szt., letnie ok. 300 zł/szt., całoroczne ok. 375 zł/szt. (całoroczne 250–600 zł/szt. wg Interii). Wymiana 4 opon z wyważeniem ok. 160 zł (kb.pl 2026: 158 zł; Oponeo, winiety24: 128–216 zł). Przechowalnia średnio ok. 150 zł za sezon (kb.pl). Trwałość przykładowa. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze. To nie jest porada.'},
 {id:'lpg',krot:'Benzyna czy LPG',cat:2,t:'Benzyna czy LPG: kiedy instalacja się zwraca',k:'lpg gaz instalacja gazowa benzyna auto samochód zwrot',
  i:'Auto na gazie pali go więcej niż benzyny, ale gaz jest tańszy. Liczymy roczną oszczędność i zwrot instalacji.',
  in:[{id:'km',l:'Ile km rocznie',v:'15000',u:''},{id:'sb',l:'Spalanie benzyny',v:'7',u:'l/100 km'},PALIWO,{id:'sg',l:'Spalanie LPG',v:'8,5',u:'l/100 km'},{id:'pg',l:'Cena LPG',v:'3,10',u:'zł/l'},{id:'c',l:'Koszt instalacji',v:'3500',u:'zł'}],
