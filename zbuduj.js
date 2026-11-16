@@ -48,7 +48,7 @@ const stopka = `<div class="cta">OBSERWUJ @ILENAPRAWDE</div>
   <a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener">TikTok</a>
   <a href="https://www.youtube.com/@ilenaprawde" target="_blank" rel="noopener">YouTube</a>
  </nav>`;
-const stopka2 = `<p class="fine">Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc.html">Prywatność</a> · <a href="/regulamin.html">Regulamin</a></p>
+const stopka2 = `<p class="fine">Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc/">Prywatność</a> · <a href="/regulamin/">Regulamin</a></p>
 <p class="fine">Strona nie używa ciasteczek i nie zbiera danych osobowych. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics). Kalkulatory liczą w Twojej przeglądarce.</p>`;
 const brand = `<div class="brandbar"><a href="/">ILE NAPRAWDĘ</a><span>paragony z liczenia</span></div>`;
 
@@ -196,7 +196,7 @@ zapisz('abonament/index.html', `<!doctype html>
 
 // ---------- sitemap.xml + robots.txt ----------
 const dzis = new Date().toISOString().slice(0, 10);
-const urls = [ORIGIN + '/', ...KALK.map(c => `${ORIGIN}/kalkulatory/${c.id}/`), ORIGIN + '/abonamenty/', ORIGIN + '/prywatnosc.html', ORIGIN + '/regulamin.html'];
+const urls = [ORIGIN + '/', ...KALK.map(c => `${ORIGIN}/kalkulatory/${c.id}/`), ORIGIN + '/abonamenty/', ORIGIN + '/prywatnosc/', ORIGIN + '/regulamin/'];
 zapisz('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `<url><loc>${u}</loc><lastmod>${dzis}</lastmod></url>`).join('\n')}
