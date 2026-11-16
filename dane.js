@@ -11,21 +11,21 @@ const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
 const CATS=['Prąd i dom','Apteka','Samochód','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet','Święta','Zakupy'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu: typ ('roznica' = ile można zyskać → zielone „−620 zł / 2 lata”; 'procent' → zielone „−77%”; 'koszt' → neutralne „96 zł / rok”), kwota (liczba), okres ('rok' | '2 lata' | 'sezon' …; zawsze widoczny), procent (opcjonalnie, liczba bez znaku), podpis pod kwotą,
 // kalkulatory bez odcinka: typ/okres wynikają z etykiety wyniku (sk), można je nadpisać polami typ/okres w KALK,
-// tytul = krótki tytuł odcinka (≤ 45 znaków) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
+// tytul = krótki tytuł odcinka (zalecane ≤70 znaków, hasło w pierwszych słowach) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
 // zapowiedź bez kalkulatora: {nr,plan:true,pa,nazwa,cat} – karta „wkrótce – DD.MM” bez linku (po powstaniu kalkulatora zamień na zwykły wpis z id);
 // opcjonalnie: href (inny cel niż kalkulator, np. '/abonamenty/'), nazwa (inna niż krot kalkulatora) i params (wartości pól w linku, np. {m:'26,59',z:'13,79'}) – /nr otwiera kalkulator z tymi wartościami.
 const ODCINKI=[
-{nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',tytul:'Czerwona dioda w TV zjada pieniądze? (96 zł)',typ:'koszt',kwota:4.82,okres:'rok',podpis:'starszy sprzęt nawet 96 zł'},
+{nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',tytul:'Tryb czuwania TV: ile zjada czerwona dioda? (96 zł)',typ:'koszt',kwota:4.82,okres:'rok',podpis:'starszy sprzęt nawet 96 zł'},
 {nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',tytul:'Pełny czajnik na jeden kubek? (211 zł)',typ:'roznica',kwota:211,okres:'rok',podpis:'rocznie w parę'},
 {nr:3,id:'zamiennik',yt:'aHd9EIZBv8s',pa:'2026-11-13T19:00:00+01:00',tytul:'Ibuprofen: ile płacisz za markę? (−77%)',nazwa:'Zamiennik: ibuprofen',typ:'procent',procent:77,podpis:'ten sam ibuprofen'},
 {nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',tytul:'Krople do nosa: ile płacisz za markę? (−48%)',nazwa:'Zamiennik: krople do nosa',typ:'procent',procent:48,podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
-{nr:5,id:'telefon',yt:'M6WJQECgtIg',pa:'2026-11-15T19:00:00+01:00',tytul:'Ładowanie telefonu: ile kosztuje? (9,66 zł)',typ:'koszt',kwota:9.66,okres:'rok',podpis:'za cały rok'},
-{nr:6,id:'lpg',pa:'2026-11-16T19:00:00+01:00',tytul:'Benzyna czy gaz: ile oszczędzasz? (2 558 zł)',typ:'roznica',kwota:2558,okres:'rok',procent:39,podpis:'rocznie w kieszeni'},
-{nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Czym najtaniej ogrzać dom? (3 427 zł)',typ:'roznica',kwota:3427,okres:'rok',procent:47,podpis:'różnicy rocznie'},
-{nr:8,id:'abonament',href:'/abonamenty/',pa:'2026-11-18T19:00:00+01:00',tytul:'Ile przepłacasz w swojej sieci? (do 660 zł)',nazwa:'Abonament: ile przepłacasz w swojej sieci',typ:'roznica',kwota:660,okres:'2 lata',procent:37,podpis:'T-Mobile → Red Bull'},
-{nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
+{nr:5,id:'telefon',yt:'M6WJQECgtIg',pa:'2026-11-15T19:00:00+01:00',tytul:'Ładowanie telefonu przez rok: 9,66 zł',typ:'koszt',kwota:9.66,okres:'rok',podpis:'za cały rok'},
+{nr:6,id:'lpg',pa:'2026-11-16T19:00:00+01:00',tytul:'LPG czy benzyna: ile oszczędzasz? (2 558 zł)',typ:'roznica',kwota:2558,okres:'rok',procent:39,podpis:'rocznie w kieszeni'},
+{nr:7,id:'ogrzewanie',pa:'2026-11-17T19:00:00+01:00',tytul:'Ogrzewanie domu: co najtaniej? (3 427 zł)',typ:'roznica',kwota:3427,okres:'rok',procent:47,podpis:'różnicy rocznie'},
+{nr:8,id:'abonament',href:'/abonamenty/',pa:'2026-11-18T19:00:00+01:00',tytul:'Play, Orange, T-Mobile, Plus: ile przepłacasz? (do 660 zł)',nazwa:'Abonament: ile przepłacasz w swojej sieci',typ:'roznica',kwota:660,okres:'2 lata',procent:37,podpis:'T-Mobile → Red Bull'},
+{nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki choinkowe całą dobę: ile kosztują? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
-{nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony: dwa komplety czy całoroczne? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
+{nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony całoroczne czy sezonowe: co taniej? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
 {nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
 {nr:13,id:'obnizka',pa:'2026-11-23T19:00:00+01:00',tytul:'Black Friday: prawdziwy rabat z najniższej ceny z 30 dni',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
 {nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',tytul:'Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'}
