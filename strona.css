@@ -47,7 +47,7 @@ h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;tex
 .rp{background:var(--paper);padding:24px 16px 28px;clip-path:polygon(0.00% 0px,2.50% 6px,5.00% 0px,7.50% 6px,10.00% 0px,12.50% 6px,15.00% 0px,17.50% 6px,20.00% 0px,22.50% 6px,25.00% 0px,27.50% 6px,30.00% 0px,32.50% 6px,35.00% 0px,37.50% 6px,40.00% 0px,42.50% 6px,45.00% 0px,47.50% 6px,50.00% 0px,52.50% 6px,55.00% 0px,57.50% 6px,60.00% 0px,62.50% 6px,65.00% 0px,67.50% 6px,70.00% 0px,72.50% 6px,75.00% 0px,77.50% 6px,80.00% 0px,82.50% 6px,85.00% 0px,87.50% 6px,90.00% 0px,92.50% 6px,95.00% 0px,97.50% 6px,100.00% 0px,100.00% calc(100% - 6px),97.50% calc(100% - 0px),95.00% calc(100% - 6px),92.50% calc(100% - 0px),90.00% calc(100% - 6px),87.50% calc(100% - 0px),85.00% calc(100% - 6px),82.50% calc(100% - 0px),80.00% calc(100% - 6px),77.50% calc(100% - 0px),75.00% calc(100% - 6px),72.50% calc(100% - 0px),70.00% calc(100% - 6px),67.50% calc(100% - 0px),65.00% calc(100% - 6px),62.50% calc(100% - 0px),60.00% calc(100% - 6px),57.50% calc(100% - 0px),55.00% calc(100% - 6px),52.50% calc(100% - 0px),50.00% calc(100% - 6px),47.50% calc(100% - 0px),45.00% calc(100% - 6px),42.50% calc(100% - 0px),40.00% calc(100% - 6px),37.50% calc(100% - 0px),35.00% calc(100% - 6px),32.50% calc(100% - 0px),30.00% calc(100% - 6px),27.50% calc(100% - 0px),25.00% calc(100% - 6px),22.50% calc(100% - 0px),20.00% calc(100% - 6px),17.50% calc(100% - 0px),15.00% calc(100% - 6px),12.50% calc(100% - 0px),10.00% calc(100% - 6px),7.50% calc(100% - 0px),5.00% calc(100% - 6px),2.50% calc(100% - 0px),0.00% calc(100% - 6px))}
 .rp h2.sec{margin-bottom:10px}
 .row{display:flex;gap:6px;align-items:baseline;font-size:14px;padding:7px 0;color:var(--ink);text-decoration:none}
-.row i{font-style:normal;color:var(--mut);min-width:30px}
+.row i{font-style:normal;color:var(--mut);flex:none;width:46px;white-space:nowrap}   /* szerokość stała (mieści „#14”+ikonkę) – tytuł zawsze zaczyna się w tej samej kolumnie, ikonka nigdy nie „ucieka” na 2. wiersz przy zawijaniu tytułu */
 .row .t{min-width:0}
 .row .f{flex:1;border-bottom:2px dotted var(--rule);transform:translateY(-3px);min-width:12px}
 .row b{font-weight:700;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;align-items:flex-end;flex:none}
@@ -100,7 +100,7 @@ h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;tex
 .tagrow{display:flex;justify-content:space-between;align-items:center;gap:6px}
 .play{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;flex:none;font-size:8px;line-height:1;color:var(--red);border:1.5px solid var(--red);border-radius:50%;background:var(--paper);cursor:pointer;padding-left:1px;vertical-align:-3px;margin-left:3px}
 .play:hover,.play:focus-visible{background:var(--hl)}
-.row i .play,.tag .play{margin-left:4px}
+.tag .play{margin-left:4px}
 #filmy{margin-top:16px;display:grid;gap:10px}
 .film{display:flex;align-items:center;gap:12px;border:2px solid var(--ink);background:var(--paper);padding:8px;color:var(--ink);text-decoration:none;font-weight:700;font-size:13px;letter-spacing:.5px}
 .film img{display:block;width:60px;height:auto;flex:none;border:1px solid var(--rule)}

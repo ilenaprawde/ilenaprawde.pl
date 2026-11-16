@@ -16,7 +16,7 @@ const CATS=['Prąd i dom','Apteka','Samochód','Praca i pensja','Pieniądze','Mi
 // opcjonalnie: href (inny cel niż kalkulator, np. '/abonamenty/'), nazwa (inna niż krot kalkulatora) i params (wartości pól w linku, np. {m:'26,59',z:'13,79'}) – /nr otwiera kalkulator z tymi wartościami.
 const ODCINKI=[
 {nr:1,id:'czuwanie',yt:'uru9NgthJB4',pa:'2026-11-11T12:00:00+01:00',nazwa:'Tryb czuwania TV: ile zjada czerwona dioda?',tytul:'Tryb czuwania TV: ile zjada czerwona dioda? (96 zł)',typ:'koszt',kwota:4.82,okres:'rok',podpis:'starszy sprzęt nawet 96 zł'},
-{nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',tytul:'Pełny czajnik na jeden kubek? (211 zł)',typ:'roznica',kwota:211,okres:'rok',podpis:'rocznie w parę'},
+{nr:2,id:'czajnik',yt:'Jy7j-4YCH3s',pa:'2026-11-12T19:00:00+01:00',nazwa:'Pełny czajnik na jedną herbatę: ile przepłacasz?',tytul:'Pełny czajnik na jedną herbatę: ile przepłacasz?',typ:'roznica',kwota:211,okres:'rok',podpis:'rocznie w parę'},
 {nr:3,id:'zamiennik',yt:'aHd9EIZBv8s',pa:'2026-11-13T19:00:00+01:00',tytul:'Ibuprofen: ile płacisz za markę? (−77%)',nazwa:'Zamiennik: ibuprofen',typ:'procent',procent:77,podpis:'ten sam ibuprofen'},
 {nr:4,id:'zamiennik',yt:'FDqv7ivoM6A',pa:'2026-11-14T19:00:00+01:00',tytul:'Krople do nosa: ile płacisz za markę? (−48%)',nazwa:'Zamiennik: krople do nosa',typ:'procent',procent:48,podpis:'ta sama substancja',params:{m:'26,59',z:'13,79',n:'2'}},
 {nr:5,id:'telefon',yt:'M6WJQECgtIg',pa:'2026-11-15T19:00:00+01:00',nazwa:'Ładowanie telefonu przez rok',tytul:'Ładowanie telefonu przez rok: 9,66 zł',typ:'koszt',kwota:9.66,okres:'rok',podpis:'za cały rok'},
