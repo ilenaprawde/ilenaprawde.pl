@@ -27,7 +27,8 @@ const ODCINKI=[
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
 {nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony: dwa komplety czy całoroczne? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
 {nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
-{nr:13,id:'obnizka',pa:'2026-11-23T19:00:00+01:00',tytul:'−50% na Black Friday? Prawdziwy rabat (−5%)',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'}
+{nr:13,id:'obnizka',pa:'2026-11-23T19:00:00+01:00',tytul:'−50% na Black Friday? Prawdziwy rabat (−5%)',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
+{nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',tytul:'Kup teraz, zapłać później: ile kosztuje? (640 zł)',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -113,6 +114,23 @@ const KALK=[
   return{l,sk:'PRAWDZIWY RABAT'+za,sv:d2*n,svt:rab(d2,v.pn),kol:'green',pod:UO}},
  w:'reklamowany rabat = (cena przed − cena promocyjna) ÷ cena przed × 100; prawdziwy rabat = (najniższa z 30 dni − cena promocyjna) ÷ najniższa z 30 dni × 100; kwoty rabatu × liczba sztuk',
  s:'Przykłady z Black Friday 2025 ze sklepów internetowych: obudowa komputera 369 → 189 zł (najniższa z 30 dni 199 zł), telewizor 4799 → 3999 zł (najniższa z 30 dni 4499 zł). Od 1.01.2023 przy obniżce sklep musi podać najniższą cenę z 30 dni przed obniżką (dyrektywa Omnibus, UOKiK). To nie jest porada.'},
+{id:'bnpl',krot:'Kup teraz, zapłać później',cat:8,nr:14,t:'Kup teraz, zapłać później (BNPL): ile kosztuje spóźnienie i raty',k:'bnpl kup teraz zapłać później allegro pay paypo blik płacę później pko odroczona płatność raty odsetki spóźnienie bik rrso zakupy',
+ i:'Płatność odroczona (np. Allegro Pay, PayPo, BLIK Płacę Później) spłacona w 30 dni zwykle nic nie kosztuje. Policz, ile kosztuje spóźnienie, a ile rozłożenie na raty.',
+ in:[{id:'tr',l:'Co liczymy',v:'0',opt:[['Spóźnienie',0],['Raty',1]]},
+  {id:'kw',l:'Kwota do spłaty',v:'1000',u:'zł',gdy:'tr=0'},{id:'dn',l:'Dni spóźnienia',v:'14',u:'dni',gdy:'tr=0'},
+  {id:'st',l:'Stawka odsetek za opóźnienie',v:'0',opt:[['maksymalne 18,5%',0],['ustawowe 9,25% (np. PKO Płacę później)',1],['własna %',2]],gdy:'tr=0'},
+  {id:'sw',l:'Własna stawka',v:'18,5',u:'% rocznie',gdy:'tr=0&st=2'},
+  {id:'pc',l:'Cena zakupu',v:'2259',u:'zł',gdy:'tr=1'},
+  {id:'ck',l:'Całkowita kwota do zapłaty',v:'2899,52',u:'zł',gdy:'tr=1',h:'Całkowitą kwotę do zapłaty znajdziesz w formularzu informacyjnym przed potwierdzeniem rat.'},
+  {id:'lr',l:'Liczba rat',v:'30',u:'',gdy:'tr=1'}],
+ pre:[['Wstaw przykład: 732 zł, 5 rat (RRSO 25,09%)',{tr:'1',pc:'732',ck:'787,63',lr:'5'}],['Wstaw przykład: 2259 zł, 30 rat (RRSO 20,88%)',{tr:'1',pc:'2259',ck:'2899,52',lr:'30'}],['Wstaw przykład: Smart! 2 raty 0%',{tr:'1',pc:'583',ck:'583',lr:'2'}]],
+ f:v=>{if(!v.tr){const s=[18.5,9.25,v.sw][v.st]??18.5,o=v.kw*s/100*v.dn/365;
+   return{l:[['Stawka',s.toLocaleString('pl-PL',{maximumFractionDigits:2})+'% rocznie'],['Na dzień spóźnienia',zl(v.kw*s/100/365)],['Za '+f1(v.dn)+' dni',zl(o)]],sk:'ODSETKI ZA SPÓŹNIENIE',sv:o,svt:'ok. '+zl(o),podKol:'red',pod:'Uwaga: opóźnienie w płatności odroczonej może trafić do BIK i obniżyć ocenę kredytową.'}}
+  if(v.ck<v.pc)return{l:[],sk:'SPRAWDŹ KWOTY',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Całkowita kwota do zapłaty nie może być niższa niż cena zakupu.'};
+  const k=v.ck-v.pc,r=v.lr>0?v.ck/v.lr:NaN;
+  return{l:[['Cena zakupu',zl(v.pc)],['Razem do zapłaty',zl(v.ck)],['Koszt rat (% ceny)',v.pc>0?f1(k/v.pc*100)+'%':'–'],['Rata ok.',Number.isFinite(r)?zl(r):'–']],sk:'KOSZT RAT',sv:k,svt:(k>0?'+':'')+zl(k),kol:k>0?'red':'green'}},
+ w:'spóźnienie: kwota × stawka roczna × dni ÷ 365; raty: koszt = całkowita kwota do zapłaty − cena zakupu; procent = koszt ÷ cena × 100; rata ≈ całkowita kwota ÷ liczba rat',
+ s:'Stawki z listopada 2026: odsetki maks. za opóźnienie 18,5% (2 × odsetki ustawowe za opóźnienie, art. 481 §2¹ KC), ustawowe 9,25% (stopa referencyjna NBP 3,75% + 5,5 pkt proc., M.P. 2026 poz. 367); przykłady reprezentatywne Allegro Pay z 14.07.2026 (FAQ Allegro Pay). Rata to średnia – w harmonogramie ostatnia może się różnić o grosze. To nie jest porada.'},
 {id:'dojazd',krot:'Dojazd autem',cat:2,t:'Dojazd autem: ile kosztuje paliwo na trasie',k:'auto samochód dojazd trasa praca przedszkole szkoła paliwo benzyna km',
  i:'Koszt samego paliwa na stałej trasie, np. do pracy albo przedszkola. Bez serwisu, opon i ubezpieczenia.',
  in:[{id:'km',l:'Długość jednego przejazdu',v:'5',u:'km'},{id:'k',l:'Przejazdów dziennie',v:'4',u:''},{id:'dn',l:'Dni w miesiącu',v:'22',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO],

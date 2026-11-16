@@ -19,7 +19,7 @@ const fk=v=>{const x=Number.isInteger(v)?String(v):v.toFixed(2).replace('.',',')
 const wynik=o=>{const t=o.typ||'koszt',per=o.okres?'/ '+o.okres:'',pr=o.procent!=null&&t!=='procent'?MIN+(Number.isInteger(o.procent)?o.procent:String(o.procent).replace('.',','))+'%':'';
  if(t==='procent')return{am:MIN+String(o.procent).replace('.',',')+'%',per:'',pr:'',kol:'green'};
  if(t==='roznica')return{am:MIN+fk(o.kwota),per,pr,kol:'green'};
- return{am:fk(o.kwota),per,pr:'',kol:'ink'}};
+ return{am:(o.znak||'')+fk(o.kwota),per,pr:'',kol:o.znak==='+'?'red':'ink'}};
 const okresSk=sk=>/SEZON/.test(sk)?'sezon':'rok';
 const typSk=sk=>/OSZCZĘD/.test(sk)?'roznica':'koszt';
 const defaults=c=>{const v={};c.in.forEach(x=>v[x.id]=num(x.v));return v};
@@ -84,10 +84,10 @@ function kalk(c){
   const w=el('div','fw');const inp=document.createElement('input');inp.id=id;
   if(x.chk){inp.type='checkbox';inp.checked=(P.has(x.id)?P.get(x.id):x.v)==='1';inp.addEventListener('change',()=>{if(c.zmiana)c.zmiana(x.id,ustaw);run()});d.classList.add('fchk')}else{inp.setAttribute('inputmode','decimal');inp.autocomplete='off';inp.value=P.has(x.id)?P.get(x.id):x.v;inp.addEventListener('input',run)}w.appendChild(inp);if(x.u)w.appendChild(el('span',null,x.u));d.appendChild(w);if(x.h)d.appendChild(el('p','small fh',x.h));box.appendChild(d)});
  if(c.pre){const ch=el('div','kchips');ch.setAttribute('aria-label','Przykładowe wartości');
-  c.pre.forEach(([lab,set])=>{const b=el('button','chip',lab);b.type='button';b.onclick=()=>{Object.entries(set).forEach(([k,v])=>{$('f_'+k).value=v});run()};ch.appendChild(b)});
+  c.pre.forEach(([lab,set])=>{const b=el('button','chip',lab);b.type='button';b.onclick=()=>{Object.entries(set).forEach(([k,v])=>{const e=$('f_'+k);e.value=v;const g=e.closest('.fopt');if(g)g.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',String(z.dataset.v===String(v))))});run()};ch.appendChild(b)});
   box.insertBefore(ch,box.children[0])}
  function ustaw(id,val){const e=$('f_'+id);if(e)e.value=val}
- function widoczne(x,v){if(!x.gdy)return true;const [k,w]=x.gdy.split('=');return w===undefined?!!v[k]:String(v[k])===w}
+ function widoczne(x,v){if(!x.gdy)return true;return x.gdy.split('&').every(g=>{const [k,w]=g.split('=');return w===undefined?!!v[k]:String(v[k])===w})}   // 'a=1&b=2' = oba warunki
  function wartosci(){const v={};let bad=false;c.in.forEach(x=>{const e=$('f_'+x.id);v[x.id]=x.chk?(e.checked?1:0):num(e.value)});
   c.in.forEach(x=>{const wid=widoczne(x,v),d=$('f_'+x.id).closest('.f');if(d)d.hidden=!wid;if(!wid)v[x.id]=num(x.v);else if(!(v[x.id]>=0))bad=true});return{v,bad}}  // ukryte pola: nie liczą się (wartość domyślna)
  function run(){const {v,bad}=wartosci();$('cerr').hidden=!bad;if(bad)return;
