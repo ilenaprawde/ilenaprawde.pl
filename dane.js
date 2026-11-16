@@ -8,7 +8,7 @@ const zl=v=>f2(v)+' zł', kwh=v=>f2(v)+' kWh';
 const yrs=m=>m<24?f1(m)+' mies.':f1(m/12)+' lat';
 const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
 const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
-const CATS=['Prąd i dom','Apteka','Samochód','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet','Święta'];
+const CATS=['Prąd i dom','Apteka','Samochód','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet','Święta','Zakupy'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu: typ ('roznica' = ile można zyskać → zielone „−620 zł / 2 lata”; 'procent' → zielone „−77%”; 'koszt' → neutralne „96 zł / rok”), kwota (liczba), okres ('rok' | '2 lata' | 'sezon' …; zawsze widoczny), procent (opcjonalnie, liczba bez znaku), podpis pod kwotą,
 // kalkulatory bez odcinka: typ/okres wynikają z etykiety wyniku (sk), można je nadpisać polami typ/okres w KALK,
 // tytul = krótki tytuł odcinka (≤ 45 znaków) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
@@ -26,7 +26,8 @@ const ODCINKI=[
 {nr:10,id:'lampki',pa:'2026-11-20T19:00:00+01:00',tytul:'Lampki całą dobę: ile to kosztuje? (27 zł)',typ:'roznica',kwota:20.30,okres:'sezon',procent:75,podpis:'dom, całą dobę, sezon',params:{w:'27,7',n:'1',h:'24',d:'37'}},
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
 {nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony: dwa komplety czy całoroczne? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
-{nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'}
+{nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
+{nr:13,id:'obnizka',pa:'2026-11-23T19:00:00+01:00',tytul:'−50% na Black Friday? Prawdziwy rabat (−5%)',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -96,6 +97,22 @@ const KALK=[
  f:v=>{const zy=v.z*v.l,d=zy-v.s,ob=v.z>0?Math.ceil(v.s/v.z-1e-9):NaN,sz=Number.isFinite(ob)?ob+(ob===1?' sezonie':' sezonach'):'–';
   return{l:[['Żywa przez '+f1(v.l)+' lat',zl(zy)],['Sztuczna (raz)',zl(v.s)],['Różnica',zl(Math.abs(d))+(zy>0||v.s>0?' ('+f1(Math.abs(d)/Math.max(zy,v.s)*100)+'%)':'')],['Sztuczna zwraca się po',sz]],sk:d>=0?'SZTUCZNA TAŃSZA O':'ŻYWA TAŃSZA O',sv:Math.abs(d)}},
  w:'żywa = cena × lata; sztuczna = cena jednorazowa; różnica = żywa − sztuczna; procent = różnica ÷ droższa × 100; zwrot po = cena sztucznej ÷ cena żywej (zaokrąglone w górę, w sezonach)',s:'Ceny z grudnia 2025 (ostatni sezon, przykładowe): żywa jodła kaukaska od 70 zł, dobrej klasy ok. 130 zł (Radio Kielce, Castorama), sztuczna 180 cm ok. 260 zł (sklep internetowy). Można też wypożyczyć jodłę w donicy: Castorama 75 zł za 2 tygodnie. Liczymy tylko pieniądze (bez ekologii i zapachu). To nie jest porada.'},
+{id:'obnizka',krot:'Prawdziwy rabat',cat:8,nr:13,t:'Prawdziwy rabat: ile naprawdę obniżono cenę',k:'black friday cyber monday promocja rabat obniżka wyprzedaż omnibus najniższa cena 30 dni zakupy sklep okazja',
+ i:'Przy obniżce sklep musi podać najniższą cenę z 30 dni przed obniżką. Wpisz trzy ceny i porównaj reklamowany rabat z prawdziwym.',
+ in:[{id:'pp',l:'Cena promocyjna',v:'189',u:'zł'},{id:'pr',l:'Cena „przed promocją” (przekreślona)',v:'369',u:'zł'},
+  {id:'pn',l:'Najniższa cena z 30 dni przed obniżką',v:'199',u:'zł',h:'Szukaj napisu „najniższa cena z 30 dni przed obniżką” przy produkcie – sklep musi go podać.'},
+  {id:'sz',l:'Kupuję kilka sztuk',v:'0',chk:true},{id:'n',l:'Liczba sztuk',v:'1',u:'szt.',gdy:'sz'}],
+ pre:[['obudowa PC · 369 → 189 zł',{pp:'189',pr:'369',pn:'199'}],['telewizor · 4799 → 3999 zł',{pp:'3999',pr:'4799',pn:'4499'}]],
+ f:v=>{const n=v.sz?v.n:1,zk=x=>(Math.round(x*100)/100).toLocaleString('pl-PL',{maximumFractionDigits:2})+' zł',
+   rab=(d,b)=>(d>0?'−':d<0?'+':'')+f1(Math.abs(d)/b*100)+'% ('+(d>0?'−':d<0?'+':'')+zk(Math.abs(d)*n)+')',
+   d1=v.pr-v.pp,d2=v.pn-v.pp,za=n>1?' (za '+f1(n)+' szt.)':'',UO='Od 2023 r. rabat powinien być liczony od najniższej ceny z 30 dni (UOKiK).';
+  if(!(v.pr>0&&v.pn>0))return{l:[],sk:'PRAWDZIWY RABAT',sv:0,svt:'–',pod:UO};
+  if(v.pn>v.pr)return{l:[],sk:'SPRAWDŹ CENY',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Sprawdź ceny – najniższa z 30 dni nie może być wyższa niż cena przed promocją.'};
+  const l=[['Reklamowany rabat'+za,rab(d1,v.pr)],['Prawdziwy rabat'+za,rab(d2,v.pn)]];
+  if(d2<=0)return{l,sk:'PRAWDZIWY RABAT'+za,sv:0,svt:d2<0?rab(d2,v.pn):'0%',kol:'red',podKol:'red',pod:d2<0?'To nie jest obniżka: w ostatnich 30 dniach było taniej o '+zk(-d2*n)+'.':'To nie jest obniżka: w ostatnich 30 dniach cena była taka sama.'};
+  return{l,sk:'PRAWDZIWY RABAT'+za,sv:d2*n,svt:rab(d2,v.pn),kol:'green',pod:UO}},
+ w:'reklamowany rabat = (cena przed − cena promocyjna) ÷ cena przed × 100; prawdziwy rabat = (najniższa z 30 dni − cena promocyjna) ÷ najniższa z 30 dni × 100; kwoty rabatu × liczba sztuk',
+ s:'Przykłady z Black Friday 2025 ze sklepów internetowych: obudowa komputera 369 → 189 zł (najniższa z 30 dni 199 zł), telewizor 4799 → 3999 zł (najniższa z 30 dni 4499 zł). Od 1.01.2023 przy obniżce sklep musi podać najniższą cenę z 30 dni przed obniżką (dyrektywa Omnibus, UOKiK). To nie jest porada.'},
 {id:'dojazd',krot:'Dojazd autem',cat:2,t:'Dojazd autem: ile kosztuje paliwo na trasie',k:'auto samochód dojazd trasa praca przedszkole szkoła paliwo benzyna km',
  i:'Koszt samego paliwa na stałej trasie, np. do pracy albo przedszkola. Bez serwisu, opon i ubezpieczenia.',
  in:[{id:'km',l:'Długość jednego przejazdu',v:'5',u:'km'},{id:'k',l:'Przejazdów dziennie',v:'4',u:''},{id:'dn',l:'Dni w miesiącu',v:'22',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO],
