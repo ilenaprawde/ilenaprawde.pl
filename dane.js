@@ -27,8 +27,8 @@ const ODCINKI=[
 {nr:12,id:'airfryer',pa:'2026-11-22T19:00:00+01:00',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
 {nr:9,id:'opony',pa:'2026-11-19T19:00:00+01:00',tytul:'Opony: dwa komplety czy całoroczne? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
 {nr:11,id:'choinka',pa:'2026-11-21T19:00:00+01:00',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
-{nr:13,id:'obnizka',pa:'2026-11-23T19:00:00+01:00',tytul:'−50% na Black Friday? Prawdziwy rabat (−5%)',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
-{nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',tytul:'Kup teraz, zapłać później: ile kosztuje? (640 zł)',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'}
+{nr:13,id:'obnizka',pa:'2026-11-23T19:00:00+01:00',tytul:'Black Friday: prawdziwy rabat z najniższej ceny z 30 dni',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
+{nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',tytul:'Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
