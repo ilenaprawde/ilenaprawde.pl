@@ -101,7 +101,7 @@ function kalk(c){
   c.in.forEach(x=>{const wid=widoczne(x,v),d=$('f_'+x.id).closest('.f');if(d)d.hidden=!wid;if(!wid)v[x.id]=num(x.v);else if(!(v[x.id]>=0))bad=true});return{v,bad}}  // ukryte pola: nie liczą się (wartość domyślna)
  function run(){const {v,bad}=wartosci();$('cerr').hidden=!bad;if(bad)return;
   const r=c.f(v);const cl=$('cl');cl.innerHTML='';
-  r.l.forEach(([a,b])=>{const d=el('div','line');d.appendChild(el('span','l',a));d.appendChild(el('span','fill'));d.appendChild(el('span','r',b));cl.appendChild(d)});
+  r.l.forEach(([a,b,m])=>{const d=el('div','line');d.appendChild(el('span','l',a));d.appendChild(el('span','fill'));const rr=el('span','r',b);if(m)rr.appendChild(el('small','sub',m));d.appendChild(rr);cl.appendChild(d)});
   $('sk').textContent=r.sk;const sv=$('sv');sv.textContent=r.svt||zl(r.sv);
   let pod=$('spod');if(r.pod){if(!pod){pod=el('p','small spod');pod.id='spod';sv.closest('.sum').after(pod)}pod.textContent=r.pod;pod.style.color=r.podKol==='red'?'var(--red)':'';pod.style.fontWeight=r.podKol==='red'?'700':''}else if(pod)pod.remove();
   sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)'}

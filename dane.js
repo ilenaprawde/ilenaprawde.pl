@@ -4,6 +4,7 @@
 const num=s=>{const v=parseFloat(String(s).replace(/\s/g,'').replace(',','.'));return Number.isFinite(v)?v:NaN};
 const f2=v=>v.toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2});
 const f1=v=>v.toLocaleString('pl-PL',{maximumFractionDigits:1});
+const lat=n=>{const i=Math.round(n);return i!==n?f1(n)+' lat':i===1?'1 rok':(i%10>=2&&i%10<=4&&(i%100<12||i%100>14))?i+' lata':i+' lat'};   // okres w etykiecie: „1 rok / 2 lata / 5 lat”
 const zl=v=>f2(v)+' zł', kwh=v=>f2(v)+' kWh';
 const yrs=m=>m<24?f1(m)+' mies.':f1(m/12)+' lat';
 const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
@@ -83,8 +84,8 @@ const KALK=[
  i:'Ile prądu zużyją lampki w całym sezonie, np. od 1 grudnia do 6 stycznia (37 dni)? Wpisz moc kompletu (z opisu produktu), godziny świecenia dziennie i cenę prądu.',
  in:[{id:'w',l:'Moc jednego kompletu',v:'27,7',u:'W'},{id:'n',l:'Liczba kompletów',v:'1',u:''},{id:'h',l:'Godziny świecenia dziennie',v:'24',u:'h'},{id:'d',l:'Liczba dni sezonu',v:'37',u:''},PRAD],
  pre:[['LED 100 diod · 6 W',{w:'6'}],['kurtyna 500 LED · 21,7 W',{w:'21,7'}],['stare żarówki 16 × 3 W · 48 W',{w:'48'}]],
- f:v=>{const kw=v.w*v.n/1000,e=kw*v.h*v.d,c=e*v.p,max=kw*24*v.d*v.p,r=[['Zużycie w sezonie',kwh(e)]],x=v.h<24?v.h:6,cx=kw*x*v.d*v.p,df=Math.round(max*100)/100-Math.round(cx*100)/100;
-  r.push(['Gdyby świeciły całą dobę',zl(max)],['Tylko '+f1(x)+' h dziennie'+(v.h<24?'':' (przykład)'),zl(cx)],['Różnica',zl(df)+(max>0?' ('+f1(df/max*100)+'%)':'')]);
+ f:v=>{const kw=v.w*v.n/1000,e=kw*v.h*v.d,c=e*v.p,max=kw*24*v.d*v.p,r=[['Zużycie w sezonie ('+f1(v.d)+' dni)',kwh(e)]],x=v.h<24?v.h:6,cx=kw*x*v.d*v.p,df=Math.round(max*100)/100-Math.round(cx*100)/100;
+  r.push(['Całą dobę – koszt za sezon',zl(max),'≈ '+zl(kw*24*v.p)+' dziennie'],['Tylko '+f1(x)+' h dziennie – koszt za sezon'+(v.h<24?'':' (przykład)'),zl(cx)],['Różnica za sezon',zl(df)+(max>0?' ('+f1(df/max*100)+'%)':'')]);
   return{l:r,sk:'KOSZT/SEZON',sv:c}},
  w:'moc (kW) × liczba kompletów × godziny dziennie × dni × cena prądu; różnica = koszt całą dobę − koszt przy podanych godzinach',s:'Moc wg opisów produktów: LED 100 diod 6 W (MediaMarkt), kurtyna 500 LED 21,7 W i 16 żarówek × 3 W (Murator Dom). Cena prądu 1,10 zł/kWh to przykład. Zużycie zależy od konkretnych lampek. To nie jest porada.'},
 {id:'airfryer',krot:'Airfryer czy piekarnik',cat:0,nr:12,t:'Airfryer czy piekarnik: co zjada mniej prądu',k:'airfryer frytkownica beztłuszczowa piekarnik kuchnia gotowanie porcja prąd kurczak',
@@ -97,7 +98,7 @@ const KALK=[
  in:[{id:'z',l:'Cena żywej choinki (co roku)',v:'130',u:'zł'},{id:'s',l:'Cena sztucznej choinki',v:'260',u:'zł'},{id:'l',l:'Ile lat posłuży sztuczna',v:'10',u:'lat'}],
  pre:[['żywa tania · 80 zł',{z:'80'}],['żywa dobra · 130 zł',{z:'130'}],['żywa premium · 200 zł',{z:'200'}]],
  f:v=>{const zy=v.z*v.l,d=zy-v.s,ob=v.z>0?Math.ceil(v.s/v.z-1e-9):NaN,sz=Number.isFinite(ob)?ob+(ob===1?' sezonie':' sezonach'):'–';
-  return{l:[['Żywa przez '+f1(v.l)+' lat',zl(zy)],['Sztuczna (raz)',zl(v.s)],['Różnica',zl(Math.abs(d))+(zy>0||v.s>0?' ('+f1(Math.abs(d)/Math.max(zy,v.s)*100)+'%)':'')],['Sztuczna zwraca się po',sz]],sk:d>=0?'SZTUCZNA TAŃSZA O':'ŻYWA TAŃSZA O',sv:Math.abs(d)}},
+  return{l:[['Żywa przez '+f1(v.l)+' lat',zl(zy)],['Sztuczna (raz)',zl(v.s)],['Różnica za '+lat(v.l),zl(Math.abs(d))+(zy>0||v.s>0?' ('+f1(Math.abs(d)/Math.max(zy,v.s)*100)+'%)':'')],['Sztuczna zwraca się po',sz]],sk:(d>=0?'SZTUCZNA TAŃSZA O':'ŻYWA TAŃSZA O')+' ('+lat(v.l).toUpperCase()+')',sv:Math.abs(d)}},
  w:'żywa = cena × lata; sztuczna = cena jednorazowa; różnica = żywa − sztuczna; procent = różnica ÷ droższa × 100; zwrot po = cena sztucznej ÷ cena żywej (zaokrąglone w górę, w sezonach)',s:'Ceny z grudnia 2025 (ostatni sezon, przykładowe): żywa jodła kaukaska od 70 zł, dobrej klasy ok. 130 zł (Radio Kielce, Castorama), sztuczna 180 cm ok. 260 zł (sklep internetowy). Można też wypożyczyć jodłę w donicy: Castorama 75 zł za 2 tygodnie. Liczymy tylko pieniądze (bez ekologii i zapachu). To nie jest porada.'},
 {id:'obnizka',krot:'Prawdziwy rabat',cat:8,nr:13,t:'Prawdziwy rabat: ile naprawdę obniżono cenę',k:'black friday cyber monday promocja rabat obniżka wyprzedaż omnibus najniższa cena 30 dni zakupy sklep okazja',
  i:'Przy obniżce sklep musi podać najniższą cenę z 30 dni przed obniżką. Wpisz trzy ceny i porównaj reklamowany rabat z prawdziwym.',
@@ -129,7 +130,7 @@ const KALK=[
    return{l:[['Stawka',s.toLocaleString('pl-PL',{maximumFractionDigits:2})+'% rocznie'],['Na dzień spóźnienia',zl(v.kw*s/100/365)],['Za '+f1(v.dn)+' dni',zl(o)]],sk:'ODSETKI ZA SPÓŹNIENIE',sv:o,svt:'ok. '+zl(o),podKol:'red',pod:'Uwaga: opóźnienie w płatności odroczonej może trafić do BIK i obniżyć ocenę kredytową.'}}
   if(v.ck<v.pc)return{l:[],sk:'SPRAWDŹ KWOTY',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Całkowita kwota do zapłaty nie może być niższa niż cena zakupu.'};
   const k=v.ck-v.pc,r=v.lr>0?v.ck/v.lr:NaN;
-  return{l:[['Cena zakupu',zl(v.pc)],['Razem do zapłaty',zl(v.ck)],['Koszt rat (% ceny)',v.pc>0?f1(k/v.pc*100)+'%':'–'],['Rata ok.',Number.isFinite(r)?zl(r):'–']],sk:'KOSZT RAT',sv:k,svt:(k>0?'+':'')+zl(k),kol:k>0?'red':'green'}},
+  return{l:[['Cena zakupu',zl(v.pc)],['Razem do zapłaty',zl(v.ck)],['Koszt rat za cały okres (% ceny)',v.pc>0?f1(k/v.pc*100)+'%':'–'],['Rata miesięczna ok.',Number.isFinite(r)?zl(r):'–']],sk:'KOSZT RAT (CAŁY OKRES)',sv:k,svt:(k>0?'+':'')+zl(k),kol:k>0?'red':'green'}},
  w:'spóźnienie: kwota × stawka roczna × dni ÷ 365; raty: koszt = całkowita kwota do zapłaty − cena zakupu; procent = koszt ÷ cena × 100; rata ≈ całkowita kwota ÷ liczba rat',
  s:'Stawki z listopada 2026: odsetki maks. za opóźnienie 18,5% (2 × odsetki ustawowe za opóźnienie, art. 481 §2¹ KC), ustawowe 9,25% (stopa referencyjna NBP 3,75% + 5,5 pkt proc., M.P. 2026 poz. 367); przykłady reprezentatywne Allegro Pay z 14.07.2026 (FAQ Allegro Pay). Rata to średnia – w harmonogramie ostatnia może się różnić o grosze. To nie jest porada.'},
 {id:'dojazd',krot:'Dojazd autem',cat:2,t:'Dojazd autem: ile kosztuje paliwo na trasie',k:'auto samochód dojazd trasa praca przedszkole szkoła paliwo benzyna km',
@@ -166,9 +167,9 @@ const KALK=[
   const zawsze=sez(40000)-cal(40000)>0?'całoroczne tańsze przy każdym przebiegu':'dwa komplety tańsze przy każdym przebiegu';
   const l=[['Dwa komplety: opony ('+f1(ks(v.km))+' × zima + lato)',zl((cz+cl)*ks(v.km))],[(v.fe?'Wymiany kół':'Wymiany opon')+' ('+f1(n)+' × '+zl(wym)+')',zl(n*wym)]];
   if(pr>0)l.push(['Przechowalnia ('+f1(n)+' × '+zl(pr)+')',zl(n*pr)]);
-  l.push(['Dwa komplety razem',zl(s)],['Całoroczne ('+f1(kc(v.km))+' kpl. z montażem)',zl(c)],['Różnica',zl(Math.abs(d))+(Math.max(s,c)>0?' ('+f1(Math.abs(d)/Math.max(s,c)*100)+'%)':'')],
+  l.push(['Dwa komplety razem ('+lat(v.l)+')',zl(s)],['Całoroczne ('+f1(kc(v.km))+' kpl. z montażem, '+lat(v.l)+')',zl(c)],['Różnica za '+lat(v.l),zl(Math.abs(d))+(Math.max(s,c)>0?' ('+f1(Math.abs(d)/Math.max(s,c)*100)+'%)':'')],
    ['Taniej wychodzą',d>=0?'całoroczne':'dwa komplety'],['Koszty równe przy',prog?'ok. '+prog.toLocaleString('pl-PL')+' km/rok':zawsze]);
-  return{l:l.filter(x=>!/^0,00 zł/.test(x[1])),sk:d>=0?'CAŁOROCZNE TAŃSZE O':'DWA KOMPLETY TAŃSZE O',sv:Math.abs(d),pod:v.zc?'Ceny: Twoje (wpisane ręcznie).':'Ceny: mediana z oponeo.pl, 15.11.2026 (klasa '+['budżet','średnia','premium'][v.kl]+', 205/55 R16).'}},
+  return{l:l.filter(x=>!/^0,00 zł/.test(x[1])),sk:(d>=0?'CAŁOROCZNE TAŃSZE O':'DWA KOMPLETY TAŃSZE O')+' ('+lat(v.l).toUpperCase()+')',sv:Math.abs(d),pod:v.zc?'Ceny: Twoje (wpisane ręcznie).':'Ceny: mediana z oponeo.pl, 15.11.2026 (klasa '+['budżet','średnia','premium'][v.kl]+', 205/55 R16).'}},
  w:'sezonowe: komplety = lata ÷ min(wymiana po latach, trwałość ÷ (przebieg ÷ 2)); koszt = (zimowe + letnie) × komplety + 2 × lata × wymiana + 2 × lata × przechowalnia. Całoroczne: komplety = lata ÷ min(wymiana po latach, trwałość ÷ przebieg); koszt = komplety × (cena + montaż). Zużycie liczone proporcjonalnie. Różnica = sezonowe − całoroczne; procent = różnica ÷ droższa × 100',
  s:'Ceny opon 205/55 R16 za sztukę: mediana 6 ofert z oponeo.pl z 15.11.2026 – budżet (Dębica, Goodride, Kormoran): zimowe 268, letnie 225, całoroczne 252 zł; średnia (Kleber, Fulda, Hankook, Sava): 358 / 251 / 314 zł; premium (Michelin, Continental, Goodyear, Bridgestone): 420 / 338 / 397 zł. Wymiana 4 opon z wyważeniem ok. 160 zł (kb.pl 2026: 158 zł), przechowalnia ok. 150 zł za sezon (kb.pl). Producenci zalecają wymianę opon po ok. 5 latach, najpóźniej 10 lat od produkcji. Trwałość w km przykładowa. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze. To nie jest porada.'},
 {id:'lpg',krot:'Benzyna czy LPG',cat:2,t:'Benzyna czy LPG: kiedy instalacja się zwraca',k:'lpg gaz instalacja gazowa benzyna auto samochód zwrot',
@@ -191,7 +192,7 @@ const KALK=[
  i:'Porównaj dwie oferty abonamentu: koszt przez cały okres to abonament razy miesiące plus opłata aktywacyjna. Domyślnie: Play Oferta S (A) i Virgin Mobile S (B), ceny z listopada 2026, przykładowe.',
  in:[{id:'aa',l:'Oferta A: abonament',v:'45',u:'zł/mies.'},{id:'ak',l:'Oferta A: aktywacja',v:'50',u:'zł'},{id:'am',l:'Oferta A: liczba miesięcy',v:'24',u:''},{id:'ba',l:'Oferta B: abonament',v:'20',u:'zł/mies.'},{id:'bk',l:'Oferta B: aktywacja',v:'30',u:'zł'},{id:'bm',l:'Oferta B: liczba miesięcy',v:'24',u:''}],
  pre:[['Play S (A) vs Virgin Mobile S (B)',{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}]],
- f:v=>{const A=v.aa*v.am+v.ak,B=v.ba*v.bm+v.bk,d=A-B,tan=d>=0?'B':'A',pr=(d>=0?A:B)>0?f1(Math.abs(d)/(d>=0?A:B)*100)+'%':'–';return{l:[['Koszt oferty A',zl(A)],['Koszt oferty B',zl(B)],['Taniej oferta '+tan+' o',pr]],sk:'RÓŻNICA',sv:Math.abs(d)}},
+ f:v=>{const A=v.aa*v.am+v.ak,B=v.ba*v.bm+v.bk,d=A-B,tan=d>=0?'B':'A',pr=(d>=0?A:B)>0?f1(Math.abs(d)/(d>=0?A:B)*100)+'%':'–';return{l:[['Koszt oferty A ('+f1(v.am)+' mies.)',zl(A)],['Koszt oferty B ('+f1(v.bm)+' mies.)',zl(B)],['Taniej oferta '+tan+' o',pr]],sk:v.am===v.bm?'RÓŻNICA ZA '+f1(v.am)+' MIES.':'RÓŻNICA ZA OKRES UMOWY',sv:Math.abs(d)}},
  w:'abonament × miesiące + aktywacja; różnica = koszt A − koszt B; procent = różnica ÷ droższa oferta × 100',s:'Ceny z listopada 2026, przykładowe: Play Oferta S (45 zł po rabatach za e-fakturę i zgody, aktywacja 50 zł, umowa 24 mies.) i Virgin Mobile S (20 zł po rabatach, aktywacja 30 zł, bez umowy terminowej), bez telefonu. Virgin Mobile to marka Play (ta sama sieć). Po okresie umowy ceny mogą wzrosnąć. To nie jest porada.'}
 ];
 window.ILE={KALK,ODCINKI,CATS,num,f2,f1,zl,kwh,yrs};
