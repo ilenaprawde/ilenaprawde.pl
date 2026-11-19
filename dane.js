@@ -80,14 +80,17 @@ const KALK=[
   const all=[ek,ga,po,pe].filter(Number.isFinite),m=all.length?Math.min(...all):0,z=x=>Number.isFinite(x)?zl(x):'brak';
   return{l:[['Ekogroszek rocznie',z(ek)],['Gaz rocznie',z(ga)],['Pompa ciepła rocznie',z(po)],['Pellet rocznie',z(pe)]],sk:'NAJTANIEJ/ROK',sv:m}},
  w:'cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła',s:'Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.'},
-{id:'lampki',krot:'Lampki świąteczne',cat:7,nr:10,t:'Lampki świąteczne: ile kosztuje ich świecenie',k:'lampki choinkowe świąteczne led kurtyna żarówki choinka boże narodzenie prąd święta sezon',
- i:'Ile prądu zużyją lampki w całym sezonie, np. od 1 grudnia do 6 stycznia (37 dni)? Wpisz moc kompletu (z opisu produktu), godziny świecenia dziennie i cenę prądu.',
- in:[{id:'w',l:'Moc jednego kompletu',v:'27,7',u:'W'},{id:'n',l:'Liczba kompletów',v:'1',u:''},{id:'h',l:'Godziny świecenia dziennie',v:'24',u:'h'},{id:'d',l:'Liczba dni sezonu',v:'37',u:''},PRAD],
- pre:[['LED 100 diod · 6 W',{w:'6'}],['kurtyna 500 LED · 21,7 W',{w:'21,7'}],['stare żarówki 16 × 3 W · 48 W',{w:'48'}]],
- f:v=>{const kw=v.w*v.n/1000,e=kw*v.h*v.d,c=e*v.p,max=kw*24*v.d*v.p,r=[['Zużycie w sezonie ('+f1(v.d)+' dni)',kwh(e)]],x=v.h<24?v.h:6,cx=kw*x*v.d*v.p,df=Math.round(max*100)/100-Math.round(cx*100)/100;
-  r.push(['Całą dobę – koszt za sezon',zl(max),'≈ '+zl(kw*24*v.p)+' dziennie'],['Tylko '+f1(x)+' h dziennie – koszt za sezon'+(v.h<24?'':' (przykład)'),zl(cx)],['Różnica za sezon',zl(df)+(max>0?' ('+f1(df/max*100)+'%)':'')]);
+{id:'lampki',krot:'Lampki świąteczne',cat:7,nr:10,t:'Lampki świąteczne: ile kosztuje ich świecenie',k:'lampki choinkowe świąteczne led kurtyna żarówki choinka boże narodzenie prąd święta sezon girlanda',
+ i:'Ile prądu zużyją lampki w całym sezonie, np. od 1 grudnia do 6 stycznia (37 dni)? Dodaj każdy komplet lampek osobno: moc z opisu produktu, liczbę kompletów i godziny świecenia dziennie.',
+ lista:true,
+ in:[{id:'d',l:'Liczba dni sezonu',v:'37',u:''},PRAD,{id:'x',l:'Porównanie: wszystkie świecą dziennie',v:'6',u:'h'}],
+ pre:[['LED 100 diod · 6 W',{nm:'LED 100 diod',w:'6'}],['kurtyna 500 LED · 21,7 W',{nm:'Kurtyna 500 LED',w:'21,7'}],['stare żarówki 16 × 3 W · 48 W',{nm:'Stare żarówki 16 × 3 W',w:'48'}]],
+ f:v=>{const it=v.items,d=v.d,p=v.p,r=[];let kw=0,e=0,c=0;
+  it.forEach(z=>{const k=z.w*z.n/1000*z.h*d,cc=k*p;e+=k;c+=cc;kw+=z.w*z.n/1000*z.h;r.push([(z.nm||'Lampki')+' ('+f1(z.n)+' × '+f1(z.w)+' W, '+f1(z.h)+' h)',zl(cc),kwh(k)])});
+  const dz=kw*p,wsz=it.reduce((a,z)=>a+z.w*z.n/1000,0),cx=wsz*v.x*d*p,df=Math.round(cx*100)/100-Math.round(c*100)/100,pr=c>0?df/c*100:0,sg=df<0?'−':(df>0?'+':'');
+  r.push(['RAZEM: zużycie w sezonie ('+f1(d)+' dni)',kwh(e)],['RAZEM: koszt dziennie',zl(dz)],['Gdyby wszystkie świeciły '+f1(v.x)+' h dziennie – koszt za sezon',zl(cx)],['Różnica za sezon',sg+zl(Math.abs(df))+(c>0?' ('+sg+f1(Math.abs(pr))+'%)':'')]);
   return{l:r,sk:'KOSZT/SEZON',sv:c}},
- w:'moc (kW) × liczba kompletów × godziny dziennie × dni × cena prądu; różnica = koszt całą dobę − koszt przy podanych godzinach',s:'Moc wg opisów produktów: LED 100 diod 6 W (MediaMarkt), kurtyna 500 LED 21,7 W i 16 żarówek × 3 W (Murator Dom). Cena prądu 1,10 zł/kWh to przykład. Zużycie zależy od konkretnych lampek. To nie jest porada.'},
+ w:'dla każdej pozycji: moc (kW) × liczba kompletów × godziny dziennie × dni × cena prądu; razem = suma pozycji; porównanie: łączna moc × godziny z pola porównania × dni × cena; różnica = porównanie − koszt obecny',s:'Moc wg opisów produktów: LED 100 diod 6 W (MediaMarkt), kurtyna 500 LED 21,7 W i 16 żarówek × 3 W (Murator Dom). Cena prądu 1,10 zł/kWh to przykład. Zużycie zależy od konkretnych lampek. To nie jest porada.'},
 {id:'airfryer',krot:'Airfryer czy piekarnik',cat:0,nr:12,t:'Airfryer czy piekarnik: co zjada mniej prądu',k:'airfryer frytkownica beztłuszczowa piekarnik kuchnia gotowanie porcja prąd kurczak',
  i:'Porównaj zużycie prądu na jedną porcję w piekarniku i w airfryerze (frytkownicy beztłuszczowej). Wpisz zużycie z własnych pomiarów albo z instrukcji.',
  in:[{id:'po',l:'Piekarnik: zużycie na porcję',v:'1,0',u:'kWh'},{id:'af',l:'Airfryer: zużycie na porcję',v:'0,3',u:'kWh'},{id:'n',l:'Ile razy w tygodniu',v:'4',u:''},PRAD],

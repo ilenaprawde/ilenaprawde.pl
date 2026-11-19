@@ -92,21 +92,49 @@ function kalk(c){
    d.appendChild(inp);d.appendChild(ch);d.classList.add('fopt');box.appendChild(d);return}
   const w=el('div','fw');const inp=document.createElement('input');inp.id=id;
   if(x.chk){inp.type='checkbox';inp.checked=(P.has(x.id)?P.get(x.id):x.v)==='1';inp.addEventListener('change',()=>{if(c.zmiana)c.zmiana(x.id,ustaw);run()});d.classList.add('fchk')}else{inp.setAttribute('inputmode','decimal');inp.autocomplete='off';inp.value=P.has(x.id)?P.get(x.id):x.v;inp.addEventListener('input',run)}w.appendChild(inp);if(x.u)w.appendChild(el('span',null,x.u));d.appendChild(w);if(x.h)d.appendChild(el('p','small fh',x.h));box.appendChild(d)});
- if(c.pre){const ch=el('div','kchips');ch.setAttribute('aria-label','Przykładowe wartości');
+ if(c.pre&&!c.lista){const ch=el('div','kchips');ch.setAttribute('aria-label','Przykładowe wartości');
   c.pre.forEach(([lab,set])=>{const b=el('button','chip',lab);b.type='button';b.onclick=()=>{Object.entries(set).forEach(([k,v])=>{const e=$('f_'+k);e.value=v;const g=e.closest('.fopt');if(g)g.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',String(z.dataset.v===String(v))))});run()};ch.appendChild(b)});
   box.insertBefore(ch,box.children[0])}
+
+ let items=[];const LK='ile_lampki_v1';
+ if(c.lista){
+  const zS=z=>z.map(i=>[i.nm.replace(/[|;]/g,' '),i.w,i.n,i.h].join('|')).join(';');
+  const zP=t=>t.split(';').map(q=>{const a=q.split('|');return{nm:a[0]||'',w:a[1]||'',n:a[2]||'1',h:a[3]||''}}).filter(i=>i.w!=='').slice(0,20);
+  try{if(P.has('z'))items=zP(P.get('z'));else if(P.has('w'))items=[{nm:'Lampki',w:P.get('w'),n:P.get('n')||'1',h:P.get('h')||'24'}];else{const sv=localStorage.getItem(LK);if(sv)items=zP(sv)}}catch(e){}
+  if(!items.length)items=[{nm:'Lampki',w:'27,7',n:'1',h:'24'}];
+  c.zS=zS;
+  const lw=el('div','llist');const lb=el('div','ladd');
+  const add=(o)=>{if(items.length>=20)return;items.push(Object.assign({nm:'Komplet '+(items.length+1),w:'6',n:'1',h:'6'},o||{}));rys();run()};
+  function rys(){lw.innerHTML='';
+   items.forEach((z,ix)=>{const r=el('div','litem');
+    const nm=document.createElement('input');nm.type='text';nm.className='lnm';nm.maxLength=40;nm.value=z.nm;nm.placeholder='Nazwa, np. Girlanda przód';nm.setAttribute('aria-label','Nazwa pozycji '+(ix+1));nm.addEventListener('input',()=>{z.nm=nm.value;run()});
+    const del=el('button','ldel','Usuń');del.type='button';del.disabled=items.length<2;del.setAttribute('aria-label','Usuń pozycję '+(ix+1));del.onclick=()=>{items.splice(ix,1);rys();run()};
+    const top=el('div','ltop');top.appendChild(nm);top.appendChild(del);r.appendChild(top);
+    const g=el('div','lgrid');
+    [['w','Moc 1 kompletu (W)'],['n','Liczba kompletów'],['h','Godzin dziennie']].forEach(([k,lab])=>{const f=el('div','f');const l=el('label',null,lab);const id='li_'+ix+'_'+k;l.htmlFor=id;f.appendChild(l);
+     const w=el('div','fw');const inp=document.createElement('input');inp.id=id;inp.setAttribute('inputmode','decimal');inp.autocomplete='off';inp.value=z[k];inp.addEventListener('input',()=>{z[k]=inp.value;run()});w.appendChild(inp);f.appendChild(w);g.appendChild(f)});
+    r.appendChild(g);lw.appendChild(r)})}
+  const ab=el('button','chip addb','+ dodaj lampki');ab.type='button';ab.onclick=()=>add();lb.appendChild(ab);
+  const tc=el('div','kchips');tc.setAttribute('aria-label','Gotowe zestawy – dodają nową pozycję');
+  c.pre.forEach(([lab,set])=>{const b=el('button','chip',lab);b.type='button';b.onclick=()=>add(set);tc.appendChild(b)});
+  const wr=el('div','lwrap');wr.appendChild(lw);wr.appendChild(lb);wr.appendChild(el('p','small','Gotowe zestawy (dodają nową pozycję):'));wr.appendChild(tc);
+  box.insertBefore(wr,box.firstChild);rys();
+ }
  function ustaw(id,val){const e=$('f_'+id);if(e)e.value=val}
  function widoczne(x,v){if(!x.gdy)return true;return x.gdy.split('&').every(g=>{const [k,w]=g.split('=');return w===undefined?!!v[k]:String(v[k])===w})}   // 'a=1&b=2' = oba warunki
  function wartosci(){const v={};let bad=false;c.in.forEach(x=>{const e=$('f_'+x.id);v[x.id]=x.chk?(e.checked?1:0):num(e.value)});
-  c.in.forEach(x=>{const wid=widoczne(x,v),d=$('f_'+x.id).closest('.f');if(d)d.hidden=!wid;if(!wid)v[x.id]=num(x.v);else if(!(v[x.id]>=0))bad=true});return{v,bad}}  // ukryte pola: nie liczą się (wartość domyślna)
+  c.in.forEach(x=>{const wid=widoczne(x,v),d=$('f_'+x.id).closest('.f');if(d)d.hidden=!wid;if(!wid)v[x.id]=num(x.v);else if(!(v[x.id]>=0))bad=true});
+  if(c.lista){v.items=items.map(z=>({nm:z.nm.trim(),w:num(z.w),n:num(z.n),h:num(z.h)}));v.items.forEach(z=>{if(!(z.w>=0&&z.n>=0&&z.h>=0&&z.h<=24))bad=true});if(!(v.d>=1))bad=true}
+  return{v,bad}}  // ukryte pola: nie liczą się (wartość domyślna)
  function run(){const {v,bad}=wartosci();$('cerr').hidden=!bad;if(bad)return;
+  if(c.lista){try{localStorage.setItem(LK,c.zS(items))}catch(e){}}
   const r=c.f(v);const cl=$('cl');cl.innerHTML='';
   r.l.forEach(([a,b,m])=>{const d=el('div','line');d.appendChild(el('span','l',a));d.appendChild(el('span','fill'));const rr=el('span','r',b);if(m)rr.appendChild(el('small','sub',m));d.appendChild(rr);cl.appendChild(d)});
   $('sk').textContent=r.sk;const sv=$('sv');sv.textContent=r.svt||zl(r.sv);
   let pod=$('spod');if(r.pod){if(!pod){pod=el('p','small spod');pod.id='spod';sv.closest('.sum').after(pod)}pod.textContent=r.pod;pod.style.color=r.podKol==='red'?'var(--red)':'';pod.style.fontWeight=r.podKol==='red'?'700':''}else if(pod)pod.remove();
   sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)'}
  $('cw').textContent=c.w;$('cs').textContent=c.s||'';
- function link(){const q=new URLSearchParams();c.in.forEach(x=>{const e=$('f_'+x.id);q.set(x.id,x.chk?(e.checked?'1':'0'):e.value.trim())});return location.origin+location.pathname+'?'+q.toString()}
+ function link(){const q=new URLSearchParams();c.in.forEach(x=>{const e=$('f_'+x.id);q.set(x.id,x.chk?(e.checked?'1':'0'):e.value.trim())});if(c.lista)q.set('z',c.zS(items));return location.origin+location.pathname+'?'+q.toString()}
  const msg=$('msg');
  $('share').onclick=async()=>{const u=link();
   if(navigator.share&&matchMedia('(pointer:coarse)').matches){try{await navigator.share({title:c.t+' – Ile Naprawdę',url:u});return}catch(e){if(e&&e.name==='AbortError')return}}
