@@ -12,7 +12,7 @@ const ORIGIN = 'https://ilenaprawde.pl';
 const crypto = require('crypto');
 const V = f => crypto.createHash('md5').update(fs.readFileSync(f)).digest('hex').slice(0, 8);   // znacznik wersji w adresach plików (omija stare pamięci podręczne)
 const VER = { css: V('strona.css'), dane: V('dane.js'), app: V('app.js'), ab: V('abonamenty.js') };
-const BEACON = `<!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1) --><script>(function(){try{if(navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->`;
+const BEACON = `<!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 function head({ title, desc, canonical, robots }) {
@@ -149,8 +149,8 @@ ODCINKI.filter(o => !o.plan).forEach(o => {   // zapowiedzi (plan:true) nie maj�
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="${ORIGIN}${o.href || `/kalkulatory/${o.id}/`}">
-<meta http-equiv="refresh" content="0;url=${esc(dest)}">
-<script>location.replace(${JSON.stringify(dest)})</script>
+<noscript><meta http-equiv="refresh" content="0;url=${esc(dest)}"></noscript>
+<script>window.__nb=1;(function(){var d=${JSON.stringify(dest)},m=/[?&]z=([a-z0-9]{1,12})(&|$)/i.exec(location.search);if(m)d+=(d.indexOf("?")<0?"?":"&")+"z="+m[1];location.replace(d)})()</script>
 </head><body><p><a href="${esc(dest)}">Przejdź do kalkulatora odcinka #${o.nr}</a></p>${BEACON}</body></html>
 `);
 });

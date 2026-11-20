@@ -70,6 +70,7 @@ function home(){
 function kalk(c){
  const eps=ODCINKI.filter(o=>o.id===c.id).map(o=>o.nr).sort((a,b)=>b-a);
  const P=new URLSearchParams(location.search);
+ const hasP=id=>P.has(id)&&!(id==='z'&&/^[a-z]+$/i.test(P.get(id)));   // ?z=fb to znacznik promocji, nie wartość pola 'z'
  if(c.id==='abonament'){const ln=el('a','cmpl','Porównaj oferty wszystkich sieci →');ln.href='/abonamenty/';const sh=$('share');if(sh)sh.parentNode.insertBefore(ln,sh)}
  const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);
  if(fb&&fl.length){let jest=false;fl.forEach(o=>{if(opub(o)){jest=true;const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
@@ -86,12 +87,12 @@ function kalk(c){
  const box=$('cf');box.innerHTML='';
  c.in.forEach(x=>{const d=el('div','f');const id='f_'+x.id;const lb=el('label');lb.htmlFor=id;lb.appendChild(el('span',null,x.l));d.appendChild(lb);
   if(x.gdy)d.dataset.gdy=x.gdy;if(x.sek)d.classList.add('fsek');
-  if(x.opt){const inp=document.createElement('input');inp.type='hidden';inp.id=id;inp.value=P.has(x.id)?P.get(x.id):x.v;const ch=el('div','kchips');ch.setAttribute('role','radiogroup');
+  if(x.opt){const inp=document.createElement('input');inp.type='hidden';inp.id=id;inp.value=hasP(x.id)?P.get(x.id):x.v;const ch=el('div','kchips');ch.setAttribute('role','radiogroup');
    x.opt.forEach(([lab,val])=>{const b=el('button','chip',lab);b.type='button';b.setAttribute('role','radio');b.dataset.v=val;b.setAttribute('aria-pressed',String(String(val)===inp.value));
     b.onclick=()=>{inp.value=String(val);ch.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',String(z===b)));if(c.zmiana)c.zmiana(x.id,ustaw);run()};ch.appendChild(b)});
    d.appendChild(inp);d.appendChild(ch);d.classList.add('fopt');box.appendChild(d);return}
   const w=el('div','fw');const inp=document.createElement('input');inp.id=id;
-  if(x.chk){inp.type='checkbox';inp.checked=(P.has(x.id)?P.get(x.id):x.v)==='1';inp.addEventListener('change',()=>{if(c.zmiana)c.zmiana(x.id,ustaw);run()});d.classList.add('fchk')}else{inp.setAttribute('inputmode','decimal');inp.autocomplete='off';inp.value=P.has(x.id)?P.get(x.id):x.v;inp.addEventListener('input',run)}w.appendChild(inp);if(x.u)w.appendChild(el('span',null,x.u));d.appendChild(w);if(x.h)d.appendChild(el('p','small fh',x.h));box.appendChild(d)});
+  if(x.chk){inp.type='checkbox';inp.checked=(hasP(x.id)?P.get(x.id):x.v)==='1';inp.addEventListener('change',()=>{if(c.zmiana)c.zmiana(x.id,ustaw);run()});d.classList.add('fchk')}else{inp.setAttribute('inputmode','decimal');inp.autocomplete='off';inp.value=hasP(x.id)?P.get(x.id):x.v;inp.addEventListener('input',run)}w.appendChild(inp);if(x.u)w.appendChild(el('span',null,x.u));d.appendChild(w);if(x.h)d.appendChild(el('p','small fh',x.h));box.appendChild(d)});
  if(c.pre&&!c.lista){const ch=el('div','kchips');ch.setAttribute('aria-label','Przykładowe wartości');
   c.pre.forEach(([lab,set])=>{const b=el('button','chip',lab);b.type='button';b.onclick=()=>{Object.entries(set).forEach(([k,v])=>{const e=$('f_'+k);e.value=v;const g=e.closest('.fopt');if(g)g.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',String(z.dataset.v===String(v))))});run()};ch.appendChild(b)});
   box.insertBefore(ch,box.children[0])}
@@ -100,7 +101,7 @@ function kalk(c){
  if(c.lista){
   const zS=z=>z.map(i=>[i.nm.replace(/[|;]/g,' '),i.w,i.n,i.h].join('|')).join(';');
   const zP=t=>t.split(';').map(q=>{const a=q.split('|');return{nm:a[0]||'',w:a[1]||'',n:a[2]||'1',h:a[3]||''}}).filter(i=>i.w!=='').slice(0,20);
-  try{if(P.has('z'))items=zP(P.get('z'));else if(P.has('w'))items=[{nm:'Lampki',w:P.get('w'),n:P.get('n')||'1',h:P.get('h')||'24'}];else{const sv=localStorage.getItem(LK);if(sv)items=zP(sv)}}catch(e){}
+  try{const kk=P.get('k')||((P.get('z')||'').indexOf('|')>=0?P.get('z'):'');if(kk)items=zP(kk);else if(P.has('w'))items=[{nm:'Lampki',w:P.get('w'),n:P.get('n')||'1',h:P.get('h')||'24'}];else{const sv=localStorage.getItem(LK);if(sv)items=zP(sv)}}catch(e){}
   if(!items.length)items=[{nm:'Lampki',w:'27,7',n:'1',h:'24'}];
   c.zS=zS;
   const lw=el('div','llist');const lb=el('div','ladd');
@@ -134,7 +135,7 @@ function kalk(c){
   let pod=$('spod');if(r.pod){if(!pod){pod=el('p','small spod');pod.id='spod';sv.closest('.sum').after(pod)}pod.textContent=r.pod;pod.style.color=r.podKol==='red'?'var(--red)':'';pod.style.fontWeight=r.podKol==='red'?'700':''}else if(pod)pod.remove();
   sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)'}
  $('cw').textContent=c.w;$('cs').textContent=c.s||'';
- function link(){const q=new URLSearchParams();c.in.forEach(x=>{const e=$('f_'+x.id);q.set(x.id,x.chk?(e.checked?'1':'0'):e.value.trim())});if(c.lista)q.set('z',c.zS(items));return location.origin+location.pathname+'?'+q.toString()}
+ function link(){const q=new URLSearchParams();c.in.forEach(x=>{const e=$('f_'+x.id);q.set(x.id,x.chk?(e.checked?'1':'0'):e.value.trim())});if(c.lista)q.set('k',c.zS(items));return location.origin+(window.__p0?window.__p0.split('?')[0].split('#')[0]:location.pathname)+'?'+q.toString()}
  const msg=$('msg');
  $('share').onclick=async()=>{const u=link();
   if(navigator.share&&matchMedia('(pointer:coarse)').matches){try{await navigator.share({title:c.t+' – Ile Naprawdę',url:u});return}catch(e){if(e&&e.name==='AbortError')return}}
