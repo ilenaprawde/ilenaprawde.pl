@@ -88,6 +88,7 @@ ${BEACON}
 // ---------- 404 ----------
 zapisz('404.html', head({ title: 'Nie ma takiej strony – Ile Naprawdę', desc: homeDesc, canonical: ORIGIN + '/', robots: 'noindex' }) + `
 <body>
+<script>(function(){var m=/^[/]z-([a-z]{2,12})([/].*)?$/.exec(location.pathname);if(!m)return;window.__nb=1;var q=location.search;if(!/[?&]z=/.test(q))q+=(q?'&':'?')+'z='+m[1];location.replace((m[2]||'/')+q+location.hash)})()</script>
 <main class="wrap">
 ${brand}
 <h1>Nie ma takiej <mark>strony</mark></h1>
