@@ -160,3 +160,5 @@ h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;tex
 .addb{margin:2px 0 8px;font-weight:700}
 .lwrap{margin-bottom:12px}
 .lchk{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:13px;cursor:pointer}.lchk input{width:20px;height:20px;flex:none}.lhint{margin:4px 0 0}
+.about.seo h3{font-size:13px;color:var(--ink);margin:6px 0 0}
+.about.seo p{margin:0}

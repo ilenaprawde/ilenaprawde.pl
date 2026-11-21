@@ -146,7 +146,7 @@ const KALK=[
  in:[{id:'sp',l:'Spalanie',v:'7',u:'l/100 km'},PALIWO,{id:'km',l:'Ile km rocznie',v:'15000',u:''}],
  f:v=>{const c=v.sp*v.pb;return{l:[['Na 1 km',zl(c/100)],['Na 100 km',zl(c)],['Miesięcznie',zl(c*v.km/100/12)]],sk:'ROCZNIE',sv:c*v.km/100}},
  w:'spalanie × cena paliwa = koszt 100 km',s:'Cena paliwa to przykład.'},
-{id:'opony',krot:'Opony: dwa komplety czy całoroczne',cat:2,t:'Opony zimowe + letnie czy całoroczne: co wychodzi taniej',k:'opony zimowe letnie całoroczne wielosezonowe wymiana opon przechowalnia felgi auto samochód',
+{id:'opony',krot:'Opony: dwa komplety czy całoroczne',tk:'Opony całoroczne czy 2 komplety',cat:2,t:'Opony zimowe + letnie czy całoroczne: co wychodzi taniej',k:'opony zimowe letnie całoroczne wielosezonowe wymiana opon przechowalnia felgi auto samochód',
  i:'Dwa komplety (zimowe i letnie) czy jeden komplet całorocznych? Liczymy zakup, wymiany i przechowywanie przez wybraną liczbę lat. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze.',
  in:[{id:'km',l:'Przebieg rocznie',v:'10000',u:'km'},{id:'l',l:'Ile lat liczymy',v:'5',u:'lat'},
   {id:'kl',l:'Klasa opon',v:'1',opt:[['Budżet',0],['Średnia',1],['Premium',2]]},

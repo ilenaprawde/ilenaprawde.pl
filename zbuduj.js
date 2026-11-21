@@ -15,7 +15,108 @@ const VER = { css: V('strona.css'), dane: V('dane.js'), app: V('app.js'), ab: V(
 const BEACON = `<!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->`;
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function head({ title, desc, canonical, robots }) {
+// ---------- SEO podstron kalkulatorów (N101): tytuł, opis, „Jak liczymy”, „Pytania”, JSON-LD, okładka OG, lastmod ----------
+const { execFileSync } = require('child_process');
+const num = window.ILE.num;
+const MIN = '−';
+const fk = v => { const x = Number.isInteger(v) ? String(v) : v.toFixed(2).replace('.', ','), [a, d] = x.split(','); return a.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + (d ? ',' + d : '') + ' zł'; };
+const proc = p => String(p).replace('.', ',') + '%';
+const dataPL = t => new Date(t).toLocaleDateString('sv-SE', { timeZone: 'Europe/Warsaw' });
+// wymiary JPEG z nagłówka SOF (okładki /img/filmy/N.jpg)
+function jpgWym(f) {
+  try { const b = fs.readFileSync(f); let i = 2;
+    while (i < b.length) { if (b[i] !== 0xFF) return null; const m = b[i + 1], L = b.readUInt16BE(i + 2);
+      if (m >= 0xC0 && m <= 0xCF && ![0xC4, 0xC8, 0xCC].includes(m)) return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
+      i += 2 + L; } } catch (e) {}
+  return null;
+}
+// odcinki kalkulatora (bez zapowiedzi), od najnowszego
+const odcinkiDla = id => ODCINKI.filter(o => o.id === id && !o.plan && !o.href).sort((a, b) => b.nr - a.nr);
+const okladka = id => { for (const o of odcinkiDla(id)) { const f = `img/filmy/${o.nr}.jpg`, w = jpgWym(f); if (w) return { url: `${ORIGIN}/${f}`, ...w, nr: o.nr }; } return null; };
+// wynik z danych: najpierw z odcinka (film), inaczej z wartości domyślnych kalkulatora; null gdy brak liczby
+function wynikDla(c) {
+  for (const o of odcinkiDla(c.id)) {
+    const t = o.typ || 'koszt', per = o.okres ? ' / ' + o.okres : '';
+    if (t === 'procent' && o.procent != null) return { krotki: MIN + proc(o.procent), pelny: `${MIN}${proc(o.procent)}`, podpis: o.podpis, nr: o.nr };
+    if (typeof o.kwota === 'number') {
+      const am = t === 'roznica' ? MIN + fk(o.kwota) : (o.znak || '') + fk(o.kwota);
+      const pr = t === 'roznica' && o.procent != null ? ` (${MIN}${proc(o.procent)})` : '';
+      return { krotki: am + per, pelny: (t === 'roznica' ? 'Różnica: ' : 'Koszt: ') + am + per + pr, podpis: o.podpis, nr: o.nr };
+    }
+  }
+  if (c.lista) return null;
+  try { const v = {}; c.in.forEach(x => v[x.id] = num(x.v)); const r = c.f(v);
+    if (!(typeof r.sv === 'number' && isFinite(r.sv))) return null;
+    const ozn = /OSZCZĘD|RÓŻNICA|TAŃSZ/.test(r.sk) ? MIN : '';
+    const am = r.svt || ozn + fk(Math.round(r.sv * 100) / 100);
+    const sk = r.sk.charAt(0) + r.sk.slice(1).toLowerCase();
+    return { krotki: `${sk.toLowerCase()} ${am}`, pelny: `${sk}: ${am}`, podpis: null, nr: null };
+  } catch (e) { return null; }
+}
+const zdania = s => String(s || '').trim().split(/(?<=[.!?])\s+(?=[A-ZĄĆĘŁŃÓŚŹŻ])/).filter(Boolean);
+const kropka = s => /[.!?]$/.test(s) ? s : s + '.';
+const DATA_RE = /\b\d{1,2}\.\d{1,2}\.\d{4}\b|\b(stycz|lut|marc|kwie|maj|czerw|lip|sierp|wrze[sś]|październik|paźdz|listopad|grud)[a-ząćęłńóśźż]*\s+\d{4}\b/i;
+function seoKalk(c) {
+  const w = wynikDla(c);
+  // tytuł: nazwa + „– kalkulator | Ile Naprawdę”, maks. 60 znaków
+  const suf = ' – kalkulator | Ile Naprawdę';
+  let nazwa = c.tk || c.t.split(':')[0].trim();   // tk: krótka nazwa do tytułu (opcjonalnie, dane.js)
+  if ((nazwa + suf).length > 60) nazwa = c.krot;
+  if ((nazwa + suf).length > 60) nazwa = nazwa.slice(0, 60 - suf.length).trim();
+  const title = nazwa + suf;
+  // opis: maks. 155 znaków, z liczbą z dane.js
+  let desc = (w ? `${c.krot}: ${w.krotki}${w.podpis ? ' – ' + w.podpis : ''}${w.nr ? ` (film #${w.nr})` : ' (przykład)'}. ` : '') + c.i;
+  if (desc.length > 155) { desc = desc.slice(0, 155); const k = Math.max(desc.lastIndexOf('. '), desc.lastIndexOf(' ')); desc = desc.slice(0, k).replace(/[,:;–\s]+$/, ''); if (!/[.!?]$/.test(desc)) desc = desc.slice(0, 154) + '…'; }
+  // „Jak liczymy”: wzór, założenia (wartości domyślne), źródło, data cen – tylko z pól dane.js
+  const jak = [];
+  if (c.w) jak.push(`Liczymy wzorem: ${c.w}.`);
+  const zal = c.in.filter(x => !x.gdy && !x.chk && !x.opt && !x.sek && x.v !== '').slice(0, 4).map(x => `${x.l.toLowerCase()} ${x.v}${x.u ? ' ' + x.u : ''}`);
+  if (zal.length) jak.push(`Wartości domyślne (przykład do podmiany): ${zal.join(', ')}.`);
+  const zs = zdania(c.s).filter(z => !/^To nie jest porada/.test(z));
+  if (zs.length) jak.push(...zs.slice(0, 2).map(kropka));
+  const dm = DATA_RE.exec(c.s || '');
+  if (dm) jak.push(`Data cen: ${dm[0]}.`);
+  // „Pytania”: 3 pytania z odpowiedziami z danych odcinka/kalkulatora; mniej niż 3 = sekcja pominięta
+  const faq = [];
+  if (w) faq.push([w.nr ? `Ile wyszło w filmie #${w.nr}?` : 'Ile wychodzi przy przykładowych danych?',
+    `${w.pelny}${w.podpis ? ` – ${w.podpis}` : ''}. Tyle wychodzi przy przykładowych danych${w.nr ? ' z filmu' : ''}. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik.`]);
+  if (c.w) faq.push(['Jak to policzyć samemu?', `Wzór: ${c.w}.`]);
+  if (zs.length) faq.push(['Skąd są liczby?', zs.map(kropka).join(' ')]);
+  return { title, desc, jak: jak.length >= 3 ? jak.slice(0, 5) : [], faq: faq.length >= 3 ? faq : [] };
+}
+// lastmod: najnowsza zmiana linii wpisu kalkulatora w dane.js (KALK + jego wiersze ODCINKI) wg git blame;
+// linie nie z tej historii (płytki klon) – poprzedni lastmod z sitemap.xml; niezatwierdzone zmiany – dziś
+const staraMapa = {};
+try { for (const m of fs.readFileSync('sitemap.xml', 'utf8').matchAll(/<loc>([^<]+)<\/loc><lastmod>([^<]+)<\/lastmod>/g)) staraMapa[m[1]] = m[2]; } catch (e) {}
+const daneLinie = fs.readFileSync('dane.js', 'utf8').split('\n');
+function blameData(linie, url) {
+  if (!linie.length) return null;
+  let naj = null, stara = false;
+  const zakresy = []; linie.sort((a, b) => a - b).forEach(n => { const z = zakresy[zakresy.length - 1]; if (z && n === z[1] + 1) z[1] = n; else zakresy.push([n, n]); });
+  try {
+    const arg = ['blame', '--line-porcelain']; zakresy.forEach(([a, b]) => arg.push('-L', `${a},${b}`));
+    const out = execFileSync('git', [...arg, '--', 'dane.js'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    let granica = false;
+    for (const l of out.split('\n')) {
+      if (l === 'boundary') granica = true;
+      else if (l.startsWith('committer-time ')) { if (granica) stara = true; else naj = Math.max(naj || 0, +l.slice(15) * 1000); }
+      else if (l.startsWith('\t')) granica = false;
+    }
+  } catch (e) { stara = true; }
+  const d = naj ? dataPL(naj) : null, s = stara ? staraMapa[url] : null;
+  return [d, s].filter(Boolean).sort().pop() || null;
+}
+function lastmodKalk(c, url) {
+  const st = daneLinie.findIndex(l => l.startsWith(`{id:'${c.id}',`));
+  const linie = [];
+  if (st >= 0) { let k = st + 1; while (k < daneLinie.length && !/^\{id:'|^\];/.test(daneLinie[k])) k++; for (let n = st; n < k; n++) linie.push(n + 1); }
+  daneLinie.forEach((l, n) => { if (/^\s*\{nr:/.test(l) && l.includes(`id:'${c.id}'`)) linie.push(n + 1); });
+  return blameData(linie, url);
+}
+const plikData = f => { try { return execFileSync('git', ['log', '-1', '--format=%cs', '--', f], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() || null; } catch (e) { return null; } };
+const ldJson = o => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
+
+function head({ title, desc, canonical, robots, img, ld }) {
   return `<!doctype html>
 <html lang="pl">
 <head>
@@ -31,15 +132,15 @@ function head({ title, desc, canonical, robots }) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${ORIGIN}/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="${img ? img.url : ORIGIN + '/og-image.png'}">
+<meta property="og:image:width" content="${img ? img.w : 1200}">
+<meta property="og:image:height" content="${img ? img.h : 630}">
 <meta property="og:locale" content="pl_PL">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
-<meta name="twitter:image" content="${ORIGIN}/og-image.png">
-<link rel="stylesheet" href="/strona.css?v=${VER.css}">
+<meta name="twitter:image" content="${img ? img.url : ORIGIN + '/og-image.png'}">
+<link rel="stylesheet" href="/strona.css?v=${VER.css}">${ld ? '\n' + ldJson(ld) : ''}
 </head>`;
 }
 
@@ -102,10 +203,24 @@ ${BEACON}
 
 // ---------- podstrony kalkulatorów ----------
 const pins = ['#C62828', '#1D4ED8', '#15803D', '#E0A800'];
+const tytuly = new Set();
 KALK.forEach((c, i) => {
-  const desc = `${c.i} Wzór i źródło przy rachunku.`.slice(0, 300);
-  const canonical = `${ORIGIN}/kalkulatory/${c.id}/`;
-  zapisz(`kalkulatory/${c.id}/index.html`, head({ title: `${c.t} – Ile Naprawdę`, desc, canonical }) + `
+  const canonical = `${ORIGIN}/kalkulatory/${c.id}/`;   // zawsze bez parametrów (?z=, pola formularza)
+  const seo = seoKalk(c), desc = seo.desc, img = okladka(c.id);
+  if (tytuly.has(seo.title)) throw new Error('Powtórzony tytuł: ' + seo.title); tytuly.add(seo.title);
+  const graf = [{ '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Ile Naprawdę', item: ORIGIN + '/' },
+    { '@type': 'ListItem', position: 2, name: c.krot, item: canonical }] }];
+  if (seo.faq.length) graf.push({ '@type': 'FAQPage', mainEntity: seo.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
+  odcinkiDla(c.id).filter(o => o.yt && o.pa && fs.existsSync(`img/filmy/${o.nr}.jpg`)).forEach(o => graf.push({ '@type': 'VideoObject',
+    name: o.tytul || o.nazwa || c.krot, description: (o.podpis ? `${o.nazwa || c.krot}: ${o.podpis}. ` : '') + c.i,
+    thumbnailUrl: `${ORIGIN}/img/filmy/${o.nr}.jpg`, uploadDate: o.pa,
+    contentUrl: `https://www.youtube.com/watch?v=${o.yt}`, embedUrl: `https://www.youtube.com/embed/${o.yt}` }));
+  const ld = { '@context': 'https://schema.org', '@graph': graf };
+  const sekcje = (seo.jak.length ? `<section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
+<p>${seo.jak.map(esc).join(' ')}</p></section>\n` : '') + (seo.faq.length ? `<section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
+${seo.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>\n` : '');
+  zapisz(`kalkulatory/${c.id}/index.html`, head({ title: seo.title, desc, canonical, img, ld }) + `
 <body data-strona="kalk" data-id="${c.id}">
 <main class="wrap">
 ${brand}
@@ -130,7 +245,7 @@ ${brand}
  ${stopka}
 </div></div>
 <div class="rel">POLICZ TEŻ</div><div class="mini" id="mini"></div>
-${stopka2}
+${sekcje}${stopka2}
 <noscript><p class="small">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 </main>
 <script src="/dane.js?v=${VER.dane}"></script>
@@ -196,11 +311,16 @@ zapisz('abonament/index.html', `<!doctype html>
 `);
 
 // ---------- sitemap.xml + robots.txt ----------
-const dzis = new Date().toISOString().slice(0, 10);
-const urls = [ORIGIN + '/', ...KALK.map(c => `${ORIGIN}/kalkulatory/${c.id}/`), ORIGIN + '/abonamenty/', ORIGIN + '/prywatnosc/', ORIGIN + '/regulamin/'];
+// lastmod: data ostatniej zmiany danego kalkulatora (git blame jego wpisu w dane.js), nie dzisiejsza dla wszystkich
+const dzis = dataPL(Date.now());
+const kurls = KALK.map(c => { const u = `${ORIGIN}/kalkulatory/${c.id}/`; return [u, lastmodKalk(c, u) || staraMapa[u] || dzis]; });
+const naj = kurls.map(x => x[1]).sort().pop();
+const inne = [['/abonamenty/', 'abonamenty.js'], ['/prywatnosc/', 'prywatnosc.html'], ['/regulamin/', 'regulamin.html']]
+  .map(([p, f]) => { const u = ORIGIN + p; return [u, plikData(f) || staraMapa[u] || dzis]; });
+const urls = [[ORIGIN + '/', naj], ...kurls, ...inne];
 zapisz('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `<url><loc>${u}</loc><lastmod>${dzis}</lastmod></url>`).join('\n')}
+${urls.map(([u, d]) => `<url><loc>${u}</loc><lastmod>${d}</lastmod></url>`).join('\n')}
 </urlset>
 `);
 zapisz('robots.txt', `User-agent: *
