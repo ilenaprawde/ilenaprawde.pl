@@ -86,8 +86,8 @@ const KALK=[
  in:[{id:'d',l:'Liczba dni sezonu',v:'37',u:''},PRAD,{id:'x',l:'Porównanie: wszystkie świecą dziennie',v:'6',u:'h'}],
  pre:[['LED 100 diod · 6 W',{nm:'LED 100 diod',w:'6'}],['kurtyna 500 LED · 21,7 W',{nm:'Kurtyna 500 LED',w:'21,7'}],['stare żarówki 16 × 3 W · 48 W',{nm:'Stare żarówki 16 × 3 W',w:'48'}]],
  f:v=>{const it=v.items,d=v.d,p=v.p,r=[];let kw=0,e=0,c=0;
-  it.forEach(z=>{const k=z.w*z.n/1000*z.h*d,cc=k*p;e+=k;c+=cc;kw+=z.w*z.n/1000*z.h;r.push([(z.nm||'Lampki')+' ('+f1(z.n)+' × '+f1(z.w)+' W, '+f1(z.h)+' h)',zl(cc),kwh(k)])});
-  const dz=kw*p,wsz=it.reduce((a,z)=>a+z.w*z.n/1000,0),cx=wsz*v.x*d*p,df=Math.round(cx*100)/100-Math.round(c*100)/100,pr=c>0?df/c*100:0,sg=df<0?'−':(df>0?'+':'');
+  it.forEach(z0=>{const z=Object.assign({},z0,{w:z0.w*(z0.o?1.2:1)}),k=z.w*z.n/1000*z.h*d,cc=k*p;e+=k;c+=cc;kw+=z.w*z.n/1000*z.h;r.push([(z.nm||'Lampki')+' ('+f1(z.n)+' × '+f1(z0.w)+' W, '+f1(z.h)+' h)'+(z.o?' (+20% straty zasilacza)':''),zl(cc),kwh(k)])});
+  const dz=kw*p,wsz=it.reduce((a,z)=>a+z.w*(z.o?1.2:1)*z.n/1000,0),cx=wsz*v.x*d*p,df=Math.round(cx*100)/100-Math.round(c*100)/100,pr=c>0?df/c*100:0,sg=df<0?'−':(df>0?'+':'');
   r.push(['RAZEM: zużycie w sezonie ('+f1(d)+' dni)',kwh(e)],['RAZEM: koszt dziennie',zl(dz)],['Gdyby wszystkie świeciły '+f1(v.x)+' h dziennie – koszt za sezon',zl(cx)],['Różnica za sezon',sg+zl(Math.abs(df))+(c>0?' ('+sg+f1(Math.abs(pr))+'%)':'')]);
   return{l:r,sk:'KOSZT/SEZON',sv:c}},
  w:'dla każdej pozycji: moc (kW) × liczba kompletów × godziny dziennie × dni × cena prądu; razem = suma pozycji; porównanie: łączna moc × godziny z pola porównania × dni × cena; różnica = porównanie − koszt obecny',s:'Moc wg opisów produktów: LED 100 diod 6 W (MediaMarkt), kurtyna 500 LED 21,7 W i 16 żarówek × 3 W (Murator Dom). Cena prądu 1,10 zł/kWh to przykład. Zużycie zależy od konkretnych lampek. To nie jest porada.'},

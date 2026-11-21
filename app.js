@@ -99,13 +99,13 @@ function kalk(c){
 
  let items=[];const LK='ile_lampki_v1';
  if(c.lista){
-  const zS=z=>z.map(i=>[i.nm.replace(/[|;]/g,' '),i.w,i.n,i.h].join('|')).join(';');
-  const zP=t=>t.split(';').map(q=>{const a=q.split('|');return{nm:a[0]||'',w:a[1]||'',n:a[2]||'1',h:a[3]||''}}).filter(i=>i.w!=='').slice(0,20);
-  try{const kk=P.get('k')||((P.get('z')||'').indexOf('|')>=0?P.get('z'):'');if(kk)items=zP(kk);else if(P.has('w'))items=[{nm:'Lampki',w:P.get('w'),n:P.get('n')||'1',h:P.get('h')||'24'}];else{const sv=localStorage.getItem(LK);if(sv)items=zP(sv)}}catch(e){}
-  if(!items.length)items=[{nm:'Lampki',w:'27,7',n:'1',h:'24'}];
+  const zS=z=>z.map(i=>[i.nm.replace(/[|;]/g,' '),i.w,i.n,i.h,i.o==='1'?'1':'0'].join('|')).join(';');
+  const zP=t=>t.split(';').map(q=>{const a=q.split('|');return{nm:a[0]||'',w:a[1]||'',n:a[2]||'1',h:a[3]||'',o:a[4]==='1'?'1':'0'}}).filter(i=>i.w!=='').slice(0,20);
+  try{const kk=P.get('k')||((P.get('z')||'').indexOf('|')>=0?P.get('z'):'');if(kk)items=zP(kk);else if(P.has('w'))items=[{nm:'Lampki',w:P.get('w'),n:P.get('n')||'1',h:P.get('h')||'24',o:'0'}];else{const sv=localStorage.getItem(LK);if(sv)items=zP(sv)}}catch(e){}
+  if(!items.length)items=[{nm:'Lampki',w:'27,7',n:'1',h:'24',o:'0'}];
   c.zS=zS;
   const lw=el('div','llist');const lb=el('div','ladd');
-  const add=(o)=>{if(items.length>=20)return;items.push(Object.assign({nm:'Komplet '+(items.length+1),w:'6',n:'1',h:'6'},o||{}));rys();run()};
+  const add=(o)=>{if(items.length>=20)return;items.push(Object.assign({nm:'Komplet '+(items.length+1),w:'6',n:'1',h:'6',o:'0'},o||{}));rys();run()};
   function rys(){lw.innerHTML='';
    items.forEach((z,ix)=>{const r=el('div','litem');
     const nm=document.createElement('input');nm.type='text';nm.className='lnm';nm.maxLength=40;nm.value=z.nm;nm.placeholder='Nazwa, np. Girlanda przód';nm.setAttribute('aria-label','Nazwa pozycji '+(ix+1));nm.addEventListener('input',()=>{z.nm=nm.value;run()});
@@ -114,7 +114,10 @@ function kalk(c){
     const g=el('div','lgrid');
     [['w','Moc 1 kompletu (W)'],['n','Liczba kompletów'],['h','Godzin dziennie']].forEach(([k,lab])=>{const f=el('div','f');const l=el('label',null,lab);const id='li_'+ix+'_'+k;l.htmlFor=id;f.appendChild(l);
      const w=el('div','fw');const inp=document.createElement('input');inp.id=id;inp.setAttribute('inputmode','decimal');inp.autocomplete='off';inp.value=z[k];inp.addEventListener('input',()=>{z[k]=inp.value;run()});w.appendChild(inp);f.appendChild(w);g.appendChild(f)});
-    r.appendChild(g);lw.appendChild(r)})}
+    r.appendChild(g);
+    const ch=el('label','lchk');const cb=document.createElement('input');cb.type='checkbox';cb.checked=z.o==='1';cb.addEventListener('change',()=>{z.o=cb.checked?'1':'0';run()});ch.appendChild(cb);ch.appendChild(el('span',null,'moc z zasilacza (OUTPUT) – doliczam 20% strat'));r.appendChild(ch);
+    r.appendChild(el('p','small lhint','Moc znajdziesz na etykiecie lub zasilaczu. Jeśli podana jest jako OUTPUT (wyjście zasilacza), zaznacz – zasilacz zużywa zwykle 15–25% więcej.'));
+    lw.appendChild(r)})}
   const ab=el('button','chip addb','+ dodaj lampki');ab.type='button';ab.onclick=()=>add();lb.appendChild(ab);
   const tc=el('div','kchips');tc.setAttribute('aria-label','Gotowe zestawy – dodają nową pozycję');
   c.pre.forEach(([lab,set])=>{const b=el('button','chip',lab);b.type='button';b.onclick=()=>add(set);tc.appendChild(b)});
@@ -125,7 +128,7 @@ function kalk(c){
  function widoczne(x,v){if(!x.gdy)return true;return x.gdy.split('&').every(g=>{const [k,w]=g.split('=');return w===undefined?!!v[k]:String(v[k])===w})}   // 'a=1&b=2' = oba warunki
  function wartosci(){const v={};let bad=false;c.in.forEach(x=>{const e=$('f_'+x.id);v[x.id]=x.chk?(e.checked?1:0):num(e.value)});
   c.in.forEach(x=>{const wid=widoczne(x,v),d=$('f_'+x.id).closest('.f');if(d)d.hidden=!wid;if(!wid)v[x.id]=num(x.v);else if(!(v[x.id]>=0))bad=true});
-  if(c.lista){v.items=items.map(z=>({nm:z.nm.trim(),w:num(z.w),n:num(z.n),h:num(z.h)}));v.items.forEach(z=>{if(!(z.w>=0&&z.n>=0&&z.h>=0&&z.h<=24))bad=true});if(!(v.d>=1))bad=true}
+  if(c.lista){v.items=items.map(z=>({nm:z.nm.trim(),w:num(z.w),n:num(z.n),h:num(z.h),o:z.o==='1'}));v.items.forEach(z=>{if(!(z.w>=0&&z.n>=0&&z.h>=0&&z.h<=24))bad=true});if(!(v.d>=1))bad=true}
   return{v,bad}}  // ukryte pola: nie liczą się (wartość domyślna)
  function run(){const {v,bad}=wartosci();$('cerr').hidden=!bad;if(bad)return;
   if(c.lista){try{localStorage.setItem(LK,c.zS(items))}catch(e){}}
