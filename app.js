@@ -74,7 +74,7 @@ function kalk(c){
  if(c.id==='abonament'){const ln=el('a','cmpl','Porównaj oferty wszystkich sieci →');ln.href='/abonamenty/';const sh=$('share');if(sh)sh.parentNode.insertBefore(ln,sh)}
  const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);
  if(fb&&fl.length){let jest=false;fl.forEach(o=>{if(opub(o)){jest=true;const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
-   const im=document.createElement('img');im.src='/thumbs/odc0'+o.nr+'.jpg';im.alt='';im.width=60;im.height=77;im.loading='lazy';a.appendChild(im);
+   const im=document.createElement('img');im.src='/img/filmy/'+o.nr+'.jpg';im.alt='';im.width=60;im.height=107;im.loading='lazy';im.onerror=()=>{im.remove()};a.appendChild(im);
    const fx=el('span','fx');fx.appendChild(el('b',null,'▶ OBEJRZYJ FILM #'+o.nr));if(opis(o))fx.appendChild(el('small',null,opis(o)));a.appendChild(fx);fb.appendChild(a)}
    else fb.appendChild(el('div','soonl',wkrotce(o)))});
   if(jest){const tk=el('p','small tk');const ta=el('a',null,'także na TikToku');ta.href='https://www.tiktok.com/@ilenaprawde';ta.target='_blank';ta.rel='noopener';tk.appendChild(ta);fb.appendChild(tk)}}
