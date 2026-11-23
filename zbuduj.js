@@ -90,6 +90,8 @@ function seoKalk(c) {
 const staraMapa = {};
 try { for (const m of fs.readFileSync('sitemap.xml', 'utf8').matchAll(/<loc>([^<]+)<\/loc><lastmod>([^<]+)<\/lastmod>/g)) staraMapa[m[1]] = m[2]; } catch (e) {}
 const daneLinie = fs.readFileSync('dane.js', 'utf8').split('\n');
+let PLYTKI = false;   // płytki klon (checkout automatu, fetch-depth 1): blame przypisuje wszystko jednemu commitowi
+try { PLYTKI = execFileSync('git', ['rev-parse', '--is-shallow-repository'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() === 'true'; } catch (e) {}
 function blameData(linie, url) {
   if (!linie.length) return null;
   let naj = null, stara = false;
@@ -97,11 +99,17 @@ function blameData(linie, url) {
   try {
     const arg = ['blame', '--line-porcelain']; zakresy.forEach(([a, b]) => arg.push('-L', `${a},${b}`));
     const out = execFileSync('git', [...arg, '--', 'dane.js'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
-    let granica = false;
+    // blok linii w porcelain: <sha> …, committer-time, …, [boundary], filename, \t<treść>; ocena przy linii z treścią
+    let sha = '', czas = 0, granica = false;
     for (const l of out.split('\n')) {
-      if (l === 'boundary') granica = true;
-      else if (l.startsWith('committer-time ')) { if (granica) stara = true; else naj = Math.max(naj || 0, +l.slice(15) * 1000); }
-      else if (l.startsWith('\t')) granica = false;
+      if (/^[0-9a-f]{40} /.test(l)) { sha = l.slice(0, 40); czas = 0; granica = false; }
+      else if (l.startsWith('committer-time ')) czas = +l.slice(15) * 1000;
+      else if (l === 'boundary') granica = true;
+      else if (l.startsWith('\t')) {
+        if (/^0+$/.test(sha)) naj = Math.max(naj || 0, Date.now());          // niezatwierdzona zmiana = dziś
+        else if (granica || PLYTKI) stara = true;                              // płytki klon (automat): data commitu nic nie mówi
+        else naj = Math.max(naj || 0, czas);
+      }
     }
   } catch (e) { stara = true; }
   const d = naj ? dataPL(naj) : null, s = stara ? staraMapa[url] : null;
@@ -317,7 +325,7 @@ const dzis = dataPL(Date.now());
 const kurls = KALK.map(c => { const u = `${ORIGIN}/kalkulatory/${c.id}/`; return [u, lastmodKalk(c, u) || staraMapa[u] || dzis]; });
 const naj = kurls.map(x => x[1]).sort().pop();
 const inne = [['/abonamenty/', 'abonamenty.js'], ['/prywatnosc/', 'prywatnosc.html'], ['/regulamin/', 'regulamin.html']]
-  .map(([p, f]) => { const u = ORIGIN + p; return [u, plikData(f) || staraMapa[u] || dzis]; });
+  .map(([p, f]) => { const u = ORIGIN + p; return [u, (PLYTKI ? null : plikData(f)) || staraMapa[u] || dzis]; });
 const urls = [[ORIGIN + '/', naj], ...kurls, ...inne];
 zapisz('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
