@@ -73,13 +73,13 @@ const KALK=[
  in:[{id:'mah',l:'Pojemność baterii',v:'5000',u:'mAh'},{id:'v',l:'Napięcie baterii',v:'3,85',u:'V'},{id:'s',l:'Straty ładowania',v:'20',u:'%'},PRAD,{id:'d',l:'Pełnych ładowań dziennie',v:'1',u:''}],
  f:v=>{const e=v.mah*v.v/1e6/(1-v.s/100),y=e*v.d*365*v.p;return{l:[['Energia na ładowanie',f2(e*1000)+' Wh'],['Jedno ładowanie',zl(e*v.p)],['Przez 10 lat',zl(y*10)]],sk:'ROCZNIE',sv:y}},
  w:'mAh × V ÷ 1 000 000 ÷ (1 − straty) × ładowania × 365 × cena kWh',s:'Straty ładowania to przykład.'},
-{id:'ogrzewanie',krot:'Ogrzewanie domu',cat:0,nr:7,t:'Ogrzewanie domu: co najtańsze',k:'ogrzewanie dom gaz pompa ciepła pellet ekogroszek węgiel kocioł opał',
+{id:'ogrzewanie',krot:'Ogrzewanie domu',cat:0,nr:7,t:'Ogrzewanie domu: co najtańsze',k:'ogrzewanie dom gaz pompa ciepła pellet ekogroszek węgiel kocioł opał drewno kominek drzewo',
  i:'Ile rocznie kosztuje ta sama ilość ciepła z różnych źródeł? Wpisz zapotrzebowanie domu i ceny w swojej okolicy.',
- in:[{id:'q',l:'Ciepło na rok',v:'15000',u:'kWh'},{id:'ek',l:'Ekogroszek',v:'1500',u:'zł/t'},{id:'pe',l:'Pellet',v:'2200',u:'zł/t'},{id:'g',l:'Gaz z dystrybucją',v:'0,31',u:'zł/kWh'},{id:'pr',l:'Prąd z dystrybucją',v:'1,26',u:'zł/kWh'},{id:'sc',l:'Sprawność pompy ciepła (SCOP)',v:'3',u:''}],
- f:v=>{const ek=v.q*v.ek/(7200*0.8),ga=v.q*v.g/0.95,po=v.sc>0?v.q*v.pr/v.sc:Infinity,pe=v.q*v.pe/(5000*0.9);
-  const all=[ek,ga,po,pe].filter(Number.isFinite),m=all.length?Math.min(...all):0,z=x=>Number.isFinite(x)?zl(x):'brak';
-  return{l:[['Ekogroszek rocznie',z(ek)],['Gaz rocznie',z(ga)],['Pompa ciepła rocznie',z(po)],['Pellet rocznie',z(pe)]],sk:'NAJTANIEJ/ROK',sv:m}},
- w:'cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła',s:'Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.'},
+ in:[{id:'q',l:'Ciepło na rok',v:'15000',u:'kWh'},{id:'ek',l:'Ekogroszek',v:'1500',u:'zł/t'},{id:'pe',l:'Pellet',v:'2200',u:'zł/t'},{id:'dr',l:'Drewno sezonowane',v:'500',u:'zł/mp',opc:true},{id:'g',l:'Gaz z dystrybucją',v:'0,31',u:'zł/kWh'},{id:'pr',l:'Prąd z dystrybucją',v:'1,26',u:'zł/kWh'},{id:'sc',l:'Sprawność pompy ciepła (SCOP)',v:'3',u:''}],
+ f:v=>{const ek=v.q*v.ek/(7200*0.8),ga=v.q*v.g/0.95,po=v.sc>0?v.q*v.pr/v.sc:Infinity,pe=v.q*v.pe/(5000*0.9),dr=v.dr>0?v.q*v.dr/(2000*0.7):Infinity;
+  const all=[ek,ga,po,pe,dr].filter(Number.isFinite),m=all.length?Math.min(...all):0,z=x=>Number.isFinite(x)?zl(x):'brak';
+  return{l:[['Ekogroszek rocznie',z(ek)],['Gaz rocznie',z(ga)],['Pompa ciepła rocznie',z(po)],['Pellet rocznie',z(pe)],['Drewno rocznie',z(dr)]],sk:'NAJTANIEJ/ROK',sv:m}},
+ w:'cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła; drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%)',s:'Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Drewno 500 zł/mp – środek przedziału 450–800 zł/mp za sezonowane liściaste ze składu (kb.pl, Murator, listopad 2026); w nadleśnictwie ok. 160–270 zł/m³, ale mokre. 1 mp suchego drewna liściastego ≈ 2000 kWh, sprawność pieca/kominka z płaszczem 70%. Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.',uw:'Drewno dodane po filmie, na prośbę widzów.'},
 {id:'lampki',krot:'Lampki świąteczne',cat:7,nr:10,t:'Lampki świąteczne: ile kosztuje ich świecenie',k:'lampki choinkowe świąteczne led kurtyna żarówki choinka boże narodzenie prąd święta sezon girlanda',
  i:'Ile prądu zużyją lampki w całym sezonie, np. od 1 grudnia do 6 stycznia (37 dni)? Dodaj każdy komplet lampek osobno: moc z opisu produktu, liczbę kompletów i godziny świecenia dziennie.',
  lista:true,

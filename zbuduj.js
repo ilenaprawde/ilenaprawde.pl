@@ -73,7 +73,8 @@ function seoKalk(c) {
   const zal = c.in.filter(x => !x.gdy && !x.chk && !x.opt && !x.sek && x.v !== '').slice(0, 4).map(x => `${x.l.toLowerCase()} ${x.v}${x.u ? ' ' + x.u : ''}`);
   if (zal.length) jak.push(`Wartości domyślne (przykład do podmiany): ${zal.join(', ')}.`);
   const zs = zdania(c.s).filter(z => !/^To nie jest porada/.test(z));
-  if (zs.length) jak.push(...zs.slice(0, 2).map(kropka));
+  if (zs.length) jak.push(...zs.slice(0, c.uw ? 1 : 2).map(kropka));
+  if (c.uw) jak.push(kropka(c.uw));   // uw: uwaga o zmianie po filmie (dane.js)
   const dm = DATA_RE.exec(c.s || '');
   if (dm) jak.push(`Data cen: ${dm[0]}.`);
   // „Pytania”: 3 pytania z odpowiedziami z danych odcinka/kalkulatora; mniej niż 3 = sekcja pominięta

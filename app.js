@@ -127,7 +127,7 @@ function kalk(c){
  function ustaw(id,val){const e=$('f_'+id);if(e)e.value=val}
  function widoczne(x,v){if(!x.gdy)return true;return x.gdy.split('&').every(g=>{const [k,w]=g.split('=');return w===undefined?!!v[k]:String(v[k])===w})}   // 'a=1&b=2' = oba warunki
  function wartosci(){const v={};let bad=false;c.in.forEach(x=>{const e=$('f_'+x.id);v[x.id]=x.chk?(e.checked?1:0):num(e.value)});
-  c.in.forEach(x=>{const wid=widoczne(x,v),d=$('f_'+x.id).closest('.f');if(d)d.hidden=!wid;if(!wid)v[x.id]=num(x.v);else if(!(v[x.id]>=0))bad=true});
+  c.in.forEach(x=>{const wid=widoczne(x,v),d=$('f_'+x.id).closest('.f');if(d)d.hidden=!wid;if(!wid)v[x.id]=num(x.v);else if(!(v[x.id]>=0)){if(x.opc&&!$('f_'+x.id).value.trim())v[x.id]=0;else bad=true}});   // opc: puste pole = 0 (źródło „brak”)
   if(c.lista){v.items=items.map(z=>({nm:z.nm.trim(),w:num(z.w),n:num(z.n),h:num(z.h),o:z.o==='1'}));v.items.forEach(z=>{if(!(z.w>=0&&z.n>=0&&z.h>=0&&z.h<=24))bad=true});if(!(v.d>=1))bad=true}
   return{v,bad}}  // ukryte pola: nie liczą się (wartość domyślna)
  function run(){const {v,bad}=wartosci();$('cerr').hidden=!bad;if(bad)return;
