@@ -29,7 +29,7 @@ const ODCINKI=[
 {nr:12,id:'airfryer',yt:'2l1yRRDC_9g',pa:'2026-11-22T19:00:00+01:00',nazwa:'Airfryer czy piekarnik',tytul:'Airfryer czy piekarnik: co tańsze? (160 zł)',typ:'roznica',kwota:160,okres:'rok',procent:70,podpis:'4 razy w tygodniu'},
 {nr:9,id:'opony',yt:'fs1JL1UXHpc',pa:'2026-11-19T19:00:00+01:00',nazwa:'Opony całoroczne czy sezonowe',tytul:'Opony całoroczne czy sezonowe: co taniej? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
 {nr:11,id:'choinka',yt:'aPxKQ7POt2o',pa:'2026-11-21T19:00:00+01:00',nazwa:'Choinka żywa czy sztuczna',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
-{nr:13,id:'obnizka',pa:'2026-11-23T19:00:00+01:00',nazwa:'Black Friday: prawdziwy rabat',tytul:'Black Friday: prawdziwy rabat z najniższej ceny z 30 dni',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
+{nr:13,id:'obnizka',yt:'_1sTdNgNmFE',pa:'2026-11-23T19:00:00+01:00',nazwa:'Black Friday: prawdziwy rabat',tytul:'Black Friday: prawdziwy rabat z najniższej ceny z 30 dni',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
 {nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',nazwa:'Zapłać później: Allegro Pay, PayPo, BLIK',tytul:'Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
