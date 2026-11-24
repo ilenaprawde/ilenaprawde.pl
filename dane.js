@@ -34,7 +34,7 @@ const ODCINKI=[
 {nr:15,id:'stopien',pa:'2026-11-25T19:00:00+01:00',nazwa:'1°C mniej w domu: oszczędność',tytul:'Ile daje 1°C mniej w domu? (294 zł)',typ:'roznica',kwota:294,okres:'sezon',procent:6,podpis:'mniej w sezonie za 1°C'},
 {nr:16,id:'gwarancja',pa:'2026-11-26T19:00:00+01:00',nazwa:'Przedłużona gwarancja: opłacalność',tytul:'Czy przedłużona gwarancja się opłaca? (400 zł)',typ:'koszt',kwota:400,okres:'lata 3–5',podpis:'przedłużona gwarancja przy pralce 2000 zł'},
 {nr:17,id:'dostawa',pa:'2026-11-27T19:00:00+01:00',nazwa:'Darmowa dostawa: dorzucić czy zapłacić',tytul:'Dorzucić do darmowej dostawy? (+24 zł)',typ:'koszt',znak:'+',kwota:24,okres:'zakup',podpis:'tyle przepłacasz, dorzucając 39 zł'},
-{nr:18,id:'streaming',pa:'2026-11-28T19:00:00+01:00',nazwa:'Streaming: wszystko naraz czy po kolei',tytul:'Streaming naraz czy rotacja? (1057 zł)',typ:'roznica',kwota:1057,okres:'rok',procent:75,podpis:'różnicy rocznie: rotacja zamiast 4 naraz'},
+{nr:18,id:'streaming',pa:'2026-11-28T19:00:00+01:00',nazwa:'Netflix, HBO, Disney+, Prime: naraz?',tytul:'Netflix, HBO Max, Disney+ i Prime: naraz czy po kolei? (1057 zł)',typ:'roznica',kwota:1057,okres:'rok',procent:75,podpis:'różnicy rocznie: rotacja zamiast 4 naraz'},
 {nr:19,id:'lek-dawka',pa:'2026-11-29T19:00:00+01:00',nazwa:'Lek: cena za tabletkę i kurację',tytul:'Paracetamol: zwykły czy musujący? (ponad 5× drożej)',typ:'razy',razy:5.11,podpis:'musujący drożej niż zwykły za 12 tabletek'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
@@ -158,7 +158,7 @@ const KALK=[
   return{l,sk:'OSZCZĘDZASZ',sv:-df,svt:'−'+zl(-df),kol:'green',pod:df<0?'Oszczędzasz '+zl(-df)+' – dorzuć.':'Wychodzi na to samo.'}},
  w:'brakuje = próg − koszyk (nie mniej niż 0); bez dorzucania płacisz koszyk + dostawa; z dorzuceniem koszyk + dorzucone (puste pole = brakująca kwota); różnica = dorzucone − koszt dostawy: dodatnia = przepłacasz, ujemna = oszczędzasz',
  s:'Przykład: próg 99 zł i kurier 14,99 zł jak w Media Markt (mediamarkt.pl/dostawa, sprawdzone 24.11.2026: „Darmowa dostawa dla zamówień od 99 zł”, kurier 14,99 zł lub 0 zł). 90 zł + 9 zł = 99 zł wobec 90 zł + 14,99 zł = 104,99 zł, czyli 5,99 zł mniej; 60 zł + 39 zł = 99 zł wobec 74,99 zł, czyli 24,01 zł więcej. Progi i ceny dostaw różnią się między sklepami. Np. Allegro Smart!: darmowa od 49,90 zł. To nie jest porada.'},
-{id:'streaming',krot:'Streaming: naraz czy rotacja',cat:6,nr:18,t:'Streaming: wszystkie serwisy naraz czy rotacja',k:'streaming netflix hbo max disney prime video skyshowtime apple tv subskrypcje seriale filmy rotacja anulowanie abonament vod',
+{id:'streaming',krot:'Streaming: naraz czy rotacja',tk:'Netflix, HBO, Disney+, Prime',cat:6,nr:18,t:'Streaming: wszystkie serwisy naraz czy rotacja',k:'streaming netflix hbo max disney prime video skyshowtime apple tv subskrypcje seriale filmy rotacja anulowanie abonament vod',
  i:'Ile kosztują wszystkie serwisy naraz, a ile rotacja, czyli jeden serwis na raz? Wpisz miesięczne ceny swoich planów (0 = nie mam).',
  in:[{id:'nf',l:'Netflix',v:'37',u:'zł/mies.',opc:true},{id:'hb',l:'HBO Max',v:'29,99',u:'zł/mies.',opc:true},{id:'di',l:'Disney+',v:'34,99',u:'zł/mies.',opc:true},{id:'pr',l:'Amazon Prime',v:'15,50',u:'zł/mies.',opc:true},{id:'sk',l:'SkyShowtime',v:'0',u:'zł/mies.',opc:true},{id:'ap',l:'Apple TV',v:'0',u:'zł/mies.',opc:true},{id:'in',l:'Inny serwis',v:'0',u:'zł/mies.',opc:true}],
  f:v=>{const c=[v.nf,v.hb,v.di,v.pr,v.sk,v.ap,v.in].filter(x=>x>0),n=c.length,su=c.reduce((a,b)=>a+b,0);
