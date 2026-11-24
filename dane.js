@@ -32,7 +32,8 @@ const ODCINKI=[
 {nr:13,id:'obnizka',yt:'_1sTdNgNmFE',pa:'2026-11-23T19:00:00+01:00',nazwa:'Black Friday: prawdziwy rabat',tytul:'Black Friday: prawdziwy rabat z najniższej ceny z 30 dni',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
 {nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',nazwa:'Zapłać później: Allegro Pay, PayPo, BLIK',tytul:'Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'},
 {nr:15,id:'stopien',pa:'2026-11-25T19:00:00+01:00',nazwa:'1°C mniej w domu: oszczędność',tytul:'Ile daje 1°C mniej w domu? (294 zł)',typ:'roznica',kwota:294,okres:'sezon',procent:6,podpis:'mniej w sezonie za 1°C'},
-{nr:16,id:'gwarancja',pa:'2026-11-26T19:00:00+01:00',nazwa:'Przedłużona gwarancja: opłacalność',tytul:'Czy przedłużona gwarancja się opłaca? (400 zł)',typ:'koszt',kwota:400,okres:'lata 3–5',podpis:'przedłużona gwarancja przy pralce 2000 zł'}
+{nr:16,id:'gwarancja',pa:'2026-11-26T19:00:00+01:00',nazwa:'Przedłużona gwarancja: opłacalność',tytul:'Czy przedłużona gwarancja się opłaca? (400 zł)',typ:'koszt',kwota:400,okres:'lata 3–5',podpis:'przedłużona gwarancja przy pralce 2000 zł'},
+{nr:17,id:'dostawa',pa:'2026-11-27T19:00:00+01:00',nazwa:'Darmowa dostawa: dorzucić czy zapłacić',tytul:'Dorzucić do darmowej dostawy? (+24 zł)',typ:'koszt',znak:'+',kwota:24,okres:'zakup',podpis:'tyle przepłacasz, dorzucając 39 zł'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -143,6 +144,18 @@ const KALK=[
   return{l:[['Składka',zl(sk)+' ('+f1(pc)+'% ceny)'],['Płacisz za: '+zak,lat(ly)],['Za rok dodatkowej ochrony',zl(sk/ly)],['Zwróci się przy',Number.isFinite(nr)?lm(nr)+' po '+zl(v.n):'–']],sk:'SKŁADKA ZA '+zak.toUpperCase(),sv:sk,svt:zl(sk),pod:pc>=30?'Składka to już '+f1(pc)+'% ceny sprzętu.':'',podKol:pc>=30?'red':''}},
  w:'składka = cena sprzętu × procent ÷ 100 (albo wpisana kwota); lata dodatkowej ochrony = ochrona łącznie − większa z liczb: 2 lata (odpowiedzialność sprzedawcy) i gwarancja producenta; za rok = składka ÷ lata; zwrot = składka ÷ typowa naprawa, zaokrąglone w górę',
  s:'Składka zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl); pralka 1000 zł ≈ 300 zł za 3 dodatkowe lata (Pepper, 04.2026). Naprawy 2026 (cenauslug.pl): pompa 210–400 zł, grzałka 220–380 zł, łożyska 450–700 zł. Przykład: 2000 zł × 20% = 400 zł. Przez 2 lata za niezgodność towaru z umową odpowiada sprzedawca – za darmo. Przedłużona gwarancja to ubezpieczenie: sprawdź wyłączenia w warunkach. To nie jest porada.'},
+{id:'dostawa',krot:'Darmowa dostawa',cat:8,nr:17,t:'Darmowa dostawa od progu: dorzucić czy zapłacić za kuriera',k:'darmowa dostawa próg koszyk kurier dorzucić zakupy sklep internetowy black friday paczkomat allegro smart koszt dostawy',
+ i:'Do darmowej dostawy brakuje kilku złotych? Policz, czy opłaca się dorzucić coś do koszyka, czy lepiej zapłacić za dostawę.',
+ in:[{id:'k',l:'Wartość koszyka',v:'60',u:'zł'},{id:'p',l:'Darmowa dostawa od',v:'99',u:'zł'},{id:'d',l:'Koszt dostawy',v:'14,99',u:'zł'},{id:'x',l:'Ile dorzucasz (0 = brakująca kwota)',v:'0',u:'zł',opc:true},{id:'pz',l:'Dorzucana rzecz i tak by mi się przydała',v:'0',chk:true}],
+ f:v=>{const br=Math.max(0,v.p-v.k);
+  if(br===0)return{l:[['Koszyk',zl(v.k)],['Brakuje do progu',zl(0)]],sk:'DOSTAWA',sv:0,svt:'0,00 zł',kol:'green',pod:'Masz już darmową dostawę.'};
+  const dor=v.x>0?v.x:br,l=[['Brakuje do progu',zl(br)],['Bez dorzucania: koszyk + dostawa',zl(v.k+v.d)],['Z dorzuceniem: koszyk + dorzucone',zl(v.k+dor)]];
+  if(dor<br)return{l,sk:'ZA MAŁO',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Za mało – nadal nie masz darmowej dostawy.'};
+  const df=Math.round((dor-v.d)*100)/100;
+  if(df>0)return{l,sk:'PRZEPŁACASZ',sv:df,svt:'+'+zl(df),kol:'red',podKol:v.pz?'':'red',pod:v.pz?'Wydajesz '+zl(df)+' więcej, ale dostajesz rzecz, której potrzebujesz – OK.':'Przepłacasz '+zl(df)+'.'};
+  return{l,sk:'OSZCZĘDZASZ',sv:-df,svt:'−'+zl(-df),kol:'green',pod:df<0?'Oszczędzasz '+zl(-df)+' – dorzuć.':'Wychodzi na to samo.'}},
+ w:'brakuje = próg − koszyk (nie mniej niż 0); bez dorzucania płacisz koszyk + dostawa; z dorzuceniem koszyk + dorzucone (puste pole = brakująca kwota); różnica = dorzucone − koszt dostawy: dodatnia = przepłacasz, ujemna = oszczędzasz',
+ s:'Przykład: próg 99 zł i kurier 14,99 zł jak w Media Markt (mediamarkt.pl/dostawa, sprawdzone 24.11.2026: „Darmowa dostawa dla zamówień od 99 zł”, kurier 14,99 zł lub 0 zł). 90 zł + 9 zł = 99 zł wobec 90 zł + 14,99 zł = 104,99 zł, czyli 5,99 zł mniej; 60 zł + 39 zł = 99 zł wobec 74,99 zł, czyli 24,01 zł więcej. Progi i ceny dostaw różnią się między sklepami. Np. Allegro Smart!: darmowa od 49,90 zł. To nie jest porada.'},
 {id:'bnpl',krot:'Kup teraz, zapłać później',cat:8,nr:14,t:'Kup teraz, zapłać później (BNPL): ile kosztuje spóźnienie i raty',k:'bnpl kup teraz zapłać później allegro pay paypo blik płacę później pko odroczona płatność raty odsetki spóźnienie bik rrso zakupy',
  i:'Płatność odroczona (np. Allegro Pay, PayPo, BLIK Płacę Później) spłacona w 30 dni zwykle nic nie kosztuje. Policz, ile kosztuje spóźnienie, a ile rozłożenie na raty.',
  in:[{id:'tr',l:'Co liczymy',v:'0',opt:[['Spóźnienie',0],['Raty',1]]},
