@@ -138,6 +138,8 @@ function kalk(c){
   let pod=$('spod');if(r.pod){if(!pod){pod=el('p','small spod');pod.id='spod';sv.closest('.sum').after(pod)}pod.textContent=r.pod;pod.style.color=r.podKol==='red'?'var(--red)':'';pod.style.fontWeight=r.podKol==='red'?'700':''}else if(pod)pod.remove();
   sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)'}
  $('cw').textContent=c.w;$('cs').textContent=c.s||'';
+ // „Ceny sprawdzone: DD.MM.RRRR” – tylko kalkulatory z cenami śledzonymi przez tygodniową kontrolę (dane/ceny_sprawdzone.json; plik zapisuje automat)
+ fetch('/dane/ceny_sprawdzone.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{const d=j&&j[c.id],e=$('csd');if(e&&/^\d{4}-\d{2}-\d{2}$/.test(d||'')){e.textContent='Ceny sprawdzone: '+d.slice(8)+'.'+d.slice(5,7)+'.'+d.slice(0,4);e.hidden=false}}).catch(()=>{});
  function link(){const q=new URLSearchParams();c.in.forEach(x=>{const e=$('f_'+x.id);q.set(x.id,x.chk?(e.checked?'1':'0'):e.value.trim())});if(c.lista)q.set('k',c.zS(items));return location.origin+(window.__p0?window.__p0.split('?')[0].split('#')[0]:location.pathname)+'?'+q.toString()}
  const msg=$('msg');
  $('share').onclick=async()=>{const u=link();

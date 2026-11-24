@@ -240,6 +240,7 @@ ${brand}
  <h1>${esc(c.t)}</h1>
  <p class="i">${esc(c.i)}</p>
  <div id="cf"></div>
+ <p class="small cdate" id="csd" hidden></p>
  <hr class="dash">
  <div id="cl" aria-live="polite"></div>
  <hr class="dbl">
