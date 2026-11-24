@@ -30,7 +30,8 @@ const ODCINKI=[
 {nr:9,id:'opony',yt:'fs1JL1UXHpc',pa:'2026-11-19T19:00:00+01:00',nazwa:'Opony całoroczne czy sezonowe',tytul:'Opony całoroczne czy sezonowe: co taniej? (2013 zł)',typ:'roznica',kwota:2013,okres:'5 lat',procent:50,podpis:'całoroczne vs zimowe + letnie'},
 {nr:11,id:'choinka',yt:'aPxKQ7POt2o',pa:'2026-11-21T19:00:00+01:00',nazwa:'Choinka żywa czy sztuczna',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
 {nr:13,id:'obnizka',yt:'_1sTdNgNmFE',pa:'2026-11-23T19:00:00+01:00',nazwa:'Black Friday: prawdziwy rabat',tytul:'Black Friday: prawdziwy rabat z najniższej ceny z 30 dni',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
-{nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',nazwa:'Zapłać później: Allegro Pay, PayPo, BLIK',tytul:'Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'}
+{nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',nazwa:'Zapłać później: Allegro Pay, PayPo, BLIK',tytul:'Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'},
+{nr:15,id:'stopien',pa:'2026-11-25T19:00:00+01:00',nazwa:'1°C mniej w domu: oszczędność',tytul:'Ile daje 1°C mniej w domu? (294 zł)',typ:'roznica',kwota:294,okres:'sezon',procent:6,podpis:'mniej w sezonie za 1°C'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -119,6 +120,17 @@ const KALK=[
   return{l,sk:'PRAWDZIWY RABAT'+za,sv:d2*n,svt:rab(d2,v.pn),kol:'green',pod:UO}},
  w:'reklamowany rabat = (cena przed − cena promocyjna) ÷ cena przed × 100; prawdziwy rabat = (najniższa z 30 dni − cena promocyjna) ÷ najniższa z 30 dni × 100; kwoty rabatu × liczba sztuk',
  s:'Przykłady z Black Friday 2025 ze sklepów internetowych: obudowa komputera 369 → 189 zł (najniższa z 30 dni 199 zł), telewizor 4799 → 3999 zł (najniższa z 30 dni 4499 zł). Od 1.01.2023 przy obniżce sklep musi podać najniższą cenę z 30 dni przed obniżką (dyrektywa Omnibus, UOKiK). To nie jest porada.'},
+{id:'stopien',krot:'1°C mniej w domu',cat:0,nr:15,t:'1°C mniej w domu: ile oszczędzasz w sezonie',k:'temperatura obniżka stopień 1°C ogrzewanie kaloryfer termostat oszczędność sezon grzewczy dom ciepło',
+ i:'Ile rocznie oszczędzasz, obniżając temperaturę w domu? Wpisz roczny koszt ogrzewania i temperaturę przed zmianą i po niej.',
+ in:[{id:'k',l:'Roczny koszt ogrzewania',v:'4895',u:'zł',h:'Nie znasz go? Policz w kalkulatorze ogrzewania: ilenaprawde.pl/7'},{id:'tn',l:'Temperatura teraz',v:'22',u:'°C'},{id:'tp',l:'Temperatura po zmianie',v:'20',u:'°C'},{id:'pr',l:'Oszczędność na 1°C',v:'6',u:'%'}],
+ f:v=>{const d=v.tn-v.tp,ud=Math.min(1,Math.abs(d)*v.pr/100),o=v.k*ud,j=v.k*Math.min(1,v.pr/100),pl=v.tp<16?' Poniżej 16°C łatwo o wilgoć i pleśń.':'';
+  if(v.pr>100)return{l:[],sk:'SPRAWDŹ DANE',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Oszczędność na 1°C to procent od 0 do 100.'};
+  const l=[['Różnica temperatur',f1(Math.abs(d))+'°C'],['Zmiana kosztu za 1°C',zl(j)]];
+  if(d>0)return{l,sk:'OSZCZĘDNOŚĆ/SEZON',sv:o,svt:'−'+zl(o),kol:'green',pod:'1°C ≈ −'+zl(j)+'.'+pl,podKol:pl?'red':''};
+  if(d<0)return{l,sk:'WZROST KOSZTU/SEZON',sv:o,svt:'+'+zl(o),kol:'red',podKol:'red',pod:'Podnosisz temperaturę – koszt wzrośnie o ok. '+zl(o)+'.'};
+  return{l,sk:'ZMIANA KOSZTU/SEZON',sv:0,svt:'0,00 zł',kol:'green',pod:'Temperatura się nie zmienia – koszt też.'}},
+ w:'zmiana kosztu = roczny koszt ogrzewania × min(1; (temperatura teraz − temperatura po zmianie) × oszczędność na 1°C ÷ 100); za 1°C = koszt × oszczędność na 1°C ÷ 100',
+ s:'Przykład: dom na gaz, 15 000 kWh ciepła rocznie, gaz 0,31 zł/kWh z dystrybucją, sprawność kotła 95%: 15 000 × 0,31 ÷ 0,95 = 4894,74 zł (te same założenia co w #7). 1°C ≈ 6% to reguła orientacyjna: KAPE, Viessmann i BSM podają 6%, kb.pl i globenergia 5–8%, Danfoss 5%; fizycznie w sezonie jest średnio ok. 18°C różnicy między wnętrzem a zewnętrzem, więc 1°C to ok. 1/18, czyli ok. 5,6% ciepła. Bardziej oszczędzasz w dobrze ocieplonym domu niż w starym. Nie dotyczy mieszkań bez podzielników – tam rachunek zależy od rozliczenia spółdzielni. Poniżej 16°C łatwo o wilgoć i pleśń (poradniki gmin, Viessmann). To nie jest porada.'},
 {id:'bnpl',krot:'Kup teraz, zapłać później',cat:8,nr:14,t:'Kup teraz, zapłać później (BNPL): ile kosztuje spóźnienie i raty',k:'bnpl kup teraz zapłać później allegro pay paypo blik płacę później pko odroczona płatność raty odsetki spóźnienie bik rrso zakupy',
  i:'Płatność odroczona (np. Allegro Pay, PayPo, BLIK Płacę Później) spłacona w 30 dni zwykle nic nie kosztuje. Policz, ile kosztuje spóźnienie, a ile rozłożenie na raty.',
  in:[{id:'tr',l:'Co liczymy',v:'0',opt:[['Spóźnienie',0],['Raty',1]]},
