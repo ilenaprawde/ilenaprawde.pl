@@ -37,6 +37,7 @@ const okladka = id => { for (const o of odcinkiDla(id)) { const f = `img/filmy/$
 function wynikDla(c) {
   for (const o of odcinkiDla(c.id)) {
     const t = o.typ || 'koszt', per = o.okres ? ' / ' + o.okres : '';
+    if (t === 'razy' && o.razy != null) return { krotki: '×' + String(o.razy).replace('.', ','), pelny: 'Drożej ×' + String(o.razy).replace('.', ','), podpis: o.podpis, nr: o.nr };
     if (t === 'procent' && o.procent != null) return { krotki: MIN + proc(o.procent), pelny: `${MIN}${proc(o.procent)}`, podpis: o.podpis, nr: o.nr };
     if (typeof o.kwota === 'number') {
       const am = t === 'roznica' ? MIN + fk(o.kwota) : (o.znak || '') + fk(o.kwota);

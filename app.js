@@ -18,8 +18,9 @@ const playIcon=oo=>{const pl=el('span','play','▶');pl.setAttribute('role','lin
  const go=ev=>{ev.preventDefault();ev.stopPropagation();window.open(filmUrl(oo),'_blank','noopener')};pl.addEventListener('click',go);pl.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();go(ev)}});return pl};
 const MIN='−';
 const fk=v=>{const x=Number.isInteger(v)?String(v):v.toFixed(2).replace('.',','),[i,d]=x.split(',');return i.replace(/\B(?=(\d{3})+(?!\d))/g,' ')+(d?','+d:'')+' zł'};
-// wynik odcinka / kalkulatora: typ 'roznica' (zielone, z minusem), 'procent' (zielone), 'koszt' (neutralne, bez minusa); okres zawsze obok kwoty
+// wynik odcinka / kalkulatora: typ 'roznica' (zielone, z minusem), 'procent' (zielone), 'razy' (czerwone, „×5,11”), 'koszt' (neutralne, bez minusa); okres zawsze obok kwoty
 const wynik=o=>{const t=o.typ||'koszt',per=o.okres?'/ '+o.okres:'',pr=o.procent!=null&&t!=='procent'?MIN+(Number.isInteger(o.procent)?o.procent:String(o.procent).replace('.',','))+'%':'';
+ if(t==='razy')return{am:'×'+String(o.razy).replace('.',','),per:'',pr:'',kol:'red'};
  if(t==='procent')return{am:MIN+String(o.procent).replace('.',',')+'%',per:'',pr:'',kol:'green'};
  if(t==='roznica')return{am:MIN+fk(o.kwota),per,pr,kol:'green'};
  return{am:(o.znak||'')+fk(o.kwota),per,pr:'',kol:o.znak==='+'?'red':'ink'}};

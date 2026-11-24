@@ -34,7 +34,8 @@ const ODCINKI=[
 {nr:15,id:'stopien',pa:'2026-11-25T19:00:00+01:00',nazwa:'1°C mniej w domu: oszczędność',tytul:'Ile daje 1°C mniej w domu? (294 zł)',typ:'roznica',kwota:294,okres:'sezon',procent:6,podpis:'mniej w sezonie za 1°C'},
 {nr:16,id:'gwarancja',pa:'2026-11-26T19:00:00+01:00',nazwa:'Przedłużona gwarancja: opłacalność',tytul:'Czy przedłużona gwarancja się opłaca? (400 zł)',typ:'koszt',kwota:400,okres:'lata 3–5',podpis:'przedłużona gwarancja przy pralce 2000 zł'},
 {nr:17,id:'dostawa',pa:'2026-11-27T19:00:00+01:00',nazwa:'Darmowa dostawa: dorzucić czy zapłacić',tytul:'Dorzucić do darmowej dostawy? (+24 zł)',typ:'koszt',znak:'+',kwota:24,okres:'zakup',podpis:'tyle przepłacasz, dorzucając 39 zł'},
-{nr:18,id:'streaming',pa:'2026-11-28T19:00:00+01:00',nazwa:'Streaming: wszystko naraz czy po kolei',tytul:'Streaming naraz czy rotacja? (1057 zł)',typ:'roznica',kwota:1057,okres:'rok',procent:75,podpis:'różnicy rocznie: rotacja zamiast 4 naraz'}
+{nr:18,id:'streaming',pa:'2026-11-28T19:00:00+01:00',nazwa:'Streaming: wszystko naraz czy po kolei',tytul:'Streaming naraz czy rotacja? (1057 zł)',typ:'roznica',kwota:1057,okres:'rok',procent:75,podpis:'różnicy rocznie: rotacja zamiast 4 naraz'},
+{nr:19,id:'lek-dawka',pa:'2026-11-29T19:00:00+01:00',nazwa:'Lek: cena za tabletkę i kurację',tytul:'Paracetamol: zwykły czy musujący? (ponad 5× drożej)',typ:'razy',razy:5.11,podpis:'musujący drożej niż zwykły za 12 tabletek'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -233,6 +234,18 @@ const KALK=[
  in:[{id:'km',l:'Km autem w miesiącu',v:'500',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO,{id:'pk',l:'Parkowanie w miesiącu',v:'200',u:'zł'},{id:'bil',l:'Bilet miesięczny',v:'110',u:'zł'}],
  f:v=>{const a=v.km/100*v.sp*v.pb+v.pk,d=a-v.bil;return{l:[['Auto miesięcznie',zl(a)],['Bilet miesięcznie',zl(v.bil)],['Różnica miesięcznie',zl(d)]],sk:d>=0?'AUTO DROŻSZE/ROK':'AUTO TAŃSZE/ROK',sv:Math.abs(d)*12}},
  w:'km ÷ 100 × spalanie × cena paliwa + parking − bilet',s:'Wszystkie wartości domyślne to przykład.'},
+{id:'lek-dawka',krot:'Lek: cena za tabletkę',cat:1,nr:19,t:'Lek: cena za tabletkę i za kurację',k:'paracetamol apap efferalgan tabletki musujące lek apteka cena za sztukę kuracja opakowanie ibuprofen ból gorączka',
+ i:'Porównaj opakowania leku z tą samą substancją: ile kosztuje jedna tabletka i cała kuracja. Wpisz cenę i liczbę sztuk w opakowaniu (cena 0 = pomijamy).',
+ in:[{id:'ac',l:'Zwykła: cena opakowania',v:'2,99',u:'zł',opc:true},{id:'as',l:'Zwykła: liczba sztuk',v:'20',u:'szt.',opc:true},{id:'bc',l:'Markowa: cena opakowania',v:'10,99',u:'zł',opc:true},{id:'bs',l:'Markowa: liczba sztuk',v:'24',u:'szt.',opc:true},{id:'cc',l:'Musująca: cena opakowania',v:'12,20',u:'zł',opc:true},{id:'cs',l:'Musująca: liczba sztuk',v:'16',u:'szt.',opc:true},{id:'k',l:'Ile tabletek na kurację',v:'12',u:'szt.'}],
+ f:v=>{const N=['Zwykła','Markowa','Musująca'],it=[[v.ac,v.as],[v.bc,v.bs],[v.cc,v.cs]].map((x,i)=>({n:N[i],c:x[0],s:x[1]})).filter(x=>x.c>0&&x.s>0);
+  if(!it.length||!(v.k>0))return{l:[],sk:'SPRAWDŹ DANE',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Wpisz cenę i liczbę sztuk przynajmniej jednego opakowania oraz liczbę tabletek na kurację.'};
+  it.forEach(x=>{x.p=x.c/x.s;x.u=Math.round(x.c*v.k/x.s*100+1e-9)/100});
+  const l=[];it.forEach(x=>{l.push([x.n+': za 1 szt.',zl(x.p)]);l.push([x.n+': kuracja '+f1(v.k)+' szt.',zl(x.u)])});
+  if(it.length<2)return{l,sk:'KURACJA',sv:it[0].u,svt:zl(it[0].u),pod:'Dodaj drugie opakowanie, żeby porównać.'};
+  const mn=it.reduce((a,b)=>b.u<a.u?b:a),mx=it.reduce((a,b)=>b.u>a.u?b:a),d=Math.round((mx.u-mn.u)*100)/100;
+  return{l,sk:'RÓŻNICA ZA KURACJĘ',sv:d,svt:(d>0?'+':'')+zl(d),kol:d>0?'red':'green',pod:d>0&&mn.u>0?mx.n+' jest '+f2(mx.u/mn.u)+' razy droższa niż '+mn.n+' (najtańsza). Porównuj tylko leki z tą samą substancją i dawką.':'Ceny kuracji są takie same.'}},
+ w:'cena za 1 szt. = cena opakowania ÷ liczba sztuk; kuracja = cena za 1 szt. × liczba tabletek (zaokrąglona do grosza); różnica = najdroższa kuracja − najtańsza; „razy” = najdroższa ÷ najtańsza',
+ s:'Najniższe ceny z aptek internetowych, sprawdzone 24.11.2026: Paracetamol Zentiva 500 mg 20 szt. 2,99 zł (doz.pl), Apap 500 mg 24 tabl. powl. od 10,99 zł i Efferalgan 500 mg 16 tabl. musujących od 12,20 zł (gdziepolek.pl; w aptekach stacjonarnych drożej). Na sztukę: 0,15 / 0,46 / 0,76 zł; 12 szt.: 1,79 / 5,50 / 9,15 zł; 9,15 ÷ 1,79 = 5,11. Dawkowanie dla dorosłych: 500–1000 mg co 4–6 h, maks. 3 g na dobę (ChPL), zgodnie z ulotką. Ceny się zmieniają. To nie jest porada medyczna.'},
 {id:'zamiennik',krot:'Zamiennik leku',cat:1,nr:3,t:'Zamiennik leku: ile oszczędzasz',k:'lek leki apteka zamiennik generyk ibuprofen paracetamol krople przeziębienie',
  i:'Porównaj lek znanej marki z zamiennikiem o tej samej substancji i dawce. Wpisz ceny ze swojej apteki.',
  in:[{id:'m',l:'Cena leku znanej marki',v:'49,50',u:'zł'},{id:'z',l:'Cena zamiennika',v:'11,30',u:'zł'},{id:'n',l:'Ile opakowań w roku',v:'2',u:''}],
