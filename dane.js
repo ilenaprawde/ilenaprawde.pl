@@ -31,7 +31,8 @@ const ODCINKI=[
 {nr:11,id:'choinka',yt:'aPxKQ7POt2o',pa:'2026-11-21T19:00:00+01:00',nazwa:'Choinka żywa czy sztuczna',tytul:'Choinka żywa czy sztuczna: co taniej? (1040 zł)',typ:'roznica',kwota:1040,okres:'10 lat',procent:80,podpis:'przez 10 lat'},
 {nr:13,id:'obnizka',yt:'_1sTdNgNmFE',pa:'2026-11-23T19:00:00+01:00',nazwa:'Black Friday: prawdziwy rabat',tytul:'Black Friday: prawdziwy rabat z najniższej ceny z 30 dni',typ:'procent',procent:5,podpis:'zamiast reklamowanych −49%'},
 {nr:14,id:'bnpl',pa:'2026-11-24T19:00:00+01:00',nazwa:'Zapłać później: Allegro Pay, PayPo, BLIK',tytul:'Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?',typ:'koszt',znak:'+',kwota:640,okres:'30 rat',podpis:'tyle kosztują raty przy 2259 zł'},
-{nr:15,id:'stopien',pa:'2026-11-25T19:00:00+01:00',nazwa:'1°C mniej w domu: oszczędność',tytul:'Ile daje 1°C mniej w domu? (294 zł)',typ:'roznica',kwota:294,okres:'sezon',procent:6,podpis:'mniej w sezonie za 1°C'}
+{nr:15,id:'stopien',pa:'2026-11-25T19:00:00+01:00',nazwa:'1°C mniej w domu: oszczędność',tytul:'Ile daje 1°C mniej w domu? (294 zł)',typ:'roznica',kwota:294,okres:'sezon',procent:6,podpis:'mniej w sezonie za 1°C'},
+{nr:16,id:'gwarancja',pa:'2026-11-26T19:00:00+01:00',nazwa:'Przedłużona gwarancja: opłacalność',tytul:'Czy przedłużona gwarancja się opłaca? (400 zł)',typ:'koszt',kwota:400,okres:'lata 3–5',podpis:'przedłużona gwarancja przy pralce 2000 zł'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -131,6 +132,17 @@ const KALK=[
   return{l,sk:'ZMIANA KOSZTU/SEZON',sv:0,svt:'0,00 zł',kol:'green',pod:'Temperatura się nie zmienia – koszt też.'}},
  w:'zmiana kosztu = roczny koszt ogrzewania × min(1; (temperatura teraz − temperatura po zmianie) × oszczędność na 1°C ÷ 100); za 1°C = koszt × oszczędność na 1°C ÷ 100',
  s:'Przykład: dom na gaz, 15 000 kWh ciepła rocznie, gaz 0,31 zł/kWh z dystrybucją, sprawność kotła 95%: 15 000 × 0,31 ÷ 0,95 = 4894,74 zł (te same założenia co w #7). 1°C ≈ 6% to reguła orientacyjna: KAPE, Viessmann i BSM podają 6%, kb.pl i globenergia 5–8%, Danfoss 5%; fizycznie w sezonie jest średnio ok. 18°C różnicy między wnętrzem a zewnętrzem, więc 1°C to ok. 1/18, czyli ok. 5,6% ciepła. Bardziej oszczędzasz w dobrze ocieplonym domu niż w starym. Nie dotyczy mieszkań bez podzielników – tam rachunek zależy od rozliczenia spółdzielni. Poniżej 16°C łatwo o wilgoć i pleśń (poradniki gmin, Viessmann). To nie jest porada.'},
+{id:'gwarancja',krot:'Przedłużona gwarancja',cat:8,nr:16,t:'Przedłużona gwarancja: czy się opłaca',k:'przedłużona gwarancja rtv agd pralka lodówka telewizor sprzęt ochrona serwis naprawa rękojmia sprzedawca zakupy',
+ i:'Sprzedawca proponuje przedłużenie gwarancji? Policz, ile płacisz za rok dodatkowej ochrony i po ilu typowych naprawach się to zwraca.',
+ in:[{id:'c',l:'Cena sprzętu',v:'2000',u:'zł'},{id:'p',l:'Cena przedłużonej gwarancji',v:'20',u:'% ceny',opc:true},{id:'kw',l:'albo kwota (0 = liczymy z procentu)',v:'0',u:'zł',opc:true,h:'Jedno z dwóch. Jeśli wpiszesz kwotę, ma pierwszeństwo przed procentem.'},{id:'o',l:'Ochrona łącznie do',v:'5',u:'lat'},{id:'g',l:'Gwarancja producenta',v:'2',u:'lat'},{id:'n',l:'Typowa naprawa',v:'400',u:'zł'}],
+ f:v=>{const sk=v.kw>0?v.kw:v.c*v.p/100,pb=Math.max(2,v.g),ly=v.o-pb;
+  if(!(sk>0&&v.c>0))return{l:[],sk:'SPRAWDŹ DANE',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Wpisz cenę sprzętu oraz procent albo kwotę gwarancji.'};
+  if(ly<=0)return{l:[['Składka',zl(sk)]],sk:'SKŁADKA',sv:sk,svt:zl(sk),kol:'red',podKol:'red',pod:'Producent już daje tyle lat – nie dopłacaj.'};
+  const pc=sk/v.c*100,nr=v.n>0?Math.ceil(Math.round(sk/v.n*1e6)/1e6):NaN,lm=x=>x===1?'1 naprawa':(x%10>=2&&x%10<=4&&(x%100<12||x%100>14))?x+' naprawy':x+' napraw';
+  const zak=ly===1?'rok '+v.o:'lata '+(pb+1)+'–'+v.o;
+  return{l:[['Składka',zl(sk)+' ('+f1(pc)+'% ceny)'],['Płacisz za: '+zak,lat(ly)],['Za rok dodatkowej ochrony',zl(sk/ly)],['Zwróci się przy',Number.isFinite(nr)?lm(nr)+' po '+zl(v.n):'–']],sk:'SKŁADKA ZA '+zak.toUpperCase(),sv:sk,svt:zl(sk),pod:pc>=30?'Składka to już '+f1(pc)+'% ceny sprzętu.':'',podKol:pc>=30?'red':''}},
+ w:'składka = cena sprzętu × procent ÷ 100 (albo wpisana kwota); lata dodatkowej ochrony = ochrona łącznie − większa z liczb: 2 lata (odpowiedzialność sprzedawcy) i gwarancja producenta; za rok = składka ÷ lata; zwrot = składka ÷ typowa naprawa, zaokrąglone w górę',
+ s:'Składka zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl); pralka 1000 zł ≈ 300 zł za 3 dodatkowe lata (Pepper, 04.2026). Naprawy 2026 (cenauslug.pl): pompa 210–400 zł, grzałka 220–380 zł, łożyska 450–700 zł. Przykład: 2000 zł × 20% = 400 zł. Przez 2 lata za niezgodność towaru z umową odpowiada sprzedawca – za darmo. Przedłużona gwarancja to ubezpieczenie: sprawdź wyłączenia w warunkach. To nie jest porada.'},
 {id:'bnpl',krot:'Kup teraz, zapłać później',cat:8,nr:14,t:'Kup teraz, zapłać później (BNPL): ile kosztuje spóźnienie i raty',k:'bnpl kup teraz zapłać później allegro pay paypo blik płacę później pko odroczona płatność raty odsetki spóźnienie bik rrso zakupy',
  i:'Płatność odroczona (np. Allegro Pay, PayPo, BLIK Płacę Później) spłacona w 30 dni zwykle nic nie kosztuje. Policz, ile kosztuje spóźnienie, a ile rozłożenie na raty.',
  in:[{id:'tr',l:'Co liczymy',v:'0',opt:[['Spóźnienie',0],['Raty',1]]},
