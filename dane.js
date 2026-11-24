@@ -35,7 +35,7 @@ const ODCINKI=[
 {nr:16,id:'gwarancja',pa:'2026-11-26T19:00:00+01:00',nazwa:'Przedłużona gwarancja: opłacalność',tytul:'Czy przedłużona gwarancja się opłaca? (400 zł)',typ:'koszt',kwota:400,okres:'lata 3–5',podpis:'przedłużona gwarancja przy pralce 2000 zł'},
 {nr:17,id:'dostawa',pa:'2026-11-27T19:00:00+01:00',nazwa:'Darmowa dostawa: dorzucić czy zapłacić',tytul:'Dorzucić do darmowej dostawy? (+24 zł)',typ:'koszt',znak:'+',kwota:24,okres:'zakup',podpis:'tyle przepłacasz, dorzucając 39 zł'},
 {nr:18,id:'streaming',pa:'2026-11-28T19:00:00+01:00',nazwa:'Netflix, HBO, Disney+, Prime: naraz?',tytul:'Netflix, HBO Max, Disney+ i Prime: naraz czy po kolei? (1057 zł)',typ:'roznica',kwota:1057,okres:'rok',procent:75,podpis:'różnicy rocznie: rotacja zamiast 4 naraz'},
-{nr:19,id:'lek-dawka',pa:'2026-11-29T19:00:00+01:00',nazwa:'Lek: cena za tabletkę i kurację',tytul:'Paracetamol: zwykły czy musujący? (ponad 5× drożej)',typ:'razy',razy:5.11,podpis:'musujący drożej niż zwykły za 12 tabletek'}
+{nr:19,id:'lek-dawka',pa:'2026-11-29T19:00:00+01:00',nazwa:'Ten sam lek, 5× drożej: paracetamol',tytul:'Ten sam lek, 5× drożej: paracetamol zwykły czy musujący?',typ:'razy',razy:5.11,podpis:'musujący drożej niż zwykły za 12 tabletek'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -234,7 +234,7 @@ const KALK=[
  in:[{id:'km',l:'Km autem w miesiącu',v:'500',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO,{id:'pk',l:'Parkowanie w miesiącu',v:'200',u:'zł'},{id:'bil',l:'Bilet miesięczny',v:'110',u:'zł'}],
  f:v=>{const a=v.km/100*v.sp*v.pb+v.pk,d=a-v.bil;return{l:[['Auto miesięcznie',zl(a)],['Bilet miesięcznie',zl(v.bil)],['Różnica miesięcznie',zl(d)]],sk:d>=0?'AUTO DROŻSZE/ROK':'AUTO TAŃSZE/ROK',sv:Math.abs(d)*12}},
  w:'km ÷ 100 × spalanie × cena paliwa + parking − bilet',s:'Wszystkie wartości domyślne to przykład.'},
-{id:'lek-dawka',krot:'Lek: cena za tabletkę',cat:1,nr:19,t:'Lek: cena za tabletkę i za kurację',k:'paracetamol apap efferalgan tabletki musujące lek apteka cena za sztukę kuracja opakowanie ibuprofen ból gorączka',
+{id:'lek-dawka',krot:'Lek: cena za tabletkę',tk:'Paracetamol zwykły czy musujący',cat:1,nr:19,t:'Lek: cena za tabletkę i za kurację',k:'paracetamol apap efferalgan tabletki musujące lek apteka cena za sztukę kuracja opakowanie ibuprofen ból gorączka',
  i:'Porównaj opakowania leku z tą samą substancją: ile kosztuje jedna tabletka i cała kuracja. Wpisz cenę i liczbę sztuk w opakowaniu (cena 0 = pomijamy).',
  in:[{id:'ac',l:'Zwykła: cena opakowania',v:'2,99',u:'zł',opc:true},{id:'as',l:'Zwykła: liczba sztuk',v:'20',u:'szt.',opc:true},{id:'bc',l:'Markowa: cena opakowania',v:'10,99',u:'zł',opc:true},{id:'bs',l:'Markowa: liczba sztuk',v:'24',u:'szt.',opc:true},{id:'cc',l:'Musująca: cena opakowania',v:'12,20',u:'zł',opc:true},{id:'cs',l:'Musująca: liczba sztuk',v:'16',u:'szt.',opc:true},{id:'k',l:'Ile tabletek na kurację',v:'12',u:'szt.'}],
  f:v=>{const N=['Zwykła','Markowa','Musująca'],it=[[v.ac,v.as],[v.bc,v.bs],[v.cc,v.cs]].map((x,i)=>({n:N[i],c:x[0],s:x[1]})).filter(x=>x.c>0&&x.s>0);
