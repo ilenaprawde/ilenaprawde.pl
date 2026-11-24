@@ -33,8 +33,7 @@ function wiersze(){
  const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{if(o.plan)return{nr:o.nr,plan:true,pa:o.pa,nazwa:o.nazwa,cat:o.cat,szukaj:o.nazwa+' '+CATS[o.cat]+' '+o.nr};const c=calc(o.id);return{nr:o.nr,id:o.id,href:o.href,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
  const uzyte=new Set(ODCINKI.map(o=>o.id));
  const bez=KALK.filter(c=>!uzyte.has(c.id)).map(c=>{const r=c.f(defaults(c));return{nr:null,id:c.id,nazwa:c.krot,cat:c.cat,w:wynik({typ:c.typ||typSk(r.sk),kwota:Math.round(r.sv*100)/100,okres:c.okres||okresSk(r.sk)}),podpis:'przykład',szukaj:c.t+' '+c.k+' '+CATS[c.cat]}});
- const cmp={nr:8,cmp:true,id:'__abonamenty',href:'/abonamenty/',nazwa:'Porównywarka abonamentów',cat:6,w:{am:'8 ofert',per:'/ 24 mies.',pr:'',kol:'ink'},podpis:'porównaj sieci',szukaj:'porównywarka abonamentów abonament telefon play virgin orange nju plus plush t-mobile red bull cena sieć'};
- return eps.concat(bez,[cmp]);
+ return eps.concat(bez);
 }
 
 /* ---------- strona główna ---------- */
@@ -47,7 +46,7 @@ function home(){
    if(i>=0&&!k)return;const b=el('button','chip',n+' · '+k);b.type='button';b.setAttribute('aria-pressed',String(i===cat));
    b.onclick=()=>{cat=i;rozwin=false;chipy();rysuj()};box.appendChild(b)})}
  function rysuj(){
-  const lista=filtr(),ep=lista.filter(r=>r.nr!=null&&!r.cmp).slice(0,6);
+  const lista=filtr(),ep=lista.filter(r=>r.nr!=null).slice(0,6);
   $('nowe').hidden=!ep.length;const w=$('wall');w.innerHTML='';
   ep.forEach((r,i)=>{if(r.plan){const a=el('div','card plan');a.setAttribute('aria-disabled','true');a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];const p=el('div','paper');p.appendChild(el('div','tagrow')).appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));const v=el('div','v c-ink');v.appendChild(el('span','am','wkrótce – '+dm(r.pa)));v.appendChild(el('span','arr','→'));p.appendChild(v);a.appendChild(pin);a.appendChild(p);w.appendChild(a);return}const a=el('a','card');a.href=r.href||url(r.id,r.params);a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';
    const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];
