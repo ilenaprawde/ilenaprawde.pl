@@ -257,7 +257,7 @@ const KALK=[
  in:[{id:'aa',l:'Oferta A: abonament',v:'45',u:'zł/mies.'},{id:'ak',l:'Oferta A: aktywacja',v:'50',u:'zł'},{id:'am',l:'Oferta A: liczba miesięcy',v:'24',u:''},{id:'ba',l:'Oferta B: abonament',v:'20',u:'zł/mies.'},{id:'bk',l:'Oferta B: aktywacja',v:'30',u:'zł'},{id:'bm',l:'Oferta B: liczba miesięcy',v:'24',u:''}],
  pre:[['Play S (A) vs Virgin Mobile S (B)',{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}]],
  f:v=>{const A=v.aa*v.am+v.ak,B=v.ba*v.bm+v.bk,d=A-B,tan=d>=0?'B':'A',pr=(d>=0?A:B)>0?f1(Math.abs(d)/(d>=0?A:B)*100)+'%':'–';return{l:[['Koszt oferty A ('+f1(v.am)+' mies.)',zl(A)],['Koszt oferty B ('+f1(v.bm)+' mies.)',zl(B)],['Taniej oferta '+tan+' o',pr]],sk:v.am===v.bm?'RÓŻNICA ZA '+f1(v.am)+' MIES.':'RÓŻNICA ZA OKRES UMOWY',sv:Math.abs(d)}},
- w:'abonament × miesiące + aktywacja; różnica = koszt A − koszt B; procent = różnica ÷ droższa oferta × 100',s:'Ceny z listopada 2026, przykładowe: Play Oferta S (45 zł po rabatach za e-fakturę i zgody, aktywacja 50 zł, umowa 24 mies.) i Virgin Mobile S (20 zł po rabatach, aktywacja 30 zł, bez umowy terminowej), bez telefonu. Virgin Mobile to marka Play (ta sama sieć). Po okresie umowy ceny mogą wzrosnąć. To nie jest porada.'}
+ w:'abonament × miesiące + aktywacja; różnica = koszt A − koszt B; procent = różnica ÷ droższa oferta × 100',s:'Ceny z listopada 2026, przykładowe: Play Oferta S (umowa 24 mies.) i Virgin Mobile S (bez umowy terminowej), ceny po rabatach za e-fakturę i zgody, bez telefonu. Virgin Mobile to marka Play (ta sama sieć). Po okresie umowy ceny mogą wzrosnąć. To nie jest porada.'}
 ];
 window.ILE={KALK,ODCINKI,CATS,num,f2,f1,zl,kwh,yrs};
 })();
