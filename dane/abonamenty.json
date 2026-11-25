@@ -1,6 +1,6 @@
 {
  "wersja": 1,
- "aktualizacja": "2026-11-25T05:49:28+01:00",
+ "aktualizacja": "2026-11-25T05:51:22+01:00",
  "oferty": [
   {
    "id": "virgin-s",
@@ -137,7 +137,7 @@
    "plan": "Play S (abonament, nowy numer)",
    "url": "https://www.play.pl/oferta/play-abonament/nowy-numer",
    "uwagi": [
-    "Cena S ładowana skryptem; Play często zwraca automatowi błąd zamiast oferty – wtedy pokazujemy wartość potwierdzoną ręcznie 15.11.2026 z oznaczeniem „do sprawdzenia”."
+    "Cena S ładowana skryptem – czytamy ją przeglądarką (potwierdzone ręcznie 25.11.2026 w przeglądarce, zgodnie z odczytem automatu). Gdy odczyt zawiedzie, pokazujemy ostatnią wartość z oznaczeniem „do sprawdzenia”."
    ],
    "cena": 45,
    "bez": 55,
@@ -146,8 +146,8 @@
    "aktywacja": 50,
    "gb": "15 GB + 5 GB online",
    "umowa": "24 mies.",
-   "odczyt": "2026-11-25T05:49:28+01:00",
-   "ostatni_ok": "2026-11-25T05:49:28+01:00",
+   "odczyt": "2026-11-25T05:51:22+01:00",
+   "ostatni_ok": "2026-11-25T05:51:22+01:00",
    "potwierdzono": "2026-11-25",
    "potwierdzono_zrodlo": "auto",
    "koszt24": 1130,
