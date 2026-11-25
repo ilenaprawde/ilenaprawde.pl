@@ -1,6 +1,6 @@
 {
  "wersja": 1,
- "aktualizacja": "2026-11-25T05:51:22+01:00",
+ "aktualizacja": "2026-11-25T06:12:35+01:00",
  "oferty": [
   {
    "id": "virgin-s",
@@ -34,18 +34,18 @@
    "plan": "Plush S (nowy numer)",
    "url": "https://www.plush.pl/",
    "uwagi": [
-    "Wartości potwierdzone ręcznie 15.11.2026 na oficjalnej stronie Plusha – strony plush.pl (błąd certyfikatu) nie da się odczytać automatem; po 30 dniach bez potwierdzenia oferta wraca do statusu „do sprawdzenia”."
+    "Cena, GB i umowa potwierdzone ręcznie 25.11.2026 na plushbezlimitu.pl (zrzuty od Pawła; aktywacja 0 zł – z potwierdzenia 15.11.2026); strony plush.pl (błąd certyfikatu) nie da się odczytać automatem; po 30 dniach bez potwierdzenia oferta wraca do statusu „do sprawdzenia”."
    ],
    "cena": 25,
    "bez": 35,
    "bez_wyliczone": false,
-   "potwierdzone_recznie": "2026-11-15",
+   "potwierdzone_recznie": "2026-11-25",
    "aktywacja": 0,
    "gb": "50 GB (100 GB po 6 mies.)",
    "umowa": "bezterminowa",
-   "odczyt": "2026-11-24T06:48:40+01:00",
-   "ostatni_ok": "2026-11-24T06:48:40+01:00",
-   "potwierdzono": "2026-11-15",
+   "odczyt": "2026-11-25T06:12:35+01:00",
+   "ostatni_ok": "2026-11-25T06:12:35+01:00",
+   "potwierdzono": "2026-11-25",
    "potwierdzono_zrodlo": "reczne",
    "koszt24": 600,
    "koszt24_bez": 840,
