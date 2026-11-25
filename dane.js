@@ -36,7 +36,7 @@ const ODCINKI=[
 {nr:17,id:'dostawa',pa:'2026-11-27T19:00:00+01:00',nazwa:'Darmowa dostawa: dorzucić czy zapłacić',tytul:'Dorzucić do darmowej dostawy? (+24 zł)',typ:'koszt',znak:'+',kwota:24,okres:'zakup',podpis:'tyle przepłacasz, dorzucając 39 zł'},
 {nr:18,id:'streaming',pa:'2026-11-28T19:00:00+01:00',nazwa:'Netflix, HBO, Disney+, Prime: naraz?',tytul:'Netflix, HBO Max, Disney+ i Prime: naraz czy po kolei? (1057 zł)',typ:'roznica',kwota:1057,okres:'rok',procent:75,podpis:'różnicy rocznie: rotacja zamiast 4 naraz'},
 {nr:19,id:'lek-dawka',pa:'2026-11-29T19:00:00+01:00',nazwa:'Ten sam lek, 5× drożej: paracetamol',tytul:'Ten sam lek, 5× drożej: paracetamol zwykły czy musujący?',typ:'razy',razy:5.11,podpis:'musujący drożej niż zwykły za 12 tabletek'},
-{nr:20,id:'suszarka',pa:'2026-11-30T19:00:00+01:00',nazwa:'Suszarka do ubrań: zwróci się?',tytul:'Suszarka do ubrań z pompą ciepła: zwróci się? (293 zł/rok)',typ:'koszt',kwota:293,okres:'rok',podpis:'prąd suszarki przy 4 praniach w tygodniu'}
+{nr:20,id:'suszarka',pa:'2026-11-30T19:00:00+01:00',nazwa:'Suszarka do ubrań: czy się zwróci?',tytul:'Suszarka do ubrań z pompą ciepła: czy się zwróci? (293 zł/rok)',typ:'koszt',kwota:293,okres:'rok',podpis:'prąd suszarki przy 4 praniach w tygodniu'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
