@@ -8,7 +8,8 @@ const lat=n=>{const i=Math.round(n);return i!==n?f1(n)+' lat':i===1?'1 rok':(i%1
 const zl=v=>f2(v)+' zł', kwh=v=>f2(v)+' kWh';
 const yrs=m=>m<24?f1(m)+' mies.':f1(m/12)+' lat';
 const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
-const PALIWO={id:'pb',l:'Cena paliwa',v:'6,20',u:'zł/l'};
+// Pb95: średnia krajowa z autocentrum.pl, 25.11.2026 (N128); cotygodniowa aktualizacja: fabryka/silnik/ceny_strona.json (pozycja „paliwo”)
+const PALIWO={id:'pb',l:'Cena paliwa',v:'5,80',u:'zł/l'};
 const CATS=['Prąd i dom','Apteka','Samochód','Praca i pensja','Pieniądze','Mieszkanie','Telefon i internet','Święta','Zakupy'];
 // ODCINKI: nr, id kalkulatora, wynik z filmu: typ ('roznica' = ile można zyskać → zielone „−620 zł / 2 lata”; 'procent' → zielone „−77%”; 'koszt' → neutralne „96 zł / rok”), kwota (liczba), okres ('rok' | '2 lata' | 'sezon' …; zawsze widoczny), procent (opcjonalnie, liczba bez znaku), podpis pod kwotą,
 // kalkulatory bez odcinka: typ/okres wynikają z etykiety wyniku (sk), można je nadpisać polami typ/okres w KALK,
@@ -242,9 +243,9 @@ const KALK=[
  s:'Ceny opon 205/55 R16 za sztukę: mediana 6 ofert z oponeo.pl z 15.11.2026 – budżet (Dębica, Goodride, Kormoran): zimowe 268, letnie 225, całoroczne 252 zł; średnia (Kleber, Fulda, Hankook, Sava): 358 / 251 / 314 zł; premium (Michelin, Continental, Goodyear, Bridgestone): 420 / 338 / 397 zł. Wymiana 4 opon z wyważeniem ok. 160 zł (kb.pl 2026: 158 zł), przechowalnia ok. 150 zł za sezon (kb.pl). Producenci zalecają wymianę opon po ok. 5 latach, najpóźniej 10 lat od produkcji. Trwałość w km przykładowa. Liczymy tylko koszty. Bezpieczeństwo i warunki jazdy (góry, śnieg) mogą przesądzić o wyborze. To nie jest porada.'},
 {id:'lpg',krot:'Benzyna czy LPG',cat:2,t:'Benzyna czy LPG: kiedy instalacja się zwraca',k:'lpg gaz instalacja gazowa benzyna auto samochód zwrot',
  i:'Auto na gazie pali go więcej niż benzyny, ale gaz jest tańszy. Liczymy roczną oszczędność i zwrot instalacji.',
- in:[{id:'km',l:'Ile km rocznie',v:'15000',u:''},{id:'sb',l:'Spalanie benzyny',v:'7',u:'l/100 km'},PALIWO,{id:'sg',l:'Spalanie LPG',v:'8,5',u:'l/100 km'},{id:'pg',l:'Cena LPG',v:'3,10',u:'zł/l'},{id:'c',l:'Koszt instalacji',v:'3500',u:'zł'}],
+ in:[{id:'km',l:'Ile km rocznie',v:'15000',u:''},{id:'sb',l:'Spalanie benzyny',v:'7',u:'l/100 km'},{id:'pb',l:'Cena benzyny',v:'6,20',u:'zł/l'},{id:'sg',l:'Spalanie LPG',v:'8,5',u:'l/100 km'},{id:'pg',l:'Cena LPG',v:'3,10',u:'zł/l'},{id:'c',l:'Koszt instalacji',v:'3500',u:'zł'}],
  f:v=>{const b=v.km/100*v.sb*v.pb,g=v.km/100*v.sg*v.pg,s=b-g;return{l:[['Benzyna rocznie',zl(b)],['LPG rocznie',zl(g)],['Zwrot instalacji',s>0?yrs(v.c/s*12):'brak']],sk:'OSZCZĘDNOŚĆ/ROK',sv:s}},
- w:'km ÷ 100 × (spalanie × cena) benzyny − to samo dla LPG',s:'Ceny i spalanie to przykład. Bez kosztów przeglądów instalacji.'},
+ w:'km ÷ 100 × (spalanie × cena) benzyny − to samo dla LPG',s:'Ceny i spalanie to przykład. Cena benzyny 6,20 zł/l i LPG 3,10 zł/l jak w filmie #6 (listopad 2026) – dlatego wynik zgadza się z filmem. Bez kosztów przeglądów instalacji.'},
 {id:'auto-czy-bilet',krot:'Auto czy bilet',cat:2,t:'Auto czy komunikacja miejska: co taniej w mieście',k:'auto komunikacja bilet miesięczny autobus tramwaj metro parking miasto',
  i:'Porównanie paliwa i parkowania z biletem miesięcznym. Nie liczymy utraty wartości auta ani ubezpieczenia, więc auto wychodzi tu najtaniej, jak może.',
  in:[{id:'km',l:'Km autem w miesiącu',v:'500',u:''},{id:'sp',l:'Spalanie',v:'8',u:'l/100 km'},PALIWO,{id:'pk',l:'Parkowanie w miesiącu',v:'200',u:'zł'},{id:'bil',l:'Bilet miesięczny',v:'110',u:'zł'}],
@@ -252,7 +253,7 @@ const KALK=[
  w:'km ÷ 100 × spalanie × cena paliwa + parking − bilet',s:'Wszystkie wartości domyślne to przykład.'},
 {id:'podroz',krot:'Podróż',tk:'Podróż: auto, pociąg czy autobus',cat:2,nr:22,t:'Dojazd na święta: auto, pociąg czy FlixBus',k:'podróż dojazd na święta auto pociąg autobus flixbus pkp intercity bilet rodzina dzieci paliwo warszawa kraków trasa',
  i:'Porównanie kosztu podróży autem, pociągiem i autobusem dla całej rodziny. Ceny biletów są dynamiczne – wpisz te, które widzisz w sklepie. Auto liczymy tylko z paliwa i opłat, bez parkingu i zużycia auta.',
- in:[{id:'km',l:'Dystans w jedną stronę',v:'295',u:'km'},{id:'tz',l:'Jadę tam i z powrotem',v:'1',chk:true},{id:'sp',l:'Spalanie',v:'6,5',u:'l/100 km'},{id:'pb',l:'Cena paliwa',v:'5,80',u:'zł/l'},{id:'op',l:'Opłaty drogowe za cały wyjazd',v:'0',u:'zł'},{id:'dd',l:'Liczba dorosłych',v:'2',u:''},{id:'dz',l:'Liczba dzieci',v:'2',u:''},
+ in:[{id:'km',l:'Dystans w jedną stronę',v:'295',u:'km'},{id:'tz',l:'Jadę tam i z powrotem',v:'1',chk:true},{id:'sp',l:'Spalanie',v:'6,5',u:'l/100 km'},PALIWO,{id:'op',l:'Opłaty drogowe za cały wyjazd',v:'0',u:'zł'},{id:'dd',l:'Liczba dorosłych',v:'2',u:''},{id:'dz',l:'Liczba dzieci',v:'2',u:''},
   {id:'bd',l:'Pociąg: bilet dorosłego w jedną stronę',v:'96,85',u:'zł'},{id:'bk',l:'Pociąg: bilet dziecka w jedną stronę',v:'61,02',u:'zł',h:'Dzieci do 4 lat w PKP Intercity jadą za darmo (ulga 100%), uczniowie mają 37% ulgi.'},
   {id:'ad',l:'Autobus: bilet dorosłego w jedną stronę',v:'47,49',u:'zł'},{id:'ak',l:'Autobus: bilet dziecka w jedną stronę',v:'47,49',u:'zł'},{id:'ar',l:'Autobus: opłata za rezerwację (za kurs)',v:'3,99',u:'zł'}],
  f:v=>{const os=v.dd+v.dz;
