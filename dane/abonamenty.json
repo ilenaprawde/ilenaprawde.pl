@@ -1,6 +1,6 @@
 {
  "wersja": 1,
- "aktualizacja": "2026-11-24T06:48:40+01:00",
+ "aktualizacja": "2026-11-25T05:49:28+01:00",
  "oferty": [
   {
    "id": "virgin-s",
@@ -142,28 +142,18 @@
    "cena": 45,
    "bez": 55,
    "bez_wyliczone": true,
+   "potwierdzone_recznie": null,
    "aktywacja": 50,
    "gb": "15 GB + 5 GB online",
    "umowa": "24 mies.",
-   "promo_pierwszy_miesiac": null,
-   "dodatek_bez_limitu": null,
-   "ostatni_ok": null,
-   "potwierdzono": "2026-11-15",
-   "potwierdzono_zrodlo": "reczne",
-   "odczyt": "2026-11-24T06:48:40+01:00",
-   "proba_nieudana": [
-    "nie znaleziono wzorca pola „cena” na https://www.play.pl/oferta/play-abonament/nowy-numer",
-    "nie znaleziono wzorca pola „aktywacja” na https://www.play.pl/oferta/play-abonament/nowy-numer",
-    "nie znaleziono wzorca pola „gb” na https://www.play.pl/oferta/play-abonament/nowy-numer",
-    "nie znaleziono wzorca pola „umowa” na https://www.play.pl/oferta/play-abonament/nowy-numer"
-   ],
-   "nieudane_z_rzedu": 12,
+   "odczyt": "2026-11-25T05:49:28+01:00",
+   "ostatni_ok": "2026-11-25T05:49:28+01:00",
+   "potwierdzono": "2026-11-25",
+   "potwierdzono_zrodlo": "auto",
    "koszt24": 1130,
    "koszt24_bez": 1370,
-   "status": "do_sprawdzenia",
-   "powody": [
-    "nie udało się dziś odczytać strony operatora"
-   ]
+   "status": "ok",
+   "powody": []
   },
   {
    "id": "orange-xs",
@@ -172,31 +162,26 @@
    "plan": "Orange Plan XS (nowy numer, online)",
    "url": "https://www.orange.pl/abonament/nowy-numer",
    "uwagi": [
-    "Plan XS: 15 GB + 5 GB za zakup online przez 24 mies., od 25. mies. 15 GB. Cena po 24 mies. nie jest podana na stronie.",
-    "Promocja: 5 mies. za 0 zł (do sprawdzenia) – nie wliczona w koszt 24 mies.; z nią różnica Orange→nju to ok. 171 zł (stan 18.11.2026)."
+    "Wartości potwierdzone ręcznie 25.11.2026 na orange.pl – strona zrywa połączenie z automatem, więc nie da się jej odczytać codziennie; po 30 dniach bez potwierdzenia oferta wraca do statusu „do sprawdzenia”.",
+    "Plan XS: 20 GB tylko online (w tym 15 GB w roamingu UE); cena po 24 mies. nie jest podana na stronie.",
+    "Cena bez rabatów to wyliczenie: strona podaje dwa rabaty po 5 zł/mies. (e-faktura i zgody marketingowe), z których można zrezygnować.",
+    "Promocji „5 mies. za 0 zł” dla planu XS nie ma już na stronie (stan 25.11.2026: promocje widać tylko przy S/M/L) – nie wliczamy żadnej promocji w koszt 24 mies."
    ],
    "cena": 45,
    "bez": 55,
    "bez_wyliczone": true,
+   "potwierdzone_recznie": "2026-11-25",
    "aktywacja": 60,
    "gb": "20 GB (online)",
    "umowa": "24 mies.",
-   "promo_pierwszy_miesiac": null,
-   "dodatek_bez_limitu": null,
-   "ostatni_ok": "2026-11-17T06:48:32+01:00",
-   "potwierdzono": "2026-11-17",
-   "potwierdzono_zrodlo": "auto",
-   "odczyt": "2026-11-24T06:48:40+01:00",
-   "proba_nieudana": [
-    "nie znaleziono wzorca pola „cena” na https://www.orange.pl/abonament/nowy-numer"
-   ],
-   "nieudane_z_rzedu": 7,
+   "odczyt": "2026-11-25T05:49:28+01:00",
+   "ostatni_ok": "2026-11-25T05:49:28+01:00",
+   "potwierdzono": "2026-11-25",
+   "potwierdzono_zrodlo": "reczne",
    "koszt24": 1140,
    "koszt24_bez": 1380,
-   "status": "do_sprawdzenia",
-   "powody": [
-    "nie udało się dziś odczytać strony operatora"
-   ]
+   "status": "ok",
+   "powody": []
   },
   {
    "id": "tmobile",
