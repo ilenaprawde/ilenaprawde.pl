@@ -36,7 +36,7 @@ const ODCINKI=[
 {nr:17,id:'dostawa',pa:'2026-11-27T19:00:00+01:00',nazwa:'Darmowa dostawa: dorzucić czy zapłacić',tytul:'Dorzucić do darmowej dostawy? (+24 zł)',typ:'koszt',znak:'+',kwota:24,okres:'zakup',podpis:'tyle przepłacasz, dorzucając 39 zł'},
 {nr:18,id:'streaming',pa:'2026-11-28T19:00:00+01:00',nazwa:'Netflix, HBO, Disney+, Prime: naraz?',tytul:'Netflix, HBO Max, Disney+ i Prime: naraz czy po kolei? (1057 zł)',typ:'roznica',kwota:1057,okres:'rok',procent:75,podpis:'różnicy rocznie: rotacja zamiast 4 naraz'},
 {nr:19,id:'lek-dawka',pa:'2026-11-29T19:00:00+01:00',nazwa:'Ten sam lek, 5× drożej: paracetamol',tytul:'Ten sam lek, 5× drożej: paracetamol zwykły czy musujący?',typ:'razy',razy:5.11,podpis:'musujący drożej niż zwykły za 12 tabletek'},
-{nr:20,id:'suszarka',pa:'2026-11-30T19:00:00+01:00',nazwa:'Suszarka za 2000 zł: zwróci się?',tytul:'Suszarka z pompą ciepła: zwróci się? (293 zł/rok)',typ:'koszt',kwota:293,okres:'rok',podpis:'prąd suszarki przy 4 praniach w tygodniu'}
+{nr:20,id:'suszarka',pa:'2026-11-30T19:00:00+01:00',nazwa:'Suszarka do ubrań: zwróci się?',tytul:'Suszarka do ubrań z pompą ciepła: zwróci się? (293 zł/rok)',typ:'koszt',kwota:293,okres:'rok',podpis:'prąd suszarki przy 4 praniach w tygodniu'}
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
@@ -64,7 +64,7 @@ const KALK=[
  in:[{id:'e',l:'Prąd na jedno pranie',v:'0,7',u:'kWh'},{id:'wl',l:'Woda na jedno pranie',v:'50',u:'l'},PRAD,{id:'wm',l:'Cena wody ze ściekami',v:'15',u:'zł/m³'},{id:'tyg',l:'Ile prań w tygodniu',v:'4',u:''}],
  f:v=>{const pr=v.e*v.p,wo=v.wl/1000*v.wm,one=pr+wo,y=one*v.tyg*52;return{l:[['Prąd na pranie',zl(pr)],['Woda na pranie',zl(wo)],['Jedno pranie',zl(one)]],sk:'ROCZNIE',sv:y}},
  w:'kWh × cena prądu + litry ÷ 1000 × cena m³, razy prania w roku',s:'Wartości domyślne to przykład; cena wody różni się między gminami.'},
-{id:'suszarka',krot:'Suszarka',tk:'Suszarka z pompą ciepła',cat:0,nr:20,t:'Suszarka z pompą ciepła: czy się zwróci',k:'suszarka pompa ciepła pranie suszenie prąd kaloryfer sznurek bęben kwh',
+{id:'suszarka',krot:'Suszarka do ubrań',tk:'Suszarka do ubrań z pompą ciepła',cat:0,nr:20,t:'Suszarka do ubrań z pompą ciepła: czy się zwróci',k:'suszarka do ubrań pompa ciepła pranie suszenie prąd kaloryfer sznurek bęben kwh',
  i:'Ile prądu zjada suszarka i ile ciepła z domu zabiera pranie na kaloryferze. Sznurek na balkonie latem kosztuje 0 zł. Wartości domyślne to przykład z etykiety energetycznej: 128 kWh na 100 cykli.',
  in:[{id:'c',l:'Cena suszarki',v:'2000',u:'zł'},{id:'e',l:'Prąd na 1 suszenie',v:'1,28',u:'kWh'},PRAD,{id:'tyg',l:'Ile prań w tygodniu',v:'4',u:''},{id:'n',l:'Ile lat',v:'10',u:''},{id:'wl',l:'Kaloryfer: woda w praniu po wirowaniu',v:'4',u:'l'},{id:'q',l:'Kaloryfer: koszt 1 kWh ciepła w domu',v:'0,33',u:'zł/kWh'},{id:'ms',l:'Kaloryfer: miesiące sezonu grzewczego',v:'6',u:''}],
  f:v=>{const one=v.e*v.p,rok=one*v.tyg*52,raz=v.c+rok*v.n,kal=v.wl*0.68*v.q,kr=kal*v.tyg*52*v.ms/12,d=Math.round((kal-one)*100)/100;
