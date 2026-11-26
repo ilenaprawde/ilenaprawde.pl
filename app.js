@@ -23,47 +23,48 @@ const wynik=o=>{const t=o.typ||'koszt',per=o.okres?'/ '+o.okres:'',pr=o.procent!
  if(t==='razy')return{am:'×'+String(o.razy).replace('.',','),per:'',pr:'',kol:'red'};
  if(t==='procent')return{am:MIN+String(o.procent).replace('.',',')+'%',per:'',pr:'',kol:'green'};
  if(t==='roznica')return{am:MIN+fk(o.kwota),per,pr,kol:'green'};
- return{am:(o.znak||'')+fk(o.kwota),per,pr:'',kol:o.znak==='+'?'red':'ink'}};
+ return{am:(o.znak||'')+fk(o.kwota),per,pr:'',kol:'red'}};
 const okresSk=sk=>/SEZON/.test(sk)?'sezon':'rok';
 const typSk=sk=>/OSZCZĘD/.test(sk)?'roznica':'koszt';
 const defaults=c=>{const v={};c.in.forEach(x=>v[x.id]=num(x.v));return v};
 
-/* ---------- wiersze (rachunki): odcinki od najnowszych + kalkulatory bez odcinka ---------- */
-function wiersze(){
- const eps=[...ODCINKI].sort((a,b)=>b.nr-a.nr).map(o=>{if(o.plan)return{nr:o.nr,plan:true,pa:o.pa,nazwa:o.nazwa,cat:o.cat,szukaj:o.nazwa+' '+CATS[o.cat]+' '+o.nr};const c=calc(o.id);return{nr:o.nr,id:o.id,href:o.href,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),podpis:o.podpis,szukaj:o.nazwa+' '+c.t+' '+c.k+' '+CATS[c.cat]+' '+o.nr}});
- const uzyte=new Set(ODCINKI.map(o=>o.id));
- const bez=KALK.filter(c=>!uzyte.has(c.id)).map(c=>{const r=c.f(defaults(c));return{nr:null,id:c.id,nazwa:c.krot,cat:c.cat,w:wynik({typ:c.typ||typSk(r.sk),kwota:Math.round(r.sv*100)/100,okres:c.okres||okresSk(r.sk)}),podpis:'przykład',szukaj:c.t+' '+c.k+' '+CATS[c.cat]}});
- return eps.concat(bez);
+/* ---------- karty: jeden kalkulator = jedna karta (wynik z najnowszego filmu albo przykład) ---------- */
+function karty(){
+ return KALK.map(c=>{const eps=ODCINKI.filter(o=>o.id===c.id&&!o.plan&&!o.href).sort((a,b)=>b.nr-a.nr),o=eps[0];
+  if(o)return{id:c.id,nr:o.nr,o,params:o.params,nazwa:o.nazwa||c.krot,cat:c.cat,w:wynik(o),szukaj:[o.nazwa,c.t,c.k,CATS[c.cat],...eps.map(e=>e.nr+' '+(e.nazwa||''))].join(' ')};
+  const r=c.f(defaults(c));
+  return{id:c.id,nr:null,nazwa:c.krot,cat:c.cat,w:wynik({typ:c.typ||typSk(r.sk),kwota:Math.round(r.sv*100)/100,okres:c.okres||okresSk(r.sk)}),szukaj:[c.t,c.k,CATS[c.cat]].join(' ')}})
 }
+// karta: #N ▶ (albo PRZYKŁAD), nazwa, wynik – wynik zawsze na dole karty (wyrównany w rzędzie)
+function karta(r,href){const a=el('a','card');a.href=href||url(r.id,r.params);
+ const p=el('div','paper');const tr=el('div','tagrow');
+ if(r.nr!=null){const tg=el('small','tg','#'+r.nr);if(r.o&&opub(r.o))tg.appendChild(playIcon(r.o));tr.appendChild(tg);if(r.o&&!opub(r.o))tr.appendChild(el('small','soon',dm(r.o.pa)))}
+ else tr.appendChild(el('small','tg','przykład'));
+ p.appendChild(tr);p.appendChild(el('div','t',r.nazwa));
+ const v=el('div','v c-'+r.w.kol);v.appendChild(el('span','am',r.w.am));v.appendChild(el('span','per',(r.w.per||'')+(r.w.pr?(r.w.per?' · ':'')+r.w.pr:'')||' '));p.appendChild(v);
+ a.appendChild(p);return a}
 
-/* ---------- strona główna ---------- */
+/* ---------- strona główna: najnowsze filmy + 6 działów ---------- */
 function home(){
- const wsz=wiersze();let cat=-1,rozwin=false;
- const filtr=()=>{const ws=norm($('q').value.trim()).split(/\s+/).filter(Boolean);return wsz.filter(r=>(cat<0||r.cat===cat)&&ws.every(w=>norm(r.szukaj).includes(w)))};
- $('ile').textContent=KALK.length+' kalkulatorów ze wzorem, źródłem i datą cen.';
- function chipy(){const box=$('cats');box.innerHTML='';
-  [['Wszystkie',-1,wsz.length],...CATS.map((n,i)=>[n,i,wsz.filter(r=>r.cat===i).length])].forEach(([n,i,k])=>{
-   if(i>=0&&!k)return;const b=el('button','chip',n+' · '+k);b.type='button';b.setAttribute('aria-pressed',String(i===cat));
-   b.onclick=()=>{cat=i;rozwin=false;chipy();rysuj()};box.appendChild(b)})}
- function rysuj(){
-  const lista=filtr(),ep=lista.filter(r=>r.nr!=null).slice(0,6);
-  $('nowe').hidden=!ep.length;const w=$('wall');w.innerHTML='';
-  ep.forEach((r,i)=>{if(r.plan){const a=el('div','card plan');a.setAttribute('aria-disabled','true');a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];const p=el('div','paper');p.appendChild(el('div','tagrow')).appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));const v=el('div','v c-ink');v.appendChild(el('span','am','wkrótce – '+dm(r.pa)));v.appendChild(el('span','arr','→'));p.appendChild(v);a.appendChild(pin);a.appendChild(p);w.appendChild(a);return}const a=el('a','card');a.href=r.href||url(r.id,r.params);a.style.transform='rotate('+ROT[i%ROT.length]+'deg)';
-   const pin=el('i','pin');pin.style.background=PINS[i%PINS.length];
-   const p=el('div','paper');const tr=el('div','tagrow');tr.appendChild(el('small','tg','#'+r.nr+' · '+CATS[r.cat]));
-   const oo=ODCINKI.find(x=>x.nr===r.nr);
-   if(oo&&opub(oo))tr.appendChild(playIcon(oo));
-   p.appendChild(tr);p.appendChild(el('div','t',r.nazwa));p.appendChild(el('div','dots'));
-   {const v=el('div','v c-'+r.w.kol);v.appendChild(el('span','am',r.w.am));if(r.w.per)v.appendChild(el('span','per',r.w.per));p.appendChild(v);if(r.w.pr)p.appendChild(el('div','pr c-'+r.w.kol,r.w.pr))}p.appendChild(el('small',null,r.podpis));if(oo&&!opub(oo))p.appendChild(el('div','soon',wkrotce(oo).replace('film #'+oo.nr+' ','')));a.appendChild(pin);a.appendChild(p);w.appendChild(a)});
-  $('none').hidden=lista.length>0;$('roll').hidden=!lista.length;
-  const box=$('rows');box.innerHTML='';const pokaz=rozwin?lista:lista.slice(0,10);
-  pokaz.forEach(r=>{if(r.plan){const a=el('div','row plan');a.appendChild(el('i',null,'#'+r.nr));a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));a.appendChild(el('b',null,'wkrótce – '+dm(r.pa)));box.appendChild(a);return}const a=el('a','row');a.href=r.href||url(r.id,r.params);
-   const ii=el('i',null,r.nr!=null?'#'+r.nr:'');const oo=r.nr!=null?ODCINKI.find(x=>x.nr===r.nr):null;if(oo&&opub(oo))ii.appendChild(playIcon(oo));a.appendChild(ii);
-   a.appendChild(el('span','t',r.nazwa));a.appendChild(el('span','f'));{const b=el('b','c-'+r.w.kol);b.appendChild(el('span','am',r.w.am+(r.w.per?' '+r.w.per:'')));if(r.w.pr)b.appendChild(el('span','pr',r.w.pr));a.appendChild(b)}box.appendChild(a)});
-  const m=$('more');m.hidden=rozwin||lista.length<=10;m.textContent='POKAŻ WSZYSTKIE '+lista.length+' ↓'}
- $('more').onclick=()=>{rozwin=true;rysuj()};
- $('q').addEventListener('input',()=>{rozwin=false;rysuj()});
- chipy();rysuj();
+ const wsz=karty();
+ $('ile').textContent=KALK.length+' kalkulatorów w '+CATS.length+' działach – każdy ze wzorem, źródłem i datą cen.';
+ // skróty do działów
+ const nav=$('cats');nav.innerHTML='';
+ CATS.forEach((n,i)=>{const k=wsz.filter(r=>r.cat===i).length;if(!k)return;const a=el('a','chip',n+' · '+k);a.href='#d'+i;nav.appendChild(a)});
+ // 3 najnowsze filmy (opublikowane albo zapowiedziane)
+ const najn=[...ODCINKI].filter(o=>!o.plan&&!o.href).sort((a,b)=>b.nr-a.nr).slice(0,3);
+ const w=$('wall');w.innerHTML='';
+ najn.forEach(o=>{const c=calc(o.id);w.appendChild(karta({id:o.id,nr:o.nr,o,params:o.params,nazwa:o.nazwa||c.krot,w:wynik(o)}))});
+ const box=$('dzialy');box.innerHTML='';const sek=[];
+ CATS.forEach((n,i)=>{const lista=wsz.filter(r=>r.cat===i).sort((a,b)=>(b.nr??-1)-(a.nr??-1));if(!lista.length)return;
+  const s=el('section','dz');s.id='d'+i;s.setAttribute('aria-labelledby','dh'+i);
+  const h=el('h2','sec');h.id='dh'+i;h.appendChild(document.createTextNode(n.toUpperCase()));const sp=el('span');h.appendChild(sp);s.appendChild(h);
+  const g=el('div','grid');lista.forEach(r=>{const k=karta(r);k._r=r;g.appendChild(k)});s.appendChild(g);box.appendChild(s);sek.push({s,sp,g})});
+ function filtr(){const ws=norm($('q').value.trim()).split(/\s+/).filter(Boolean);let ile=0;
+  sek.forEach(({s,sp,g})=>{let k=0;[...g.children].forEach(a=>{const ok=ws.every(x=>norm(a._r.szukaj).includes(x));a.hidden=!ok;if(ok)k++});s.hidden=!k;ile+=k;
+   sp.textContent=k===1?'1 kalkulator':k+(k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?' kalkulatory':' kalkulatorów')});
+  $('nowe').hidden=ws.length>0;nav.hidden=ws.length>0;$('none').hidden=ile>0}
+ $('q').addEventListener('input',filtr);filtr();
 }
 
 /* ---------- podstrona kalkulatora ---------- */
@@ -72,7 +73,7 @@ function kalk(c){
  const P=new URLSearchParams(location.search);
  const hasP=id=>P.has(id)&&!(id==='z'&&/^[a-z]+$/i.test(P.get(id)));   // ?z=fb to znacznik promocji, nie wartość pola 'z'
  if(c.id==='abonament'){const ln=el('a','cmpl','Porównaj oferty wszystkich sieci →');ln.href='/abonamenty/';const sh=$('share');if(sh)sh.parentNode.insertBefore(ln,sh)}
- const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);
+ const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);if(fb)fb.hidden=!fl.length;
  if(fb&&fl.length){let jest=false;fl.forEach(o=>{if(opub(o)){jest=true;const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
    const im=document.createElement('img');im.src='/img/filmy/'+o.nr+'.jpg';im.alt='';im.width=60;im.height=107;im.loading='lazy';im.onerror=()=>{im.remove()};a.appendChild(im);
    const fx=el('span','fx');fx.appendChild(el('b',null,'▶ OBEJRZYJ FILM #'+o.nr));if(opis(o))fx.appendChild(el('small',null,opis(o)));a.appendChild(fx);fb.appendChild(a)}
@@ -134,10 +135,15 @@ function kalk(c){
   if(c.lista){try{localStorage.setItem(LK,c.zS(items))}catch(e){}}
   const r=c.f(v);const cl=$('cl');cl.innerHTML='';
   r.l.forEach(([a,b,m])=>{const d=el('div','line');d.appendChild(el('span','l',a));d.appendChild(el('span','fill'));const rr=el('span','r',b);if(m)rr.appendChild(el('small','sub',m));d.appendChild(rr);cl.appendChild(d)});
+  const bx=$('bars');if(bx){bx.innerHTML='';const re=c.sl?new RegExp(c.sl):null;
+   const B=re?r.l.filter(([a])=>re.test(a)).map(([a,b])=>{const m=/(-?[\d\s\u00a0]+(?:,\d+)?)\s*zł/.exec(String(b));return m?{a,b,v:num(m[1].replace(/[\s\u00a0]/g,''))}:null}).filter(x=>x&&x.v>=0):[];
+   bx.hidden=B.length<2;if(B.length>=2){const mx=Math.max(...B.map(x=>x.v)),mn=Math.min(...B.map(x=>x.v));bx.appendChild(el('h2','kh','PORÓWNANIE'));
+    B.forEach(x=>{const d=el('div','bar'+(x.v===mn?' min':x.v===mx?' max':''));const l=el('div','bl');l.appendChild(el('span',null,x.a));l.appendChild(el('b',null,x.b));d.appendChild(l);
+     const tr=el('div','bt');const fi=el('div','bf');fi.style.width=(mx>0?Math.max(2,x.v/mx*100):0)+'%';tr.appendChild(fi);d.appendChild(tr);bx.appendChild(d)})}}
   $('sk').textContent=r.sk;const sv=$('sv');sv.textContent=r.svt||zl(r.sv);
   let pod=$('spod');if(r.pod){if(!pod){pod=el('p','small spod');pod.id='spod';sv.closest('.sum').after(pod)}pod.textContent=r.pod;pod.style.color=r.podKol==='red'?'var(--red)':'';pod.style.fontWeight=r.podKol==='red'?'700':''}else if(pod)pod.remove();
   sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)'}
- $('cw').textContent=c.w;$('cs').textContent=c.s||'';
+ if($('cw'))$('cw').textContent=c.w;if($('cs'))$('cs').textContent=c.s||'';
  // „Ceny sprawdzone: DD.MM.RRRR” – tylko kalkulatory z cenami śledzonymi przez tygodniową kontrolę (dane/ceny_sprawdzone.json; plik zapisuje automat)
  fetch('/dane/ceny_sprawdzone.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{const d=j&&j[c.id],e=$('csd');if(e&&/^\d{4}-\d{2}-\d{2}$/.test(d||'')){e.textContent='Ceny sprawdzone: '+d.slice(8)+'.'+d.slice(5,7)+'.'+d.slice(0,4);e.hidden=false}}).catch(()=>{});
  function link(){const q=new URLSearchParams();c.in.forEach(x=>{const e=$('f_'+x.id);q.set(x.id,x.chk?(e.checked?'1':'0'):e.value.trim())});if(c.lista)q.set('k',c.zS(items));return location.origin+(window.__p0?window.__p0.split('?')[0].split('#')[0]:location.pathname)+'?'+q.toString()}
@@ -147,7 +153,7 @@ function kalk(c){
   try{await navigator.clipboard.writeText(u)}catch(e){const t=document.createElement('textarea');t.value=u;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(_){}t.remove()}
   msg.textContent='Skopiowano link z Twoimi liczbami.';setTimeout(()=>{msg.textContent=''},4000)};
  // POLICZ TEŻ: dwa inne rachunki (najpierw z tego samego działu)
- const inne=KALK.filter(x=>x.id!==c.id).sort((a,b)=>(b.cat===c.cat)-(a.cat===c.cat)).slice(0,2),mini=$('mini');
+ const inne=KALK.filter(x=>x.id!==c.id).sort((a,b)=>(b.cat===c.cat)-(a.cat===c.cat)).slice(0,3),mini=$('mini');
  inne.forEach(x=>{const a=el('a');a.href=url(x.id);const ee=ODCINKI.filter(o=>o.id===x.id).map(o=>o.nr).sort((p,q)=>q-p)[0];
   a.appendChild(el('small',null,(ee?'#'+ee+' · ':'')+CATS[x.cat]));a.appendChild(el('p',null,x.krot));mini.appendChild(a)});
  run();

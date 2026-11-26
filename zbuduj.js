@@ -87,7 +87,7 @@ function seoKalk(c) {
     `${w.pelny}${w.podpis ? ` – ${w.podpis}` : ''}. Tyle wychodzi przy przykładowych danych${w.nr ? ' z filmu' : ''}. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik.`]);
   if (c.w) faq.push(['Jak to policzyć samemu?', `Wzór: ${c.w}.`]);
   if (zs.length) faq.push(['Skąd są liczby?', zs.map(kropka).join(' ')]);
-  return { title, desc, jak: jak.length >= 3 ? jak.slice(0, 5) : [], faq: faq.length >= 3 ? faq : [] };
+  return { title, desc, jak: jak.slice(0, 5), faq: faq.length >= 3 ? faq : [] };
 }
 // lastmod: najnowsza zmiana linii wpisu kalkulatora w dane.js (KALK + jego wiersze ODCINKI) wg git blame;
 // linie nie z tej historii (płytki klon) – poprzedni lastmod z sitemap.xml; niezatwierdzone zmiany – dziś
@@ -179,9 +179,9 @@ ${brand}
 <h1>Ile to <mark>naprawdę</mark> kosztuje?</h1>
 <p class="lead" id="ile">${KALK.length} kalkulatorów ze wzorem, źródłem i datą cen.</p>
 <div class="search"><input id="q" type="search" placeholder="Szukaj: np. czajnik, LED" aria-label="Szukaj rachunku" autocomplete="off"></div>
-<div class="chips" id="cats" role="group" aria-label="Działy"></div>
-<section id="nowe" aria-labelledby="hn"><h2 class="sec" id="hn">NAJNOWSZE <span>z ostatnich filmów</span></h2><div class="wall" id="wall"></div></section>
-<section class="roll" id="roll" aria-labelledby="hw"><div class="rp"><h2 class="sec" id="hw">WSZYSTKIE RACHUNKI <span>od najnowszych</span></h2><div id="rows"></div><button class="more" id="more" type="button" hidden></button></div></section>
+<nav class="chips" id="cats" aria-label="Działy"></nav>
+<section id="nowe" aria-labelledby="hn"><h2 class="sec" id="hn">NAJNOWSZE FILMY <span>3 ostatnie odcinki</span></h2><div class="grid" id="wall"></div></section>
+<div id="dzialy"></div>
 <p class="none" id="none" hidden>Nie mam jeszcze takiego rachunku. Nowe dodaję na bieżąco.</p>
 <noscript><ul>
 ${linki}
@@ -242,23 +242,22 @@ ${brand}
  <div class="tag" id="ktag"></div>
  <h1>${esc(c.h1 || c.st || c.t)}</h1>
  <p class="i">${esc(c.i)}</p>
+ <div class="wyn" aria-live="polite"><div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
+ <hr class="dash">
+ <h2 class="kh">TWOJE LICZBY</h2>
  <div id="cf"></div>
  <p class="small cdate" id="csd" hidden></p>
  <hr class="dash">
- <div id="cl" aria-live="polite"></div>
- <hr class="dbl">
- <div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div>
- <p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p>
- <hr class="dash">
- <p class="small"><b>Wzór:</b> <span id="cw">${esc(c.w)}</span></p>
- <p class="small" id="cs">${esc(c.s || '')}</p>
- <p class="small">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
+ <h2 class="kh">RACHUNEK</h2>
+ <div id="cl"></div>
+ <div id="bars" hidden></div>
+ <p class="small note">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
  <button class="share" id="share" type="button">UDOSTĘPNIJ WYNIK</button>
  <div class="msg" id="msg" role="status"></div>
- <div id="filmy"></div>
- ${stopka}
 </div></div>
-<div class="rel">POLICZ TEŻ</div><div class="mini" id="mini"></div>
+${sekcje}<section class="rels" aria-labelledby="rh"><h2 class="sec" id="rh">POWIĄZANE <span>${esc(CATS[c.cat])}</span></h2><div class="mini" id="mini"></div></section>
+<section class="filmbox" id="filmy" aria-label="Film"></section>
+${stopka}
 ${sekcje}${stopka2}
 <noscript><p class="small">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 </main>

@@ -164,3 +164,34 @@ h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;tex
 .about.seo p{margin:0}
 
 .cdate{margin:2px 0 0;font-size:11px}
+
+/* ---------- N143: kolory jak w filmach, siatka 8 px, działy, karty równej wysokości ---------- */
+:root{--red:#DC2626;--amber:#D97706;--desk:#E9E2D3}
+.chips{margin:16px 0 32px}.chips a.chip{text-decoration:none;display:inline-block}
+#nowe,.dz{margin-top:32px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 16px}}
+.grid .card{display:flex}
+.grid .card .paper{display:flex;flex-direction:column;width:100%;min-height:0;padding:24px 16px}
+.grid .card .t{flex:1;font-size:14px;line-height:1.3;margin:8px 0 16px;overflow-wrap:anywhere}
+.grid .card .v{margin-top:auto;display:block;font-size:clamp(20px,5.6vw,24px)}
+.grid .card .v .am{display:block}
+.grid .card .v .per{display:block;font-size:11px;font-weight:600;color:var(--mut);margin-top:4px;white-space:normal}
+.tagrow small.soon{font-size:10px;color:var(--mut)}
+.wyn{margin:16px 0 8px;text-align:center}
+.wyn .sum{flex-direction:column;align-items:center;gap:8px}
+.wyn .sum .k{font-size:12px;letter-spacing:2px;color:var(--mut)}
+.wyn .sum .v{font-size:clamp(32px,10vw,46px)}
+.wyn .spod{text-align:center;margin-top:8px}
+.kh{font-size:12px;letter-spacing:2px;color:var(--mut);margin:0 0 8px;font-weight:700}
+#bars{margin-top:24px;display:grid;gap:16px}
+.bar .bl{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.bar .bl b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar .bt{height:12px;background:#EFE9DD;margin-top:4px}
+.bar .bf{height:100%;background:var(--ink)}
+.bar.min .bf{background:var(--green)}.bar.max .bf{background:var(--red)}
+.note{margin-top:16px}
+.rels{margin-top:32px}
+.mini{grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.mini{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.filmbox{margin-top:32px}

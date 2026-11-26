@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Przedłużona gwarancja – czy się opłaca | Ile Naprawdę">
 <meta name="twitter:description" content="Przedłużona gwarancja: 400 zł / lata 3–5 – przedłużona gwarancja przy pralce 2000 zł (film #16). Sprzedawca proponuje przedłużenie gwarancji? Policz, ile…">
 <meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
-<link rel="stylesheet" href="/strona.css?v=3fa07413">
+<link rel="stylesheet" href="/strona.css?v=a853881b">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ile Naprawdę","item":"https://ilenaprawde.pl/"},{"@type":"ListItem","position":2,"name":"Przedłużona gwarancja","item":"https://ilenaprawde.pl/kalkulatory/gwarancja/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Ile zwykle kosztuje przedłużona gwarancja?","acceptedAnswer":{"@type":"Answer","text":"Składka to zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl). Sprzedawca odpowiada przez 2 lata niezależnie od gwarancji."}},{"@type":"Question","name":"Ile wyszło w filmie #16?","acceptedAnswer":{"@type":"Answer","text":"Koszt: 400 zł / lata 3–5 – przedłużona gwarancja przy pralce 2000 zł. Tyle wychodzi przy przykładowych danych z filmu. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik."}},{"@type":"Question","name":"Jak to policzyć samemu?","acceptedAnswer":{"@type":"Answer","text":"Wzór: składka = cena sprzętu × procent ÷ 100 (albo wpisana kwota); lata dodatkowej ochrony = ochrona łącznie − większa z liczb: 2 lata (odpowiedzialność sprzedawcy) i gwarancja producenta; za rok = składka ÷ lata; zwrot = składka ÷ typowa naprawa, zaokrąglone w górę."}},{"@type":"Question","name":"Skąd są liczby?","acceptedAnswer":{"@type":"Answer","text":"Składka zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl); pralka 1000 zł ≈ 300 zł za 3 dodatkowe lata (Pepper, 04.2026). Naprawy 2026 (cenauslug.pl): pompa 210–400 zł, grzałka 220–380 zł, łożyska 450–700 zł. Przykład: 2000 zł × 20% = 400 zł. Przez 2 lata za niezgodność towaru z umową odpowiada sprzedawca – za darmo. Przedłużona gwarancja to ubezpieczenie: sprawdź wyłączenia w warunkach."}}]}]}</script>
 </head>
 <body data-strona="kalk" data-id="gwarancja">
@@ -32,27 +32,33 @@
  <div class="tag" id="ktag"></div>
  <h1>Przedłużona gwarancja – czy się opłaca</h1>
  <p class="i">Sprzedawca proponuje przedłużenie gwarancji? Policz, ile płacisz za rok dodatkowej ochrony i po ilu typowych naprawach się to zwraca.</p>
+ <div class="wyn" aria-live="polite"><div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
+ <hr class="dash">
+ <h2 class="kh">TWOJE LICZBY</h2>
  <div id="cf"></div>
  <p class="small cdate" id="csd" hidden></p>
  <hr class="dash">
- <div id="cl" aria-live="polite"></div>
- <hr class="dbl">
- <div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div>
- <p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p>
- <hr class="dash">
- <p class="small"><b>Wzór:</b> <span id="cw">składka = cena sprzętu × procent ÷ 100 (albo wpisana kwota); lata dodatkowej ochrony = ochrona łącznie − większa z liczb: 2 lata (odpowiedzialność sprzedawcy) i gwarancja producenta; za rok = składka ÷ lata; zwrot = składka ÷ typowa naprawa, zaokrąglone w górę</span></p>
- <p class="small" id="cs">Składka zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl); pralka 1000 zł ≈ 300 zł za 3 dodatkowe lata (Pepper, 04.2026). Naprawy 2026 (cenauslug.pl): pompa 210–400 zł, grzałka 220–380 zł, łożyska 450–700 zł. Przykład: 2000 zł × 20% = 400 zł. Przez 2 lata za niezgodność towaru z umową odpowiada sprzedawca – za darmo. Przedłużona gwarancja to ubezpieczenie: sprawdź wyłączenia w warunkach. To nie jest porada.</p>
- <p class="small">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
+ <h2 class="kh">RACHUNEK</h2>
+ <div id="cl"></div>
+ <div id="bars" hidden></div>
+ <p class="small note">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
  <button class="share" id="share" type="button">UDOSTĘPNIJ WYNIK</button>
  <div class="msg" id="msg" role="status"></div>
- <div id="filmy"></div>
- <div class="cta">OBSERWUJ @ILENAPRAWDE</div>
+</div></div>
+<section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
+<p>Liczymy wzorem: składka = cena sprzętu × procent ÷ 100 (albo wpisana kwota); lata dodatkowej ochrony = ochrona łącznie − większa z liczb: 2 lata (odpowiedzialność sprzedawcy) i gwarancja producenta; za rok = składka ÷ lata; zwrot = składka ÷ typowa naprawa, zaokrąglone w górę. Wartości domyślne (przykład do podmiany): cena sprzętu 2000 zł, cena przedłużonej gwarancji 20 % ceny, albo kwota (0 = liczymy z procentu) 0 zł, ochrona łącznie do 5 lat. Składka zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl); pralka 1000 zł ≈ 300 zł za 3 dodatkowe lata (Pepper, 04.2026). Naprawy 2026 (cenauslug.pl): pompa 210–400 zł, grzałka 220–380 zł, łożyska 450–700 zł.</p></section>
+<section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
+<h3>Ile zwykle kosztuje przedłużona gwarancja?</h3><p>Składka to zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl). Sprzedawca odpowiada przez 2 lata niezależnie od gwarancji.</p>
+<h3>Ile wyszło w filmie #16?</h3><p>Koszt: 400 zł / lata 3–5 – przedłużona gwarancja przy pralce 2000 zł. Tyle wychodzi przy przykładowych danych z filmu. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik.</p>
+<h3>Jak to policzyć samemu?</h3><p>Wzór: składka = cena sprzętu × procent ÷ 100 (albo wpisana kwota); lata dodatkowej ochrony = ochrona łącznie − większa z liczb: 2 lata (odpowiedzialność sprzedawcy) i gwarancja producenta; za rok = składka ÷ lata; zwrot = składka ÷ typowa naprawa, zaokrąglone w górę.</p>
+<h3>Skąd są liczby?</h3><p>Składka zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl); pralka 1000 zł ≈ 300 zł za 3 dodatkowe lata (Pepper, 04.2026). Naprawy 2026 (cenauslug.pl): pompa 210–400 zł, grzałka 220–380 zł, łożyska 450–700 zł. Przykład: 2000 zł × 20% = 400 zł. Przez 2 lata za niezgodność towaru z umową odpowiada sprzedawca – za darmo. Przedłużona gwarancja to ubezpieczenie: sprawdź wyłączenia w warunkach.</p></section>
+<section class="rels" aria-labelledby="rh"><h2 class="sec" id="rh">POWIĄZANE <span>Zakupy</span></h2><div class="mini" id="mini"></div></section>
+<section class="filmbox" id="filmy" aria-label="Film"></section>
+<div class="cta">OBSERWUJ @ILENAPRAWDE</div>
  <nav class="soc" aria-label="Profile w mediach społecznościowych">
   <a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener">TikTok</a>
   <a href="https://www.youtube.com/@ilenaprawde" target="_blank" rel="noopener">YouTube</a>
  </nav>
-</div></div>
-<div class="rel">POLICZ TEŻ</div><div class="mini" id="mini"></div>
 <section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
 <p>Liczymy wzorem: składka = cena sprzętu × procent ÷ 100 (albo wpisana kwota); lata dodatkowej ochrony = ochrona łącznie − większa z liczb: 2 lata (odpowiedzialność sprzedawcy) i gwarancja producenta; za rok = składka ÷ lata; zwrot = składka ÷ typowa naprawa, zaokrąglone w górę. Wartości domyślne (przykład do podmiany): cena sprzętu 2000 zł, cena przedłużonej gwarancji 20 % ceny, albo kwota (0 = liczymy z procentu) 0 zł, ochrona łącznie do 5 lat. Składka zwykle 10–30% ceny (rankomat.pl); przykłady: ochrona do 5 lat za 20% ceny w RTV Euro AGD i Media Expert, 15% w oleole (agdmaniak.pl); pralka 1000 zł ≈ 300 zł za 3 dodatkowe lata (Pepper, 04.2026). Naprawy 2026 (cenauslug.pl): pompa 210–400 zł, grzałka 220–380 zł, łożyska 450–700 zł.</p></section>
 <section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
@@ -64,8 +70,8 @@
 <p class="fine">Strona nie używa ciasteczek i nie zbiera danych osobowych. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics). Kalkulatory liczą w Twojej przeglądarce.</p>
 <noscript><p class="small">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 </main>
-<script src="/dane.js?v=994be7ef"></script>
-<script src="/app.js?v=93e9fedb"></script>
+<script src="/dane.js?v=086ce783"></script>
+<script src="/app.js?v=3140d913"></script>
 <!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Najtańsze ogrzewanie domu – porównanie w zł | Ile Naprawdę">
 <meta name="twitter:description" content="Ogrzewanie domu: −3 427 zł / rok – różnicy rocznie (film #7). Ile rocznie kosztuje ta sama ilość ciepła z różnych źródeł? Wpisz zapotrzebowanie domu i…">
 <meta name="twitter:image" content="https://ilenaprawde.pl/img/filmy/7.jpg">
-<link rel="stylesheet" href="/strona.css?v=3fa07413">
+<link rel="stylesheet" href="/strona.css?v=a853881b">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ile Naprawdę","item":"https://ilenaprawde.pl/"},{"@type":"ListItem","position":2,"name":"Ogrzewanie domu","item":"https://ilenaprawde.pl/kalkulatory/ogrzewanie/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Jak liczymy koszt ogrzewania drewnem?","acceptedAnswer":{"@type":"Answer","text":"Drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%). 1 mp suchego drewna liściastego to ok. 2000 kWh, sprawność pieca lub kominka z płaszczem 70%."}},{"@type":"Question","name":"Ile wyszło w filmie #7?","acceptedAnswer":{"@type":"Answer","text":"Różnica: −3 427 zł / rok (−47%) – różnicy rocznie. Tyle wychodzi przy przykładowych danych z filmu. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik."}},{"@type":"Question","name":"Jak to policzyć samemu?","acceptedAnswer":{"@type":"Answer","text":"Wzór: cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła; drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%)."}},{"@type":"Question","name":"Skąd są liczby?","acceptedAnswer":{"@type":"Answer","text":"Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Drewno 500 zł/mp – środek przedziału 450–800 zł/mp za sezonowane liściaste ze składu (kb.pl, Murator, listopad 2026); w nadleśnictwie ok. 160–270 zł/m³, ale mokre. 1 mp suchego drewna liściastego ≈ 2000 kWh, sprawność pieca/kominka z płaszczem 70%. Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji."}}]},{"@type":"VideoObject","name":"Ogrzewanie domu: co najtaniej? (3 427 zł)","description":"Ogrzewanie domu: gaz, węgiel, pellet, pompa ciepła: różnicy rocznie. Ile rocznie kosztuje ta sama ilość ciepła z różnych źródeł? Wpisz zapotrzebowanie domu i ceny w swojej okolicy.","thumbnailUrl":"https://ilenaprawde.pl/img/filmy/7.jpg","uploadDate":"2026-11-17T19:00:00+01:00","contentUrl":"https://www.youtube.com/watch?v=48EevVKBYPA","embedUrl":"https://www.youtube.com/embed/48EevVKBYPA"}]}</script>
 </head>
 <body data-strona="kalk" data-id="ogrzewanie">
@@ -32,27 +32,33 @@
  <div class="tag" id="ktag"></div>
  <h1>Najtańsze ogrzewanie domu – porównanie w zł</h1>
  <p class="i">Ile rocznie kosztuje ta sama ilość ciepła z różnych źródeł? Wpisz zapotrzebowanie domu i ceny w swojej okolicy.</p>
+ <div class="wyn" aria-live="polite"><div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
+ <hr class="dash">
+ <h2 class="kh">TWOJE LICZBY</h2>
  <div id="cf"></div>
  <p class="small cdate" id="csd" hidden></p>
  <hr class="dash">
- <div id="cl" aria-live="polite"></div>
- <hr class="dbl">
- <div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div>
- <p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p>
- <hr class="dash">
- <p class="small"><b>Wzór:</b> <span id="cw">cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła; drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%)</span></p>
- <p class="small" id="cs">Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Drewno 500 zł/mp – środek przedziału 450–800 zł/mp za sezonowane liściaste ze składu (kb.pl, Murator, listopad 2026); w nadleśnictwie ok. 160–270 zł/m³, ale mokre. 1 mp suchego drewna liściastego ≈ 2000 kWh, sprawność pieca/kominka z płaszczem 70%. Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.</p>
- <p class="small">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
+ <h2 class="kh">RACHUNEK</h2>
+ <div id="cl"></div>
+ <div id="bars" hidden></div>
+ <p class="small note">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
  <button class="share" id="share" type="button">UDOSTĘPNIJ WYNIK</button>
  <div class="msg" id="msg" role="status"></div>
- <div id="filmy"></div>
- <div class="cta">OBSERWUJ @ILENAPRAWDE</div>
+</div></div>
+<section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
+<p>Liczymy wzorem: cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła; drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%). Wartości domyślne (przykład do podmiany): ciepło na rok 15000 kWh, ekogroszek 1500 zł/t, pellet 2200 zł/t, drewno sezonowane 500 zł/mp. Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Drewno dodane po filmie, na prośbę widzów. Data cen: listopad 2026.</p></section>
+<section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
+<h3>Jak liczymy koszt ogrzewania drewnem?</h3><p>Drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%). 1 mp suchego drewna liściastego to ok. 2000 kWh, sprawność pieca lub kominka z płaszczem 70%.</p>
+<h3>Ile wyszło w filmie #7?</h3><p>Różnica: −3 427 zł / rok (−47%) – różnicy rocznie. Tyle wychodzi przy przykładowych danych z filmu. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik.</p>
+<h3>Jak to policzyć samemu?</h3><p>Wzór: cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła; drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%).</p>
+<h3>Skąd są liczby?</h3><p>Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Drewno 500 zł/mp – środek przedziału 450–800 zł/mp za sezonowane liściaste ze składu (kb.pl, Murator, listopad 2026); w nadleśnictwie ok. 160–270 zł/m³, ale mokre. 1 mp suchego drewna liściastego ≈ 2000 kWh, sprawność pieca/kominka z płaszczem 70%. Wpisz aktualne ceny ze swojej okolicy. Bez kosztów instalacji.</p></section>
+<section class="rels" aria-labelledby="rh"><h2 class="sec" id="rh">POWIĄZANE <span>Dom i ogrzewanie</span></h2><div class="mini" id="mini"></div></section>
+<section class="filmbox" id="filmy" aria-label="Film"></section>
+<div class="cta">OBSERWUJ @ILENAPRAWDE</div>
  <nav class="soc" aria-label="Profile w mediach społecznościowych">
   <a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener">TikTok</a>
   <a href="https://www.youtube.com/@ilenaprawde" target="_blank" rel="noopener">YouTube</a>
  </nav>
-</div></div>
-<div class="rel">POLICZ TEŻ</div><div class="mini" id="mini"></div>
 <section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
 <p>Liczymy wzorem: cena paliwa ÷ (kWh w paliwie × sprawność) × kWh ciepła; drewno: kWh ciepła × cena za mp ÷ (2000 kWh z 1 mp × sprawność 70%). Wartości domyślne (przykład do podmiany): ciepło na rok 15000 kWh, ekogroszek 1500 zł/t, pellet 2200 zł/t, drewno sezonowane 500 zł/mp. Ceny przykładowe: listopad 2026 (kb.pl, taryfa ORLEN + PSG, średnia G11). Drewno dodane po filmie, na prośbę widzów. Data cen: listopad 2026.</p></section>
 <section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
@@ -64,8 +70,8 @@
 <p class="fine">Strona nie używa ciasteczek i nie zbiera danych osobowych. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics). Kalkulatory liczą w Twojej przeglądarce.</p>
 <noscript><p class="small">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 </main>
-<script src="/dane.js?v=994be7ef"></script>
-<script src="/app.js?v=93e9fedb"></script>
+<script src="/dane.js?v=086ce783"></script>
+<script src="/app.js?v=3140d913"></script>
 <!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

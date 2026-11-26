@@ -21,7 +21,7 @@
 <meta name="twitter:title" content="Allegro Smart! – kiedy się zwraca w zł | Ile Naprawdę">
 <meta name="twitter:description" content="Allegro Smart!: −72 zł / rok – oszczędności przy 12 paczkach rocznie (film #23). Czy Smart! się zwraca? Wpisz, ile paczek rocznie zamawiasz i ile kosztuje…">
 <meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
-<link rel="stylesheet" href="/strona.css?v=3fa07413">
+<link rel="stylesheet" href="/strona.css?v=a853881b">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ile Naprawdę","item":"https://ilenaprawde.pl/"},{"@type":"ListItem","position":2,"name":"Allegro Smart!","item":"https://ilenaprawde.pl/kalkulatory/allegro-smart/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Od jakiej kwoty jest darmowa dostawa ze Smart?","acceptedAnswer":{"@type":"Answer","text":"Od 49,90 zł u jednego sprzedającego (allegro.pl/smart, 25.11.2026); darmowe są też zwroty. Smart roczny kosztuje 59,90 zł, miesięczny 14,99 zł."}},{"@type":"Question","name":"Ile wyszło w filmie #23?","acceptedAnswer":{"@type":"Answer","text":"Różnica: −72 zł / rok – oszczędności przy 12 paczkach rocznie. Tyle wychodzi przy przykładowych danych z filmu. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik."}},{"@type":"Question","name":"Jak to policzyć samemu?","acceptedAnswer":{"@type":"Answer","text":"Wzór: dostawy = paczki × koszt dostawy; różnica rocznego = cena rocznego − dostawy; miesięczny = cena × miesiące; próg rocznego = cena rocznego ÷ koszt dostawy (w górę); próg miesięcznego = cena miesięcznego ÷ koszt dostawy (w górę)."}},{"@type":"Question","name":"Skąd są liczby?","acceptedAnswer":{"@type":"Answer","text":"Ceny z 25.11.2026 (Allegro Pomoc, allegro.pl/smart): Smart! 59,90 zł rocznie i 14,99 zł miesięcznie, Paczkomat InPost bez Smart 10,95 zł, darmowa dostawa od 49,90 zł u jednego sprzedającego. Promocje roczne bywają tańsze."}}]}]}</script>
 </head>
 <body data-strona="kalk" data-id="allegro-smart">
@@ -32,27 +32,33 @@
  <div class="tag" id="ktag"></div>
  <h1>Allegro Smart! – kiedy się zwraca w zł</h1>
  <p class="i">Czy Smart! się zwraca? Wpisz, ile paczek rocznie zamawiasz i ile kosztuje dostawa bez Smart. Darmowa dostawa w Smart od 49,90 zł u jednego sprzedającego – licz tylko takie zamówienia. Zwroty też są darmowe.</p>
+ <div class="wyn" aria-live="polite"><div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
+ <hr class="dash">
+ <h2 class="kh">TWOJE LICZBY</h2>
  <div id="cf"></div>
  <p class="small cdate" id="csd" hidden></p>
  <hr class="dash">
- <div id="cl" aria-live="polite"></div>
- <hr class="dbl">
- <div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div>
- <p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p>
- <hr class="dash">
- <p class="small"><b>Wzór:</b> <span id="cw">dostawy = paczki × koszt dostawy; różnica rocznego = cena rocznego − dostawy; miesięczny = cena × miesiące; próg rocznego = cena rocznego ÷ koszt dostawy (w górę); próg miesięcznego = cena miesięcznego ÷ koszt dostawy (w górę)</span></p>
- <p class="small" id="cs">Ceny z 25.11.2026 (Allegro Pomoc, allegro.pl/smart): Smart! 59,90 zł rocznie i 14,99 zł miesięcznie, Paczkomat InPost bez Smart 10,95 zł, darmowa dostawa od 49,90 zł u jednego sprzedającego. Promocje roczne bywają tańsze. To nie jest porada.</p>
- <p class="small">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
+ <h2 class="kh">RACHUNEK</h2>
+ <div id="cl"></div>
+ <div id="bars" hidden></div>
+ <p class="small note">Liczby domyślne to przykłady do podmiany na Twoje. Wyliczenie poglądowe, to nie jest porada.</p>
  <button class="share" id="share" type="button">UDOSTĘPNIJ WYNIK</button>
  <div class="msg" id="msg" role="status"></div>
- <div id="filmy"></div>
- <div class="cta">OBSERWUJ @ILENAPRAWDE</div>
+</div></div>
+<section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
+<p>Liczymy wzorem: dostawy = paczki × koszt dostawy; różnica rocznego = cena rocznego − dostawy; miesięczny = cena × miesiące; próg rocznego = cena rocznego ÷ koszt dostawy (w górę); próg miesięcznego = cena miesięcznego ÷ koszt dostawy (w górę). Wartości domyślne (przykład do podmiany): paczki w roku (zamówienia od 49,90 zł u jednego sprzedającego) 12, koszt dostawy bez smart 10,95 zł, smart! roczny 59,90 zł, smart! miesięczny 14,99 zł/mies.. Ceny z 25.11.2026 (Allegro Pomoc, allegro.pl/smart): Smart! 59,90 zł rocznie i 14,99 zł miesięcznie, Paczkomat InPost bez Smart 10,95 zł, darmowa dostawa od 49,90 zł u jednego sprzedającego. Promocje roczne bywają tańsze. Data cen: 25.11.2026.</p></section>
+<section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
+<h3>Od jakiej kwoty jest darmowa dostawa ze Smart?</h3><p>Od 49,90 zł u jednego sprzedającego (allegro.pl/smart, 25.11.2026); darmowe są też zwroty. Smart roczny kosztuje 59,90 zł, miesięczny 14,99 zł.</p>
+<h3>Ile wyszło w filmie #23?</h3><p>Różnica: −72 zł / rok – oszczędności przy 12 paczkach rocznie. Tyle wychodzi przy przykładowych danych z filmu. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik.</p>
+<h3>Jak to policzyć samemu?</h3><p>Wzór: dostawy = paczki × koszt dostawy; różnica rocznego = cena rocznego − dostawy; miesięczny = cena × miesiące; próg rocznego = cena rocznego ÷ koszt dostawy (w górę); próg miesięcznego = cena miesięcznego ÷ koszt dostawy (w górę).</p>
+<h3>Skąd są liczby?</h3><p>Ceny z 25.11.2026 (Allegro Pomoc, allegro.pl/smart): Smart! 59,90 zł rocznie i 14,99 zł miesięcznie, Paczkomat InPost bez Smart 10,95 zł, darmowa dostawa od 49,90 zł u jednego sprzedającego. Promocje roczne bywają tańsze.</p></section>
+<section class="rels" aria-labelledby="rh"><h2 class="sec" id="rh">POWIĄZANE <span>Abonamenty</span></h2><div class="mini" id="mini"></div></section>
+<section class="filmbox" id="filmy" aria-label="Film"></section>
+<div class="cta">OBSERWUJ @ILENAPRAWDE</div>
  <nav class="soc" aria-label="Profile w mediach społecznościowych">
   <a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener">TikTok</a>
   <a href="https://www.youtube.com/@ilenaprawde" target="_blank" rel="noopener">YouTube</a>
  </nav>
-</div></div>
-<div class="rel">POLICZ TEŻ</div><div class="mini" id="mini"></div>
 <section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
 <p>Liczymy wzorem: dostawy = paczki × koszt dostawy; różnica rocznego = cena rocznego − dostawy; miesięczny = cena × miesiące; próg rocznego = cena rocznego ÷ koszt dostawy (w górę); próg miesięcznego = cena miesięcznego ÷ koszt dostawy (w górę). Wartości domyślne (przykład do podmiany): paczki w roku (zamówienia od 49,90 zł u jednego sprzedającego) 12, koszt dostawy bez smart 10,95 zł, smart! roczny 59,90 zł, smart! miesięczny 14,99 zł/mies.. Ceny z 25.11.2026 (Allegro Pomoc, allegro.pl/smart): Smart! 59,90 zł rocznie i 14,99 zł miesięcznie, Paczkomat InPost bez Smart 10,95 zł, darmowa dostawa od 49,90 zł u jednego sprzedającego. Promocje roczne bywają tańsze. Data cen: 25.11.2026.</p></section>
 <section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
@@ -64,8 +70,8 @@
 <p class="fine">Strona nie używa ciasteczek i nie zbiera danych osobowych. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics). Kalkulatory liczą w Twojej przeglądarce.</p>
 <noscript><p class="small">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 </main>
-<script src="/dane.js?v=994be7ef"></script>
-<script src="/app.js?v=93e9fedb"></script>
+<script src="/dane.js?v=086ce783"></script>
+<script src="/app.js?v=3140d913"></script>
 <!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
