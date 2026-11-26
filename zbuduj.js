@@ -64,7 +64,9 @@ function seoKalk(c) {
   let nazwa = c.tk || c.t.split(':')[0].trim();   // tk: krótka nazwa do tytułu (opcjonalnie, dane.js)
   if ((nazwa + suf).length > 60) nazwa = c.krot;
   if ((nazwa + suf).length > 60) nazwa = nazwa.slice(0, 60 - suf.length).trim();
-  const title = nazwa + suf;
+  // st: tytuł SEO (fraza z Google + korzyść, ≤ 46 znaków) – wtedy <title> = st + „ | Ile Naprawdę” (≤ 60 znaków)
+  const title = c.st ? c.st + ' | Ile Naprawdę' : nazwa + suf;
+  if (title.length > 60) throw new Error('title > 60 znaków: ' + title);
   // opis: maks. 155 znaków, z liczbą z dane.js
   let desc = (w ? `${c.krot}: ${w.krotki}${w.podpis ? ' – ' + w.podpis : ''}${w.nr ? ` (film #${w.nr})` : ' (przykład)'}. ` : '') + c.i;
   if (desc.length > 155) { desc = desc.slice(0, 155); const k = Math.max(desc.lastIndexOf('. '), desc.lastIndexOf(' ')); desc = desc.slice(0, k).replace(/[,:;–\s]+$/, ''); if (!/[.!?]$/.test(desc)) desc = desc.slice(0, 154) + '…'; }
@@ -80,6 +82,7 @@ function seoKalk(c) {
   if (dm) jak.push(`Data cen: ${dm[0]}.`);
   // „Pytania”: 3 pytania z odpowiedziami z danych odcinka/kalkulatora; mniej niż 3 = sekcja pominięta
   const faq = [];
+  (c.faq || []).forEach(p => faq.push(p));   // faq: pytania charakterystyczne dla kalkulatora (dane.js)
   if (w) faq.push([w.nr ? `Ile wyszło w filmie #${w.nr}?` : 'Ile wychodzi przy przykładowych danych?',
     `${w.pelny}${w.podpis ? ` – ${w.podpis}` : ''}. Tyle wychodzi przy przykładowych danych${w.nr ? ' z filmu' : ''}. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik.`]);
   if (c.w) faq.push(['Jak to policzyć samemu?', `Wzór: ${c.w}.`]);
@@ -237,7 +240,7 @@ ${brand}
 <a class="back" href="/">← wszystkie rachunki</a>
 <div class="kcard"><i class="pin" style="background:${pins[i % pins.length]};position:absolute;top:-6px;left:calc(50% - 8px);width:16px;height:16px;border-radius:50%;z-index:2;box-shadow:inset -2px -2px 0 #0003,0 2px 2px #0004"></i><div class="p">
  <div class="tag" id="ktag"></div>
- <h1>${esc(c.t)}</h1>
+ <h1>${esc(c.h1 || c.st || c.t)}</h1>
  <p class="i">${esc(c.i)}</p>
  <div id="cf"></div>
  <p class="small cdate" id="csd" hidden></p>
