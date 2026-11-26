@@ -1,13 +1,13 @@
 {
- "sprawdzono": "2026-11-26T20:59+01:00",
+ "sprawdzono": "2026-11-26T21:01+01:00",
  "sieci": [
   {
    "id": "dominos",
    "nazwa": "Domino's",
    "regulamin": "https://www.dominospizza.pl/DominosPizza/media/files/regulaminy/Regulamin-promocji.pdf",
    "ok": true,
-   "sprawdzono": "2026-11-26T20:59+01:00",
-   "odczyt_regulaminu": "2026-11-26T20:59:36+01:00",
+   "sprawdzono": "2026-11-26T21:01+01:00",
+   "odczyt_regulaminu": "2026-11-26T21:01:22+01:00",
    "promocje": [
     {
      "nazwa": "Pizza Codzienna XXL 29,98 zł",
@@ -50,8 +50,8 @@
    "nazwa": "T-Pizza",
    "regulamin": "https://www.tpizza.pl/regulamin-promocji/",
    "ok": true,
-   "sprawdzono": "2026-11-26T20:59+01:00",
-   "odczyt_regulaminu": "2026-11-26T20:59:36+01:00",
+   "sprawdzono": "2026-11-26T21:01+01:00",
+   "odczyt_regulaminu": "2026-11-26T21:01:22+01:00",
    "promocje": [
     {
      "nazwa": "Super Uno Classic",
