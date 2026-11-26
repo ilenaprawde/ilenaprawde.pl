@@ -54,7 +54,7 @@ function wynikDla(c) {
     return { krotki: `${sk.toLowerCase()} ${am}`, pelny: `${sk}: ${am}`, podpis: null, nr: null };
   } catch (e) { return null; }
 }
-const zdania = s => String(s || '').trim().split(/(?<=[.!?])\s+(?=[A-ZĄĆĘŁŃÓŚŹŻ])/).filter(Boolean);
+const zdania = s => String(s || '').trim().split(/(?<=[.!?])(?<!\b(?:np|ok|tzw|tj|zob|nr|ul|godz|m\.in)\.)\s+(?=[A-ZĄĆĘŁŃÓŚŹŻ])/).filter(Boolean);   // bez dzielenia po skrótach (np., ok., tzw.)
 const kropka = s => /[.!?]$/.test(s) ? s : s + '.';
 const DATA_RE = /\b\d{1,2}\.\d{1,2}\.\d{4}\b|\b(stycz|lut|marc|kwie|maj|czerw|lip|sierp|wrze[sś]|październik|paźdz|listopad|grud)[a-ząćęłńóśźż]*\s+\d{4}\b/i;
 function seoKalk(c) {
@@ -258,7 +258,7 @@ ${brand}
 ${sekcje}<section class="rels" aria-labelledby="rh"><h2 class="sec" id="rh">POWIĄZANE <span>${esc(CATS[c.cat])}</span></h2><div class="mini" id="mini"></div></section>
 <section class="filmbox" id="filmy" aria-label="Film"></section>
 ${stopka}
-${sekcje}${stopka2}
+${stopka2}
 <noscript><p class="small">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 </main>
 <script src="/dane.js?v=${VER.dane}"></script>
