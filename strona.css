@@ -188,7 +188,7 @@ h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;tex
 .bar .bl{display:flex;justify-content:space-between;gap:8px;font-size:13px}
 .bar .bl b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .bar .bt{height:12px;background:#EFE9DD;margin-top:4px}
-.bar .bf{height:100%;background:var(--ink)}
+.bar .bf{height:100%;background:#9A9384}
 .bar.min .bf{background:var(--green)}.bar.max .bf{background:var(--red)}
 .note{margin-top:16px}
 .rels{margin-top:32px}
@@ -204,3 +204,8 @@ nav.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 nav.chips .chip{display:flex;align-items:center;justify-content:center;text-align:center;padding:8px}
 nav.chips .chip{font-size:12px;letter-spacing:0;padding:8px 4px;white-space:nowrap;min-height:40px}
 @media(max-width:639px){.grid>.card:last-child:nth-child(odd){grid-column:1/-1}}
+
+/* N147: wyraźny próg / zwrot pod wynikiem */
+.op{margin:12px auto 0;max-width:440px;padding:8px 12px;border:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px;text-align:left}
+.op b{font-size:20px;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:400px){.op{flex-direction:column;align-items:flex-start;gap:2px}}

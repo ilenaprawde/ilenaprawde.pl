@@ -142,6 +142,8 @@ function kalk(c){
      const tr=el('div','bt');const fi=el('div','bf');fi.style.width=(mx>0?Math.max(2,x.v/mx*100):0)+'%';tr.appendChild(fi);d.appendChild(tr);bx.appendChild(d)})}}
   $('sk').textContent=r.sk;const sv=$('sv');sv.textContent=r.svt||zl(r.sv);
   let pod=$('spod');if(r.pod){if(!pod){pod=el('p','small spod');pod.id='spod';sv.closest('.sum').after(pod)}pod.textContent=r.pod;pod.style.color=r.podKol==='red'?'var(--red)':'';pod.style.fontWeight=r.podKol==='red'?'700':''}else if(pod)pod.remove();
+  {let op=$('op');const ore=c.op?new RegExp(c.op):null,or=ore&&r.l.find(([x])=>ore.test(x));
+   if(or){if(!op){op=el('p','op');op.id='op';($('spod')||sv.closest('.sum')).after(op)}op.textContent='';op.appendChild(el('span',null,or[0]));op.appendChild(el('b',null,or[1]))}else if(op)op.remove()}
   sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)'}
  if($('cw'))$('cw').textContent=c.w;if($('cs'))$('cs').textContent=c.s||'';
  // „Ceny sprawdzone: DD.MM.RRRR” – tylko kalkulatory z cenami śledzonymi przez tygodniową kontrolę (dane/ceny_sprawdzone.json; plik zapisuje automat)
