@@ -230,3 +230,6 @@ nav.chips .chip{font-size:12px;letter-spacing:0;padding:8px 4px;white-space:nowr
 .pzi a{display:block;background:var(--paper);padding:12px 16px;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;border:1.5px dashed var(--ink)}
 .pzpage .fine2{margin-top:16px}
 .pzpage .fine2{font-size:12px;color:var(--mut);line-height:1.5}
+
+/* N153: zawężenie promocji pod nazwą */
+.pzz{font-size:13px;font-weight:700;line-height:1.4;color:var(--ink);overflow-wrap:anywhere}

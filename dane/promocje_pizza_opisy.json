@@ -1,0 +1,29 @@
+{
+ "_info": "Opisy pisane ręcznie (N153). Klucz = sieć -> dokładna nazwa promocji z regulaminu. zaw = zawężenie pogrubione pod nazwą (rozmiar, kategoria, kanał, dni); uwaga = dodatkowa linijka (opcjonalnie); kod = kod podany publicznie (opcjonalnie). Plik czyta tylko zbuduj.js – odczyt regulaminów (fabryka) go nie nadpisuje. Promocja bez wpisu pokazuje warunki z regulaminu w całości.",
+ "dominos": {
+  "Pizza Codzienna XXL 29,98 zł": {"zaw": "Tylko XXL na cienkim cieście: Codzienna z boczkiem, z pieczarkami, z szynką, z pomidorkami. Tylko odbiór osobisty (bez dostawy)", "uwaga": "Nie obowiązuje w 2 lokalach w Szczecinie; bez „pół na pół”; do ceny 1,99 zł za opakowanie."},
+  "Pizza Polish Heroes 30% taniej": {"zaw": "Tylko 3 pizze: Wiejska, Zbójnicka, Drwala (średnie, duże, XXL, MAX, cienkie ciasto). Lokal, odbiór i dostawa", "uwaga": "Okres: 19.11.2026–18.02.2027; bez „pół na pół”."},
+  "2 pizze w cenie 1 w aplikacji mobilnej": {"zaw": "Tylko w aplikacji mobilnej (nie na stronie, nie telefonicznie). Dowolne pizze z menu, bez kreatora, Pizz Codziennych, Rzymskich, Volcano i Polish Heroes", "uwaga": "Dwie pizze w cenie droższej (jedna promocyjna do jednej droższej); dostawa i odbiór w lokalu; nie w Piastowie i Nowym Targu; bez „pół na pół”."}
+ },
+ "tpizza": {
+  "Super Uno Classic": {"zaw": "Jedna pizza z grupy Bestsellery, cienkie ciasto; mała, średnia, duża albo Max", "uwaga": "Ciasto tradycyjne: +3 zł. Codziennie, w lokalu i w dostawie."},
+  "Super Uno Wyjątkowe": {"zaw": "Jedna pizza z grupy Wyjątkowe, cienkie ciasto; mała, średnia, duża albo Max", "uwaga": "Ciasto tradycyjne: +3 zł. Codziennie, w lokalu i w dostawie."},
+  "Super Uno Premium": {"zaw": "Jedna pizza z grupy Wyjątkowe (tak w regulaminie), cienkie ciasto; mała, średnia, duża albo Max", "uwaga": "Ciasto tradycyjne: +3 zł. Codziennie, w lokalu i w dostawie."},
+  "Super Duo Classic": {"zaw": "Zestaw 2 pizz: z grupy Bestsellery albo własna kompozycja do 2 składników; tylko średnie lub duże", "uwaga": "Cena za każdą pizzę w zestawie, do ceny +3 zł. Codziennie, w lokalu i w dostawie."},
+  "Super Duo Premium": {"zaw": "Zestaw 2 pizz: z grupy Premium albo własna kompozycja do 2 składników; tylko średnie lub duże", "uwaga": "Cena za każdą pizzę w zestawie. Codziennie, w lokalu i w dostawie."},
+  "Super Trio Classic": {"zaw": "Zestaw 3 pizz z grupy Bestsellery; tylko średnie lub duże", "uwaga": "Cena za każdą pizzę w zestawie. Codziennie, w lokalu i w dostawie."},
+  "Super Trio Premium": {"zaw": "Zestaw 3 pizz z grupy Bestsellery (tak w regulaminie); tylko średnie lub duże", "uwaga": "Cena za każdą pizzę w zestawie. Codziennie, w lokalu i w dostawie."},
+  "2za1 na Bestsellery": {"zaw": "Tylko duże z kategorii Bestsellery; w dostawie i online, bez agregatorów (np. Pyszne, Glovo)", "uwaga": "Raz na zamówienie; dostawa od 45 zł, odbiór osobisty bez minimum; nie łączy się z innymi ofertami."},
+  "-50% na wszystkie pizze": {"zaw": "Tylko średnie, kategorie Klasyczne i Bestsellery (bez nowości); we wszystkich kanałach", "uwaga": "Dostawa od 45 zł; nie łączy się z innymi ofertami."},
+  "Pizza Poniedziałkowa": {"zaw": "Tylko mała pizza z kategorii Bestsellery; tylko w lokalu (na miejscu i na wynos); tylko w poniedziałki", "uwaga": "Aktywuje się automatycznie, bez kodu."},
+  "Pizza duża w dostawie za 40,95 zł": {"zaw": "Rozmiar XXL (mimo nazwy „duża”), 5 wybranych pizz: Uśmiech Boryny, Wegetariańska, Carbonara, Margherita, Biesiada Serowa; tylko dostawa; pon. i czw.", "uwaga": "Dostawa od 45 zł; bez kodu."},
+  "MAX w cenie dużej!": {"zaw": "Tylko pizze klasyczne/bestsellery w rozmiarze MAX, płacisz jak za dużą; we wszystkich kanałach; tylko we wtorki", "uwaga": "Dostawa od 45 zł; nie łączy się z innymi ofertami."},
+  "Mega Party Box w cenie 97,95 zł": {"zaw": "Zestaw: 2 średnie pizze do 4 składników, 2 sosy 50 ml, frytki 170 g, 8 nuggetsów, 8 Pizza Rolls; w lokalu i w dostawie"},
+  "Mega Party Box w cenie 89,95 zł": {"zaw": "Ten sam zestaw (2 średnie pizze do 4 składników, 2 sosy, frytki, 8 nuggetsów, 8 Pizza Rolls); tylko w piątki; w lokalu i w dostawie", "uwaga": "Nie łączy się z innymi ofertami."},
+  "Pizza dnia": {"zaw": "Tylko mała pizza dnia, tylko w lokalu. Pon. Uśmiech Boryny, wt. Double Pepperoni, śr. Capriciosa, czw. Pepperoni, pt. Vege, sob. Hawajska, niedz. Margherita", "uwaga": "Na wynos dopłata 1,95 zł za pudełko."},
+  "Średnia pizza z odbiorem osobistym w promocyjnej cenie": {"zaw": "Tylko średnia, wybrana pizza; według regulaminu dostępna tylko w lokalu", "uwaga": "Na wynos dopłata 1,95 zł za pudełko."},
+  "zero limits": {"zaw": "Zestaw: pizza Capriciosa XXL, łódeczki ziemniaczane, Coca-Cola Zero 0,85 l; w lokalu i w dostawie"},
+  "Zestaw rodzinny": {"zaw": "Zestaw: 2 dowolne pizze XXL, 4 Mini Calzzone, 3 stripsy, 2 sosy 100 ml; w lokalu i w dostawie"},
+  "Hot 20": {"zaw": "Tylko średnia z kategorii Klasyczne/Bestsellery; w lokalu lub na odbiór (bez dostawy)"}
+ }
+}

@@ -326,6 +326,7 @@ zapisz('abonament/index.html', `<!doctype html>
 // ---------- promocje na pizzę dziś: /promocje-pizza/ (N152; dane: dane/promocje_pizza.json z fabryki, codziennie ok. 07:30) ----------
 const PZ_URL = ORIGIN + '/promocje-pizza/';
 let PZ = null; try { PZ = JSON.parse(fs.readFileSync('dane/promocje_pizza.json', 'utf8')); } catch (e) {}
+let PZ_OP = {}; try { PZ_OP = JSON.parse(fs.readFileSync('dane/promocje_pizza_opisy.json', 'utf8')); } catch (e) {}   // opisy ręczne (N153) – automat ich nie nadpisuje
 const PZ_INNE = [['Pizza Hut', 'https://pizzahut.pl/'], ['Da Grasso', 'https://www.dagrasso.pl/promocje'], ["Papa John's", 'https://papajohns.pl/']];
 const PZ_FAQ = [
   ['Skąd są te promocje?', "Z regulaminów promocji publikowanych przez sieci: Domino's (PDF „Regulamin promocji”) i T-Pizza (strona „Regulaminy Promocji”). Sprawdzamy je codziennie rano i pokazujemy tylko promocje ogólnopolskie, które obowiązują dziś."],
@@ -341,19 +342,23 @@ const PZ_FAQ = [
   const termin = p => p.do >= '2027-01-01' && !p.dni ? 'codziennie' : (p.dni ? `${p.dni.map(d => DN[d]).join(', ')}` : '') + (p.do < '2027-01-01' ? `${p.dni ? ' · ' : ''}do ${dm(p.do)}` : '');
   const dowPL = iso => { const d = new Date(iso + 'T12:00:00Z').getUTCDay(); return d === 0 ? 7 : d; };
   const dzisiaj = p => p.od <= dzisPL && p.do >= dzisPL && (!p.dni || p.dni.includes(dowPL(dzisPL)));
-  const karta = p => `<article class="pzc"${dzisiaj(p) ? '' : ' hidden'} data-od="${p.od}" data-do="${p.do}"${p.dni ? ` data-dni="${p.dni.join(',')}"` : ''}>
+  // N153: kod pokazujemy tylko, gdy podany publicznie (regulamin: kod_wartosc, albo ręcznie w opisach); promocji „z kodem” bez kodu nie ma na stronie
+  const bezKodu = p => (p.tagi || []).includes('z kodem') && !p.kod_wartosc;
+  const karta = (p, sid) => { const op = (PZ_OP[sid] || {})[p.nazwa] || {}, kod = op.kod || p.kod_wartosc;
+    return `<article class="pzc"${dzisiaj(p) ? '' : ' hidden'} data-od="${p.od}" data-do="${p.do}"${p.dni ? ` data-dni="${p.dni.join(',')}"` : ''}>
   <h3>${esc(p.nazwa)}</h3>
+  ${op.zaw ? `<p class="pzz">${esc(op.zaw)}</p>` : ''}
   ${p.cena ? `<p class="pzp">${esc(p.cena)}</p>` : ''}
-  <p class="pzt">${esc(termin(p))}${(p.tagi || []).map(t => ` <span class="pzg">${esc(t)}</span>`).join('')}</p>
-  ${p.warunki ? `<p class="pzw">${esc(p.warunki)}</p>` : ''}
- </article>`;
-  const sieci = PZ ? PZ.sieci : [];
+  <p class="pzt">${esc(termin(p))}${(p.tagi || []).map(t => ` <span class="pzg">${esc(t)}</span>`).join('')}${kod ? ` <span class="pzg">kod: ${esc(kod)}</span>` : ''}</p>
+  ${op.zaw ? (op.uwaga ? `<p class="pzw">${esc(op.uwaga)}</p>` : '') : (p.warunki ? `<p class="pzw">${esc(p.warunki)}</p>` : '')}
+ </article>`; };
+  const sieci = (PZ ? PZ.sieci : []).map(s => ({ ...s, promocje: s.promocje.filter(p => !bezKodu(p)) }));
   const sekcja = s => {
     const ile = s.promocje.filter(dzisiaj).length;
     const stary = s.ok === false ? `<p class="pzs">Nieaktualne od ${esc(dm(s.nieaktualne_od || s.sprawdzono || dzisPL))} – nie udało się odczytać regulaminu. Pokazujemy ostatnie dane${s.sprawdzono ? ` z ${esc(dm(s.sprawdzono))}` : ''} (bez promocji po terminie).</p>` : '';
     return `<section class="pz" aria-labelledby="pz-${s.id}"><h2 class="sec" id="pz-${s.id}">${esc(s.nazwa.toUpperCase())} <span class="pzn">${ile} ${ile === 1 ? 'promocja' : (ile % 10 >= 2 && ile % 10 <= 4 && (ile % 100 < 10 || ile % 100 >= 20)) ? 'promocje' : 'promocji'} dziś</span></h2>
 ${stary}<div class="pzl">
-${s.promocje.map(karta).join('\n')}
+${s.promocje.map(p => karta(p, s.id)).join('\n')}
 </div>
 <p class="pz0"${ile ? ' hidden' : ''}>Dziś brak promocji ogólnopolskich w regulaminie tej sieci.</p>
 <p class="pzr"><a href="${esc(s.regulamin)}" target="_blank" rel="noopener">Regulamin promocji ${esc(s.nazwa)} (źródło) →</a></p>

@@ -1,13 +1,13 @@
 {
- "sprawdzono": "2026-11-26T20:53+01:00",
+ "sprawdzono": "2026-11-26T20:59+01:00",
  "sieci": [
   {
    "id": "dominos",
    "nazwa": "Domino's",
    "regulamin": "https://www.dominospizza.pl/DominosPizza/media/files/regulaminy/Regulamin-promocji.pdf",
    "ok": true,
-   "sprawdzono": "2026-11-26T20:53+01:00",
-   "odczyt_regulaminu": "2026-11-26T20:53:24+01:00",
+   "sprawdzono": "2026-11-26T20:59+01:00",
+   "odczyt_regulaminu": "2026-11-26T20:59:36+01:00",
    "promocje": [
     {
      "nazwa": "Pizza Codzienna XXL 29,98 zł",
@@ -18,105 +18,18 @@
      "tagi": [
       "tylko odbiór osobisty"
      ],
-     "warunki": "Dotyczy wybranych rodzajów pizz XXL na cieście cienkim: Codzienna z boczkiem, Codzienna z pieczarkami"
-    },
-    {
-     "nazwa": "Duo Deal: 2x pizza duża – 38,98 zł każda",
-     "cena": "38,98 zł",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
-     "dni": null,
-     "tagi": [],
-     "warunki": "Dotyczy wybranych rodzajów pizz dużych na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa, Vegetariana…"
-    },
-    {
-     "nazwa": "Trio Deal: 3x pizza duża – 36,98 zł każda",
-     "cena": "36,98 zł",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
-     "dni": null,
-     "tagi": [],
-     "warunki": "Dotyczy wybranych rodzajów pizz dużych na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa, Vegetariana…"
-    },
-    {
-     "nazwa": "Pizza średnia za 5 zł",
-     "cena": "5 zł",
-     "od": "2026-09-28",
-     "do": "2026-12-20",
-     "dni": null,
-     "tagi": [
-      "z kodem"
-     ],
-     "warunki": "Dotyczy wszystkich pizz średnich na cienkim cieście w aktualnym menu Organizatora z wyjątkiem kreatora pizzy, Pizz Codziennych, Pizz Rzymskich oraz…; cena…"
-    },
-    {
-     "nazwa": "Pizza -50%",
-     "cena": "−50%",
-     "od": "2026-09-28",
-     "do": "2026-12-20",
-     "dni": null,
-     "tagi": [
-      "z kodem"
-     ],
-     "warunki": "Dotyczy wszystkich pizz w aktualnym menu Organizatora z wyjątkiem kreatora pizzy, Pizz Codziennych, Pizz Rzymskich oraz Pizz Volcano; rabat w wysokości -50%…"
-    },
-    {
-     "nazwa": "Pizza Volcano 49,98 zł w dostawie",
-     "cena": "49,98 zł",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
-     "dni": null,
-     "tagi": [],
-     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
-    },
-    {
-     "nazwa": "Pizza Volcano 51,98 zł w dostawie",
-     "cena": "51,98 zł",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
-     "dni": null,
-     "tagi": [],
-     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
-    },
-    {
-     "nazwa": "Pizza Volcano 39,98 zł z odbiorem osobistym",
-     "cena": "39,98 zł",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
-     "dni": null,
-     "tagi": [
-      "tylko odbiór osobisty"
-     ],
-     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
-    },
-    {
-     "nazwa": "Pizza Volcano 41,98 zł z odbiorem osobistym",
-     "cena": "41,98 zł",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
-     "dni": null,
-     "tagi": [
-      "tylko odbiór osobisty"
-     ],
-     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
-    },
-    {
-     "nazwa": "Pizza Volcano 46,98 zł na miejscu w lokalu i z odbiorem osobistym",
-     "cena": "46,98 zł",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
-     "dni": null,
-     "tagi": [],
-     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
+     "warunki": "Dotyczy wybranych rodzajów pizz XXL na cieście cienkim: Codzienna z boczkiem, Codzienna z pieczarkami",
+     "kod_wartosc": null
     },
     {
      "nazwa": "Pizza Polish Heroes 30% taniej",
      "cena": "−30%",
-     "od": "2026-11-26",
-     "do": "2026-11-30",
+     "od": "2026-11-19",
+     "do": "2027-02-18",
      "dni": null,
      "tagi": [],
-     "warunki": "rabat w wysokości -30%"
+     "warunki": "rabat w wysokości -30%",
+     "kod_wartosc": null
     },
     {
      "nazwa": "2 pizze w cenie 1 w aplikacji mobilnej",
@@ -127,7 +40,8 @@
      "tagi": [
       "tylko aplikacja"
      ],
-     "warunki": "Dotyczy wszystkich pizz w aktualnym menu Organizatora z wyjątkiem kreatora pizzy, Pizz Codziennych, Pizz Rzymskich, Pizza Volcano i Pizz Polish Heroes; w cenie…"
+     "warunki": "Dotyczy wszystkich pizz w aktualnym menu Organizatora z wyjątkiem kreatora pizzy, Pizz Codziennych, Pizz Rzymskich, Pizza Volcano i Pizz Polish Heroes; w cenie jednej droższej pizzy",
+     "kod_wartosc": null
     }
    ]
   },
@@ -136,8 +50,8 @@
    "nazwa": "T-Pizza",
    "regulamin": "https://www.tpizza.pl/regulamin-promocji/",
    "ok": true,
-   "sprawdzono": "2026-11-26T20:53+01:00",
-   "odczyt_regulaminu": "2026-11-26T20:53:25+01:00",
+   "sprawdzono": "2026-11-26T20:59+01:00",
+   "odczyt_regulaminu": "2026-11-26T20:59:36+01:00",
    "promocje": [
     {
      "nazwa": "Super Uno Classic",
@@ -246,7 +160,7 @@
      "tagi": [
       "wybrane dni"
      ],
-     "warunki": "Cena 40,95 zł dotyczy jednej pizzy w rozmiarze XXL (dotyczy pizz: Uśmiech Boryny, Wegetariańska, Carbonara, Margherita, Biesiada Serowa) w dostawie (zarówno zamówienia zł…"
+     "warunki": "Cena 40,95 zł dotyczy jednej pizzy w rozmiarze XXL (dotyczy pizz: Uśmiech Boryny, Wegetariańska, Carbonara, Margherita, Biesiada Serowa) w dostawie (zarówno zamówienia złożone telefonicznie jak i za pośrednictwem sklepu internetowego oraz aplikacji)."
     },
     {
      "nazwa": "MAX w cenie dużej!",
@@ -292,7 +206,7 @@
      "tagi": [
       "tylko w lokalu"
      ],
-     "warunki": "Promocja obowiązuje przy zakupie jednej małej pizzy z menu według dni tygodnia (każdego dnia promocją objęta jest inna pizza): poniedziałek – Uśmiech Boryny, wtorek – Dou…"
+     "warunki": "Promocja obowiązuje przy zakupie jednej małej pizzy z menu według dni tygodnia (każdego dnia promocją objęta jest inna pizza): poniedziałek – Uśmiech Boryny, wtorek – Double Pepperoni, środa – Capriciosa, czwartek – Pepperoni, piątek – Vege, sobota – Hawajska, niedziela – Margherita."
     },
     {
      "nazwa": "Średnia pizza z odbiorem osobistym w promocyjnej cenie",
