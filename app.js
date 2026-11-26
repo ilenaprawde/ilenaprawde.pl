@@ -52,7 +52,7 @@ function home(){
  const nav=$('cats');nav.innerHTML='';
  CATS.forEach((n,i)=>{const k=wsz.filter(r=>r.cat===i).length;if(!k)return;const a=el('a','chip',n+' · '+k);a.href='#d'+i;nav.appendChild(a)});
  // 3 najnowsze filmy (opublikowane albo zapowiedziane)
- const najn=[...ODCINKI].filter(o=>!o.plan&&!o.href).sort((a,b)=>b.nr-a.nr).slice(0,3);
+ const najn=[...ODCINKI].filter(o=>!o.plan&&!o.href&&opub(o)).sort((a,b)=>b.nr-a.nr).slice(0,3);
  const w=$('wall');w.innerHTML='';
  najn.forEach(o=>{const c=calc(o.id);w.appendChild(karta({id:o.id,nr:o.nr,o,params:o.params,nazwa:o.nazwa||c.krot,w:wynik(o)}))});
  const box=$('dzialy');box.innerHTML='';const sek=[];

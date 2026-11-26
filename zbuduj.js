@@ -180,7 +180,7 @@ ${brand}
 <p class="lead" id="ile">${KALK.length} kalkulatorów ze wzorem, źródłem i datą cen.</p>
 <div class="search"><input id="q" type="search" placeholder="Szukaj: np. czajnik, LED" aria-label="Szukaj rachunku" autocomplete="off"></div>
 <nav class="chips" id="cats" aria-label="Działy"></nav>
-<section id="nowe" aria-labelledby="hn"><h2 class="sec" id="hn">NAJNOWSZE FILMY <span>3 ostatnie odcinki</span></h2><div class="grid" id="wall"></div></section>
+<section id="nowe" aria-labelledby="hn"><h2 class="sec" id="hn">NAJNOWSZE FILMY <span>3 ostatnio opublikowane</span></h2><div class="grid" id="wall"></div></section>
 <div id="dzialy"></div>
 <p class="none" id="none" hidden>Nie mam jeszcze takiego rachunku. Nowe dodaję na bieżąco.</p>
 <noscript><ul>
