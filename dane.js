@@ -12,6 +12,8 @@ const PRAD={id:'p',l:'Cena prądu z dystrybucją',v:'1,10',u:'zł/kWh'};
 const PALIWO={id:'pb',l:'Cena paliwa',v:'5,80',u:'zł/l'};
 // działy (N143): 0 Prąd · 1 Dom i ogrzewanie · 2 Auto i podróże · 3 Zakupy · 4 Abonamenty · 5 Apteka
 const CATS=['Prąd','Dom i ogrzewanie','Auto i podróże','Zakupy','Abonamenty','Apteka'];
+// strony bez kalkulatora, pokazywane jako karta w dziale (N152)
+const STRONY=[{href:'/promocje-pizza/',nazwa:'Promocje na pizzę dziś',cat:3,tag:'codziennie',am:"Domino's · T-Pizza",szukaj:'pizza promocje domino tpizza t-pizza telepizza jedzenie dostawa'}];
 // ODCINKI: nr, id kalkulatora, wynik z filmu: typ ('roznica' = ile można zyskać → zielone „−620 zł / 2 lata”; 'procent' → zielone „−77%”; 'koszt' → neutralne „96 zł / rok”), kwota (liczba), okres ('rok' | '2 lata' | 'sezon' …; zawsze widoczny), procent (opcjonalnie, liczba bez znaku), podpis pod kwotą,
 // kalkulatory bez odcinka: typ/okres wynikają z etykiety wyniku (sk), można je nadpisać polami typ/okres w KALK,
 // tytul = krótki tytuł odcinka (zalecane ≤70 znaków, hasło w pierwszych słowach) pod przyciskiem filmu; yt = ID filmu na YouTube, pa = data publikacji (ISO ze strefą) – przycisk „OBEJRZYJ FILM” pojawia się dopiero od pa (miniatura: /thumbs/odcNN.jpg);
@@ -312,5 +314,5 @@ const KALK=[
  f:v=>{const A=v.aa*v.am+v.ak,B=v.ba*v.bm+v.bk,d=A-B,tan=d>=0?'B':'A',pr=(d>=0?A:B)>0?f1(Math.abs(d)/(d>=0?A:B)*100)+'%':'–';return{l:[['Koszt oferty A ('+f1(v.am)+' mies.)',zl(A)],['Koszt oferty B ('+f1(v.bm)+' mies.)',zl(B)],['Taniej oferta '+tan+' o',pr]],sk:v.am===v.bm?'RÓŻNICA ZA '+f1(v.am)+' MIES.':'RÓŻNICA ZA OKRES UMOWY',sv:Math.abs(d)}},
  w:'abonament × miesiące + aktywacja; różnica = koszt A − koszt B; procent = różnica ÷ droższa oferta × 100',s:'Ceny z listopada 2026, przykładowe: Play Oferta S (umowa 24 mies.) i Virgin Mobile S (bez umowy terminowej), ceny po rabatach za e-fakturę i zgody, bez telefonu. Virgin Mobile to marka Play (ta sama sieć). Po okresie umowy ceny mogą wzrosnąć. Ceny w polach domyślnych (stan na 24.11.2026): Play Oferta S 45 zł/mies. (aktywacja 50 zł), Virgin Mobile S 20 zł/mies. (aktywacja 30 zł). To nie jest porada.'}
 ];
-window.ILE={KALK,ODCINKI,CATS,num,f2,f1,zl,kwh,yrs};
+window.ILE={KALK,ODCINKI,CATS,STRONY,num,f2,f1,zl,kwh,yrs};
 })();

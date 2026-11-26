@@ -209,3 +209,24 @@ nav.chips .chip{font-size:12px;letter-spacing:0;padding:8px 4px;white-space:nowr
 .op{margin:12px auto 0;max-width:440px;padding:8px 12px;border:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px;text-align:left}
 .op b{font-size:20px;white-space:nowrap;font-variant-numeric:tabular-nums}
 @media(max-width:400px){.op{flex-direction:column;align-items:flex-start;gap:2px}}
+
+/* N152: promocje na pizzę dziś */
+.pzpage .stan{font-size:13px;font-weight:700;margin:0 0 8px}
+.pz{margin-top:32px}
+.pzl{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){.pzl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pzc{background:var(--paper);padding:16px;border-top:3px solid var(--ink);display:flex;flex-direction:column;gap:8px;min-width:0}
+.pzc[hidden]{display:none}
+.pzc h3{font-size:14px;line-height:1.3;margin:0;overflow-wrap:anywhere}
+.pzp{font-weight:700;font-size:20px;line-height:1.2;color:var(--green);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.pzt{font-size:12px;color:var(--mut);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pzg{font-size:11px;color:var(--ink);border:1.5px dashed var(--ink);padding:1px 6px;white-space:nowrap}
+.pzw{font-size:12px;color:var(--mut);line-height:1.45}
+.pzs{font-size:12.5px;font-weight:700;color:var(--red);margin:0 0 16px}
+.pz0{font-size:13px;color:var(--mut);background:var(--paper);padding:16px}
+.pzr{margin-top:16px;font-size:13px}
+.pzi{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:640px){.pzi{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pzi a{display:block;background:var(--paper);padding:12px 16px;font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;border:1.5px dashed var(--ink)}
+.pzpage .fine2{margin-top:16px}
+.pzpage .fine2{font-size:12px;color:var(--mut);line-height:1.5}

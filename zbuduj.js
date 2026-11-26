@@ -323,12 +323,82 @@ zapisz('abonament/index.html', `<!doctype html>
 </head><body><p><a href="/abonamenty/">Przejdź do porównywarki abonamentów</a></p>${BEACON}</body></html>
 `);
 
+// ---------- promocje na pizzę dziś: /promocje-pizza/ (N152; dane: dane/promocje_pizza.json z fabryki, codziennie ok. 07:30) ----------
+const PZ_URL = ORIGIN + '/promocje-pizza/';
+let PZ = null; try { PZ = JSON.parse(fs.readFileSync('dane/promocje_pizza.json', 'utf8')); } catch (e) {}
+const PZ_INNE = [['Pizza Hut', 'https://pizzahut.pl/'], ['Da Grasso', 'https://www.dagrasso.pl/promocje'], ["Papa John's", 'https://papajohns.pl/']];
+const PZ_FAQ = [
+  ['Skąd są te promocje?', "Z regulaminów promocji publikowanych przez sieci: Domino's (PDF „Regulamin promocji”) i T-Pizza (strona „Regulaminy Promocji”). Sprawdzamy je codziennie rano i pokazujemy tylko promocje ogólnopolskie, które obowiązują dziś."],
+  ['Dlaczego nie ma tu Pizza Hut, Da Grasso i Papa John’s?', 'Ich regulaminy nie podają dat albo cen (cena zależy od lokalu), a aktualne oferty widać dopiero w aplikacji lub po wyborze adresu. Dlatego dajemy tylko linki do ich stron promocji.'],
+  ['Czy cena z promocji to cena w moim lokalu?', 'Nie zawsze. Ceny mogą się różnić w niektórych lokalach, do zamówienia z dostawą dochodzą opłaty za opakowanie i minimalna wartość zamówienia. Przed zamówieniem sprawdź koszyk.'],
+  ['Co znaczy „tylko aplikacja”, „z kodem” i „wybrane dni”?', 'Tylko aplikacja – promocja działa wyłącznie w aplikacji mobilnej sieci. Z kodem – trzeba mieć kod promocyjny. Wybrane dni – promocja działa tylko w niektóre dni tygodnia (pokazujemy ją, gdy dziś jest taki dzień).'],
+];
+{
+  const dzisPL = dataPL(Date.now());
+  const DN = ['', 'pon.', 'wt.', 'śr.', 'czw.', 'pt.', 'sob.', 'niedz.'];
+  const dm = iso => { const [y, m, d] = iso.slice(0, 10).split('-'); return `${+d}.${m}`; };
+  const godz = iso => iso && iso.length > 15 ? iso.slice(11, 16).replace(/^0/, '') : '';
+  const termin = p => p.do >= '2027-01-01' && !p.dni ? 'codziennie' : (p.dni ? `${p.dni.map(d => DN[d]).join(', ')}` : '') + (p.do < '2027-01-01' ? `${p.dni ? ' · ' : ''}do ${dm(p.do)}` : '');
+  const dowPL = iso => { const d = new Date(iso + 'T12:00:00Z').getUTCDay(); return d === 0 ? 7 : d; };
+  const dzisiaj = p => p.od <= dzisPL && p.do >= dzisPL && (!p.dni || p.dni.includes(dowPL(dzisPL)));
+  const karta = p => `<article class="pzc"${dzisiaj(p) ? '' : ' hidden'} data-od="${p.od}" data-do="${p.do}"${p.dni ? ` data-dni="${p.dni.join(',')}"` : ''}>
+  <h3>${esc(p.nazwa)}</h3>
+  ${p.cena ? `<p class="pzp">${esc(p.cena)}</p>` : ''}
+  <p class="pzt">${esc(termin(p))}${(p.tagi || []).map(t => ` <span class="pzg">${esc(t)}</span>`).join('')}</p>
+  ${p.warunki ? `<p class="pzw">${esc(p.warunki)}</p>` : ''}
+ </article>`;
+  const sieci = PZ ? PZ.sieci : [];
+  const sekcja = s => {
+    const ile = s.promocje.filter(dzisiaj).length;
+    const stary = s.ok === false ? `<p class="pzs">Nieaktualne od ${esc(dm(s.nieaktualne_od || s.sprawdzono || dzisPL))} – nie udało się odczytać regulaminu. Pokazujemy ostatnie dane${s.sprawdzono ? ` z ${esc(dm(s.sprawdzono))}` : ''} (bez promocji po terminie).</p>` : '';
+    return `<section class="pz" aria-labelledby="pz-${s.id}"><h2 class="sec" id="pz-${s.id}">${esc(s.nazwa.toUpperCase())} <span class="pzn">${ile} ${ile === 1 ? 'promocja' : (ile % 10 >= 2 && ile % 10 <= 4 && (ile % 100 < 10 || ile % 100 >= 20)) ? 'promocje' : 'promocji'} dziś</span></h2>
+${stary}<div class="pzl">
+${s.promocje.map(karta).join('\n')}
+</div>
+<p class="pz0"${ile ? ' hidden' : ''}>Dziś brak promocji ogólnopolskich w regulaminie tej sieci.</p>
+<p class="pzr"><a href="${esc(s.regulamin)}" target="_blank" rel="noopener">Regulamin promocji ${esc(s.nazwa)} (źródło) →</a></p>
+</section>`;
+  };
+  const spr = PZ && PZ.sprawdzono;
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ile Naprawdę', item: ORIGIN + '/' }, { '@type': 'ListItem', position: 2, name: 'Promocje na pizzę dziś', item: PZ_URL }] },
+    { '@type': 'FAQPage', mainEntity: PZ_FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] };
+  const pzDesc = "Promocje na pizzę dziś w Domino's i T-Pizza: ceny, terminy, „tylko aplikacja”, „z kodem”. Z regulaminów sieci, sprawdzane codziennie rano.";
+  zapisz('promocje-pizza/index.html', head({ title: "Promocje na pizzę dziś – Domino's i T-Pizza | Ile Naprawdę", desc: pzDesc, canonical: PZ_URL, ld }) + `
+<body data-strona="pizza" class="pzpage">
+<main class="wrap">
+${brand}
+<a class="back" href="/">← wszystkie rachunki</a>
+<h1>Promocje na pizzę <mark>dziś</mark></h1>
+<p class="stan" id="pzstan" data-spr="${esc(spr || '')}">${spr ? `Sprawdzone ${spr.slice(0, 10) === dzisPL ? 'dziś' : dm(spr)} o ${esc(godz(spr))}` : 'Brak odczytu'}</p>
+<p class="lead">Promocje ogólnopolskie z regulaminów sieci, które obowiązują dziś. Cena, termin i warunki – bez rankingu.</p>
+${sieci.map(sekcja).join('\n')}
+<section class="pz" aria-labelledby="pz-inne"><h2 class="sec" id="pz-inne">SPRAWDŹ W ICH APLIKACJI <span>bez cen</span></h2>
+<ul class="pzi">${PZ_INNE.map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${esc(n)} – promocje →</a></li>`).join('')}</ul>
+</section>
+<p class="fine2">Ceny mogą się różnić w niektórych lokalach. Wyliczenie poglądowe.</p>
+<p class="fine2">Źródło: regulaminy promocji sieci (linki pod każdą siecią). Promocje lokalne (tylko wybrane miasta) pomijamy. To nie jest porada.</p>
+<section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
+${PZ_FAQ.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>
+${stopka}
+${stopka2}
+</main>
+<script>(function(){var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw'}).format(new Date()),w=new Date(t+'T12:00:00Z').getUTCDay()||7;
+document.querySelectorAll('.pz').forEach(function(s){var n=0;s.querySelectorAll('.pzc').forEach(function(c){var d=c.dataset.dni,ok=c.dataset.od<=t&&c.dataset.do>=t&&(!d||d.split(',').indexOf(String(w))>=0);c.hidden=!ok;if(ok)n++});
+ var l=s.querySelector('.pzn');if(l)l.textContent=n+' '+(n===1?'promocja':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?'promocje':'promocji')+' dziś';var z=s.querySelector('.pz0');if(z)z.hidden=n>0});
+var e=document.getElementById('pzstan'),s=e&&e.dataset.spr;if(s&&s.slice(0,10)!==t)e.textContent='Sprawdzone '+(+s.slice(8,10))+'.'+s.slice(5,7)+' o '+s.slice(11,16).replace(/^0/,'')})()</script>
+${BEACON}
+</body>
+</html>
+`);
+}
+
 // ---------- sitemap.xml + robots.txt ----------
 // lastmod: data ostatniej zmiany danego kalkulatora (git blame jego wpisu w dane.js), nie dzisiejsza dla wszystkich
 const dzis = dataPL(Date.now());
 const kurls = KALK.map(c => { const u = `${ORIGIN}/kalkulatory/${c.id}/`; return [u, lastmodKalk(c, u) || staraMapa[u] || dzis]; });
 const naj = kurls.map(x => x[1]).sort().pop();
-const inne = [['/abonamenty/', 'abonamenty.js'], ['/prywatnosc/', 'prywatnosc.html'], ['/regulamin/', 'regulamin.html']]
+const inne = [['/abonamenty/', 'abonamenty.js'], ['/promocje-pizza/', 'dane/promocje_pizza.json'],['/prywatnosc/', 'prywatnosc.html'], ['/regulamin/', 'regulamin.html']]
   .map(([p, f]) => { const u = ORIGIN + p; return [u, (PLYTKI ? null : plikData(f)) || staraMapa[u] || dzis]; });
 const urls = [[ORIGIN + '/', naj], ...kurls, ...inne];
 zapisz('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>

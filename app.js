@@ -59,7 +59,8 @@ function home(){
  CATS.forEach((n,i)=>{const lista=wsz.filter(r=>r.cat===i).sort((a,b)=>(b.nr??-1)-(a.nr??-1));if(!lista.length)return;
   const s=el('section','dz');s.id='d'+i;s.setAttribute('aria-labelledby','dh'+i);
   const h=el('h2','sec');h.id='dh'+i;h.appendChild(document.createTextNode(n.toUpperCase()));const sp=el('span');h.appendChild(sp);s.appendChild(h);
-  const g=el('div','grid');lista.forEach(r=>{const k=karta(r);k._r=r;g.appendChild(k)});s.appendChild(g);box.appendChild(s);sek.push({s,sp,g})});
+  const g=el('div','grid');lista.forEach(r=>{const k=karta(r);k._r=r;g.appendChild(k)});
+  (window.ILE.STRONY||[]).filter(x=>x.cat===i).forEach(x=>{const a=el('a','card');a.href=x.href;const p=el('div','paper');const tr=el('div','tagrow');tr.appendChild(el('small','tg',x.tag));p.appendChild(tr);p.appendChild(el('div','t',x.nazwa));const v=el('div','v');v.appendChild(el('span','per',x.am));p.appendChild(v);a.appendChild(p);a._r={szukaj:x.nazwa+' '+x.szukaj};g.appendChild(a)});s.appendChild(g);box.appendChild(s);sek.push({s,sp,g})});
  function filtr(){const ws=norm($('q').value.trim()).split(/\s+/).filter(Boolean);let ile=0;
   sek.forEach(({s,sp,g})=>{let k=0;[...g.children].forEach(a=>{const ok=ws.every(x=>norm(a._r.szukaj).includes(x));a.hidden=!ok;if(ok)k++});s.hidden=!k;ile+=k;
    sp.textContent=k===1?'1 kalkulator':k+(k%10>=2&&k%10<=4&&(k%100<10||k%100>=20)?' kalkulatory':' kalkulatorów')});

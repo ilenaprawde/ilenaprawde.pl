@@ -1,0 +1,401 @@
+{
+ "sprawdzono": "2026-11-26T20:49+01:00",
+ "sieci": [
+  {
+   "id": "dominos",
+   "nazwa": "Domino's",
+   "regulamin": "https://www.dominospizza.pl/DominosPizza/media/files/regulaminy/Regulamin-promocji.pdf",
+   "ok": true,
+   "sprawdzono": "2026-11-26T20:49+01:00",
+   "odczyt_regulaminu": "2026-11-26T20:49:02+01:00",
+   "promocje": [
+    {
+     "nazwa": "-40% na pizze dla studentów i uczniów",
+     "cena": "−40%",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz na cieście cienkim do wyboru: Margherita, Pepperoni, Vegetariana, Vesuvio, Capricciosa, Hawajska, Carbonara…; rabat w wysokości…"
+    },
+    {
+     "nazwa": "Duo Deal: 2x pizza duża – 38,98 zł każda",
+     "cena": "38,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa, Vegetariana…"
+    },
+    {
+     "nazwa": "Trio Deal: 3x pizza duża – 36,98 zł każda",
+     "cena": "36,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa, Vegetariana…"
+    },
+    {
+     "nazwa": "Duża pizza 30,98 zł",
+     "cena": "30,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa, Vegetariana…"
+    },
+    {
+     "nazwa": "Kalendarium promocji – Duża pizza -30%",
+     "cena": "−30%",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [
+      "wybrane dni"
+     ],
+     "warunki": "rabat w wysokości -30%"
+    },
+    {
+     "nazwa": "Kalendarium Promocji – Duża pizza -20%",
+     "cena": "−20%",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [
+      "wybrane dni"
+     ],
+     "warunki": "rabat w wysokości -20%"
+    },
+    {
+     "nazwa": "Kalendarium Promocji – Duża pizza 39,98 zł",
+     "cena": "39,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": ""
+    },
+    {
+     "nazwa": "Średnia pizza 25,98 zł",
+     "cena": "25,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz średnich na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa…"
+    },
+    {
+     "nazwa": "Duża pizza 33,98 zł",
+     "cena": "33,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa, Vegetariana…"
+    },
+    {
+     "nazwa": "Pizza XXL 37,98 zł",
+     "cena": "37,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz XXL na cieście cienkim: Margherita, Pepperoni, Farmhouse, Hawajska, Carbonara, Vesuvio, Capricciosa, Vegetariana…"
+    },
+    {
+     "nazwa": "Pizza średnia za 5 zł",
+     "cena": "5 zł",
+     "od": "2026-09-28",
+     "do": "2026-12-20",
+     "dni": null,
+     "tagi": [
+      "z kodem"
+     ],
+     "warunki": "Dotyczy wszystkich pizz średnich na cienkim cieście w aktualnym menu Organizatora z wyjątkiem kreatora pizzy, Pizz Codziennych, Pizz Rzymskich oraz…; cena…"
+    },
+    {
+     "nazwa": "Pizza -50%",
+     "cena": "−50%",
+     "od": "2026-09-28",
+     "do": "2026-12-20",
+     "dni": null,
+     "tagi": [
+      "z kodem"
+     ],
+     "warunki": "Dotyczy wszystkich pizz w aktualnym menu Organizatora z wyjątkiem kreatora pizzy, Pizz Codziennych, Pizz Rzymskich oraz Pizz Volcano; rabat w wysokości -50%…"
+    },
+    {
+     "nazwa": "Pizza Volcano 49,98 zł w dostawie",
+     "cena": "49,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
+    },
+    {
+     "nazwa": "Pizza Volcano 51,98 zł w dostawie",
+     "cena": "51,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
+    },
+    {
+     "nazwa": "Pizza Volcano 39,98 zł z odbiorem osobistym",
+     "cena": "39,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
+    },
+    {
+     "nazwa": "Pizza Volcano 41,98 zł z odbiorem osobistym",
+     "cena": "41,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
+    },
+    {
+     "nazwa": "Pizza Volcano 46,98 zł na miejscu w lokalu i z odbiorem osobistym",
+     "cena": "46,98 zł",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dotyczy wybranych rodzajów pizz dużych: Volcano Meatball Mexicana, Volcano Margherita, Volcano Pepperoni, Volcano Capricciosa"
+    },
+    {
+     "nazwa": "Pizza Polish Heroes 30% taniej",
+     "cena": "−30%",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [],
+     "warunki": "rabat w wysokości -30%"
+    },
+    {
+     "nazwa": "2 pizze w cenie 1 w aplikacji mobilnej",
+     "cena": "2 w cenie 1",
+     "od": "2026-11-26",
+     "do": "2026-11-30",
+     "dni": null,
+     "tagi": [
+      "tylko aplikacja"
+     ],
+     "warunki": "Dotyczy wszystkich pizz w aktualnym menu Organizatora z wyjątkiem kreatora pizzy, Pizz Codziennych, Pizz Rzymskich, Pizza Volcano i Pizz Polish Heroes; w cenie…"
+    }
+   ]
+  },
+  {
+   "id": "tpizza",
+   "nazwa": "T-Pizza",
+   "regulamin": "https://www.tpizza.pl/regulamin-promocji/",
+   "ok": true,
+   "sprawdzono": "2026-11-26T20:49+01:00",
+   "odczyt_regulaminu": "2026-11-26T20:49:02+01:00",
+   "promocje": [
+    {
+     "nazwa": "Super Uno Classic",
+     "cena": "mała 22,95 · średnia 34,95 · duża 43,95 · Max 53,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja obowiązuje przy zakupie jednej pizzy z menu z grupy „Bestsellery”."
+    },
+    {
+     "nazwa": "Super Uno Wyjątkowe",
+     "cena": "mała 24,95 · średnia 40,95 · duża 49,95 · Max 58,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja obowiązuje przy zakupie jednej pizzy z menu z grupy „Wyjątkowe”."
+    },
+    {
+     "nazwa": "Super Uno Premium",
+     "cena": "mała 26,95 · średnia 44,95 · duża 53,95 · Max 63,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja obowiązuje przy zakupie jednej pizzy z menu z grupy „Wyjątkowe”."
+    },
+    {
+     "nazwa": "Super Duo Classic",
+     "cena": "średnia 31,95 · duża 40,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja obowiązuje przy zakupie dwóch pizz z menu z grupy „Bestsellery” lub kompozycji własnej do 2 składników."
+    },
+    {
+     "nazwa": "Super Duo Premium",
+     "cena": "średnia 35,95 · duża 44,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja obowiązuje przy zakupie dwóch pizz z menu z grupy „Premium” lub kompozycji własnej do 2 składników."
+    },
+    {
+     "nazwa": "Super Trio Classic",
+     "cena": "średnia 30,45 · duża 38,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja obowiązuje przy zakupie trzech pizz z menu z grupy „Bestsellery”."
+    },
+    {
+     "nazwa": "Super Trio Premium",
+     "cena": "średnia 29,45 · duża 41,45 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja obowiązuje przy zakupie trzech pizz z menu z grupy „Bestsellery”."
+    },
+    {
+     "nazwa": "2za1 na Bestsellery",
+     "cena": "2 za 1",
+     "od": "2026-02-19",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja na wszystkie pizze w rozmiarze duża z kategorii Bestsellery w dostawie i online, z wyłączeniem agregatorów."
+    },
+    {
+     "nazwa": "-50% na wszystkie pizze",
+     "cena": "−50%",
+     "od": "2026-02-19",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Promocja na wszystkie pizze w rozmiarze średnia w kategorii Klasyczne/Bestsellery."
+    },
+    {
+     "nazwa": "Pizza Poniedziałkowa",
+     "cena": "9,98 zł",
+     "od": "2024-12-16",
+     "do": "2027-12-31",
+     "dni": [
+      1
+     ],
+     "tagi": [
+      "tylko w lokalu",
+      "wybrane dni"
+     ],
+     "warunki": "Promocja 9,98 zł dotyczy jednej małej pizzy z kategorii bestsellery w zamówieniu złożonym na miejscu w lokalu."
+    },
+    {
+     "nazwa": "Pizza duża w dostawie za 40,95 zł",
+     "cena": "40,95 zł",
+     "od": "2026-01-12",
+     "do": "2027-12-31",
+     "dni": [
+      1,
+      4
+     ],
+     "tagi": [
+      "wybrane dni"
+     ],
+     "warunki": "Cena 40,95 zł dotyczy jednej pizzy w rozmiarze XXL (dotyczy pizz: Uśmiech Boryny, Wegetariańska, Carbonara, Margherita, Biesiada Serowa) w dostawie (zarówno zamówienia zł…"
+    },
+    {
+     "nazwa": "MAX w cenie dużej!",
+     "cena": null,
+     "od": "2026-02-17",
+     "do": "2027-12-31",
+     "dni": [
+      2
+     ],
+     "tagi": [
+      "wybrane dni"
+     ],
+     "warunki": "Promocja dotyczy wyłącznie pizz klasycznych/bestsellerów (do wyboru) w rozmiarze MAX."
+    },
+    {
+     "nazwa": "Mega Party Box w cenie 97,95 zł",
+     "cena": "97,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Zestaw zawiera: 2 pizze średnie do 4 składników, 2x sos 50 ml, frytki 170g, 8 szt. nuggets oraz 8 szt."
+    },
+    {
+     "nazwa": "Mega Party Box w cenie 89,95 zł",
+     "cena": "89,95 zł",
+     "od": "2026-02-20",
+     "do": "2027-12-31",
+     "dni": [
+      5
+     ],
+     "tagi": [
+      "wybrane dni"
+     ],
+     "warunki": "Zestaw zawiera: 2 pizze średnie do 4 składników, 2x sos 50 ml, frytki 170g, 8 szt. nuggets oraz 8 szt."
+    },
+    {
+     "nazwa": "Pizza dnia",
+     "cena": "13,99 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [
+      "tylko w lokalu"
+     ],
+     "warunki": "Promocja obowiązuje przy zakupie jednej małej pizzy z menu według dni tygodnia (każdego dnia promocją objęta jest inna pizza): poniedziałek – Uśmiech Boryny, wtorek – Dou…"
+    },
+    {
+     "nazwa": "Średnia pizza z odbiorem osobistym w promocyjnej cenie",
+     "cena": "29,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [
+      "tylko w lokalu"
+     ],
+     "warunki": "Wybrana pizza w rozmiarze średnia w promocyjnej cenie 29,95 zł."
+    },
+    {
+     "nazwa": "zero limits",
+     "cena": "54,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Zestaw zero limits za 54,95 zł."
+    },
+    {
+     "nazwa": "Zestaw rodzinny",
+     "cena": "115,95 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [],
+     "warunki": "Dwie dowolne pizze w rozmiarze XXL, Mini Calzzone 4 szt., Stripsy 3 szt oraz 2 sosy 100ml do wyboru w cenie 115,95."
+    },
+    {
+     "nazwa": "Hot 20",
+     "cena": "20 zł",
+     "od": "2026-01-01",
+     "do": "2027-12-31",
+     "dni": null,
+     "tagi": [
+      "tylko w lokalu"
+     ],
+     "warunki": "Pizza w rozmiarze średnia z kategorii Klasyczne/Bestsellery w cenie 20 zł (dostępna w lokalu/na odbiór."
+    }
+   ]
+  }
+ ]
+}
