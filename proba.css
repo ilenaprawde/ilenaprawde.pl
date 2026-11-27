@@ -75,9 +75,10 @@ details>summary::-webkit-details-marker{display:none}
 .mono-s{font-size:14px;color:var(--mut);margin:0}
 .spr{margin:16px 0 0;text-align:center;font-size:14px;font-weight:700;color:var(--tekst)}
 /* paragon – rozpoznawalny styl z filmów */
-.paragon{background:var(--papier);color:var(--tusz);font-family:var(--mono);font-size:14px;padding:26px 18px 28px;margin:0 auto;max-width:440px;filter:drop-shadow(0 2px 6px #0000001f);
- --z:8px;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/calc(var(--z)*2) var(--z) repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/calc(var(--z)*2) var(--z) repeat-x,linear-gradient(#000 0 0) center/100% calc(100% - var(--z)*2) no-repeat;
- -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/calc(var(--z)*2) var(--z) repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/calc(var(--z)*2) var(--z) repeat-x,linear-gradient(#000 0 0) center/100% calc(100% - var(--z)*2) no-repeat}
+.paragon{position:relative;background:#FBF5E6;color:var(--tusz);font-family:var(--mono);font-size:14px;padding:30px 18px 32px;margin:0 auto;max-width:440px}
+.paragon::before,.paragon::after{content:"";position:absolute;left:0;right:0;height:8px}
+.paragon::before{top:0;background:conic-gradient(from 135deg at 50% 0,var(--karta) 90deg,#0000 0) 0 0/16px 8px repeat-x}
+.paragon::after{bottom:0;background:conic-gradient(from -45deg at 50% 100%,var(--karta) 90deg,#0000 0) 0 100%/16px 8px repeat-x}
 .ph{text-align:center;font-weight:700;letter-spacing:.12em;border-bottom:2px dashed var(--tusz);padding-bottom:10px;margin-bottom:10px}
 .ph small{display:block;font-weight:400;letter-spacing:.04em;font-size:12px}
 .pl{display:flex;align-items:baseline;gap:6px;padding:3px 0}
