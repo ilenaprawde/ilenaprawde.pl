@@ -237,3 +237,8 @@ nav.chips .chip{font-size:12px;letter-spacing:0;padding:8px 4px;white-space:nowr
 .lkb{display:block;margin:12px auto 0;max-width:440px;padding:10px 8px;border:2px solid var(--ink);background:var(--ink);color:var(--paper,#fff);font-weight:700;font-size:14px;text-align:center;text-decoration:none;letter-spacing:.02em}
 .lkb:hover,.lkb:focus{background:transparent;color:var(--ink)}
 .pzk{margin:10px 0 4px}
+
+/* N159: Przywróć domyślne */
+.rst{display:block;margin:4px auto 14px;font:inherit;font-size:14px;font-weight:700;background:transparent;color:var(--ink);border:2px solid var(--ink);padding:8px 14px;cursor:pointer}
+.rst:hover,.rst:focus-visible{background:var(--ink);color:var(--paper)}
+.rst[hidden]{display:none}

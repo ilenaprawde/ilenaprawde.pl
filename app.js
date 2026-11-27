@@ -145,8 +145,15 @@ function kalk(c){
   let pod=$('spod');if(r.pod){if(!pod){pod=el('p','small spod');pod.id='spod';sv.closest('.sum').after(pod)}pod.textContent=r.pod;pod.style.color=r.podKol==='red'?'var(--red)':'';pod.style.fontWeight=r.podKol==='red'?'700':''}else if(pod)pod.remove();
   {let op=$('op');const ore=c.op?new RegExp(c.op):null,or=ore&&r.l.find(([x])=>ore.test(x));
    if(or){if(!op){op=el('p','op');op.id='op';($('spod')||sv.closest('.sum')).after(op)}op.textContent='';op.appendChild(el('span',null,or[0]));op.appendChild(el('b',null,or[1]))}else if(op)op.remove()}
-  sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)'}
+  sv.style.color=r.kol?'var(--'+r.kol+')':/OSZCZ|TAŃSZE|NAJTANIEJ/.test(r.sk)?'var(--green)':r.sv>=500?'var(--red)':r.sv>=50?'var(--amber)':'var(--green)';if(window.__rstChk)window.__rstChk()}
  if($('cw'))$('cw').textContent=c.w;if($('cs'))$('cs').textContent=c.s||'';
+ // N159: „Przywróć domyślne” (c.reset) – widoczny tylko gdy któreś pole różni się od wartości domyślnej; czyści też liczby z adresu
+ if(c.reset){const rb=el('button','rst','Przywróć domyślne');rb.type='button';rb.id='rst';rb.hidden=true;box.after(rb);
+  const zm=()=>c.in.some(x=>{const e=$('f_'+x.id);return x.chk?(e.checked?'1':'0')!==x.v:x.opt?e.value!==String(x.v):!(num(e.value)===num(x.v))});
+  window.__rstChk=()=>{rb.hidden=!zm()};
+  rb.onclick=()=>{c.in.forEach(x=>{const e=$('f_'+x.id);if(x.chk)e.checked=x.v==='1';else{e.value=x.v;const g=e.closest('.fopt');if(g)g.querySelectorAll('button').forEach(z=>z.setAttribute('aria-pressed',String(z.dataset.v===String(x.v))))}});
+   try{const Q=new URLSearchParams(location.search);c.in.forEach(x=>Q.delete(x.id));history.replaceState(null,'',location.pathname+(Q.toString()?'?'+Q.toString():'')+location.hash)}catch(e){}
+   run();rb.hidden=true};setTimeout(window.__rstChk,0)}
  // „Ceny sprawdzone: DD.MM.RRRR” – tylko kalkulatory z cenami śledzonymi przez tygodniową kontrolę (dane/ceny_sprawdzone.json; plik zapisuje automat)
  fetch('/dane/ceny_sprawdzone.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{const d=j&&j[c.id],e=$('csd');if(e&&/^\d{4}-\d{2}-\d{2}$/.test(d||'')){e.textContent='Ceny sprawdzone: '+d.slice(8)+'.'+d.slice(5,7)+'.'+d.slice(0,4);e.hidden=false}}).catch(()=>{});
  function link(){const q=new URLSearchParams();c.in.forEach(x=>{const e=$('f_'+x.id);q.set(x.id,x.chk?(e.checked?'1':'0'):e.value.trim())});if(c.lista)q.set('k',c.zS(items));return location.origin+(window.__p0?window.__p0.split('?')[0].split('#')[0]:location.pathname)+'?'+q.toString()}

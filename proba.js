@@ -25,10 +25,19 @@
    inp.id = 'f_' + x.id; inp.type = 'text'; inp.inputMode = 'decimal'; inp.autocomplete = 'off'; inp.value = x.v; lab.htmlFor = inp.id;
    inp.addEventListener('input', () => { gotowe = true; licz(); });
    we.appendChild(inp); we.appendChild(el('span', 'j', x.u || '')); d.appendChild(lab); d.appendChild(we); box.appendChild(d);
+   if (x.h) box.appendChild(el('p', 'podp', x.h));
   });
   pola.appendChild(box);
  });
 
+ // N159: „Przywróć domyślne” – widoczny tylko po zmianie; wartości domyślne = x.v z dane.js (aktualizuje je tygodniowy odczyt cen)
+ const rb = el('button', 'rst', 'Przywróć domyślne'); rb.type = 'button'; rb.hidden = true; pola.after(rb);
+ const zmienione = () => c.in.some(x => !(num($('f_' + x.id).value) === num(x.v)));
+ rb.addEventListener('click', () => {
+  c.in.forEach(x => { $('f_' + x.id).value = x.v; });
+  try { const Q = new URLSearchParams(location.search); c.in.forEach(x => Q.delete(x.id)); history.replaceState(null, '', location.pathname + (Q.toString() ? '?' + Q.toString() : '') + location.hash); } catch (e) {}
+  licz(); $('f_' + c.in[0].id).focus({ preventScroll: true });
+ });
  // ---- liczenie ----
  // N157: animacja startuje dopiero, gdy strona jest naprawdę pokazana (nie w prerenderze Chrome / w tle) i wynik jest na ekranie
  let gotowe = !ruch, dlugo = false, pokazane = 0, anim = 0;
@@ -44,6 +53,7 @@
  function licz() {
   const v = {}; let zle = false;
   c.in.forEach(x => { const e = $('f_' + x.id), w = num(e.value); const ok = w >= 0; e.setAttribute('aria-invalid', ok ? 'false' : 'true'); if (!ok) zle = true; v[x.id] = w; });
+  rb.hidden = !zmienione();
   $('blad').hidden = !zle; if (zle) return;
   const r = c.f(v);
   // paski: wiersze „… rocznie”
