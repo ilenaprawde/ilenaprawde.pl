@@ -366,3 +366,4 @@ details>summary::-webkit-details-marker{display:none}
  .hero:has(>.wyk[hidden])>.wynik{grid-column:1/-1;width:100%;max-width:560px;justify-self:center}
  .hero .pyt{max-width:680px}
 }
+html{scrollbar-gutter:stable}   /* N166: krótka strona (404) bez paska przewijania nie przesuwa kart */
