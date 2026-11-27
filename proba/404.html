@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>PRÓBA – Nie ma takiej strony – Ile Naprawdę</title>
+<meta name="description" content="Ile Naprawdę – kalkulatory codziennych kosztów: prąd, apteka, auto, ogrzewanie. Wzór i źródło przy każdym rachunku.">
+<link rel="canonical" href="https://ilenaprawde.pl/">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ile Naprawdę">
+<meta property="og:title" content="Nie ma takiej strony – Ile Naprawdę">
+<meta property="og:description" content="Ile Naprawdę – kalkulatory codziennych kosztów: prąd, apteka, auto, ogrzewanie. Wzór i źródło przy każdym rachunku.">
+<meta property="og:url" content="https://ilenaprawde.pl/">
+<meta property="og:image" content="https://ilenaprawde.pl/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pl_PL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nie ma takiej strony – Ile Naprawdę">
+<meta name="twitter:description" content="Ile Naprawdę – kalkulatory codziennych kosztów: prąd, apteka, auto, ogrzewanie. Wzór i źródło przy każdym rachunku.">
+<meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
+<meta name="theme-color" content="#0F1115">
+<link rel="stylesheet" href="/proba.css?v=30420a6b">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="dz-zakupy " data-baza="/proba">
+<div class="intro" id="intro" aria-hidden="true"><div class="ilogo"><span>ILE</span><span class="q">?</span><span class="n">&nbsp;NAPRAWDĘ</span></div></div>
+<script>(function(){var el=document.getElementById('intro'),d=new Date(),dz=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(),pokaz=false;
+try{if(/[?&]intro=1(&|$)/.test(location.search))pokaz=true;else if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&localStorage.getItem('in_intro')!==dz)pokaz=true;if(pokaz)localStorage.setItem('in_intro',dz)}catch(e){pokaz=false}
+function koniec(){if(!el.parentNode)return;el.remove();document.dispatchEvent(new Event('intro-koniec'))}
+if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classList.add('on');
+var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
+el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>
+<header class="ban k" id="ban"><a class="bback" href="/proba/">← wszystkie rachunki</a><div class="bin">
+<a class="ey" href="/proba/"><picture><source type="image/webp" srcset="/img/awatar/awatar-28.webp 1x, /img/awatar/awatar-56.webp 2x"><img class="awa" src="/img/awatar/awatar-28.png" srcset="/img/awatar/awatar-28.png 1x, /img/awatar/awatar-56.png 2x" width="28" height="28" alt=""></picture><span>ILE NAPRAWDĘ</span></a>
+<p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>codzienne życie?</span></span></span></p>
+</div></header>
+<script>(function(){var D={"L":["codzienne życie?","gwarancja?","oświetlenie?","airfryer?","zakup na raty?","choinka?","ogrzewanie?","komplet opon?","abonament?","promocja?","Black Friday?"],"stop":"codzienne życie?"},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
+ruch=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var L=D.stop?D.L.filter(function(x){return x!==D.stop}).slice(0,3).concat(D.stop):D.L.slice();
+if(!D.stop&&L.length>1)L.push(L[0]);
+w.innerHTML='';L.forEach(function(t){var s=document.createElement('span');s.textContent=t;w.appendChild(s)});
+var m=document.createElement('span');m.style.cssText='visibility:hidden;position:absolute;white-space:nowrap';var dl=D.L.concat(D.stop||[]).reduce(function(a,b){return b.length>a.length?b:a},'');
+var mx=0;D.L.concat(D.stop||[]).forEach(function(t){m.textContent=t;box.appendChild(m);mx=Math.max(mx,m.getBoundingClientRect().width);m.remove()});
+box.style.width=(Math.ceil(mx)+28)+'px';
+var i=0,n=L.length-1,T=D.stop?1100:2400,widoczny=true,tm=null;
+function krok(){i++;w.style.transition='transform .35s cubic-bezier(.6,0,.2,1)';w.style.transform='translateY(-'+(i*1.3)+'em)';
+ if(D.stop){if(i>=n){clearInterval(tm);tm=null}}else if(i===n)setTimeout(function(){w.style.transition='none';i=0;w.style.transform='translateY(0)'},380)}
+function steruj(){var ok=widoczny&&document.visibilityState==='visible';if(ok&&!tm&&(!D.stop||i<n))tm=setInterval(krok,T);if(!ok&&tm){clearInterval(tm);tm=null}}
+function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transform='translateY(-'+(n*1.3)+'em)'}return}
+ if('IntersectionObserver' in window)new IntersectionObserver(function(e){widoczny=e[0].isIntersecting;steruj()}).observe(ban);
+ document.addEventListener('visibilitychange',steruj);steruj()}
+if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>
+<main class="col nad">
+<section class="card tresc">
+
+
+<h1>Nie ma takiej strony</h1>
+<p class="lead">Ten rachunek się zgubił. Wróć do <a href="/proba/">wszystkich rachunków</a>.</p>
+
+
+</section>
+<footer class="pstop"><picture><source type="image/webp" srcset="/img/awatar/awatar-56.webp 1x, /img/awatar/awatar-112.webp 2x"><img class="awa" src="/img/awatar/awatar-56.png" srcset="/img/awatar/awatar-56.png 1x, /img/awatar/awatar-112.png 2x" width="56" height="56" alt=""></picture><p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>
+<p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. To nie jest porada finansowa.<br>Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/proba/prywatnosc/">Prywatność</a> · <a href="/proba/regulamin/">Regulamin</a><br>Strona nie używa ciasteczek. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics).</p>
+</main>
+
+</body>
+</html>

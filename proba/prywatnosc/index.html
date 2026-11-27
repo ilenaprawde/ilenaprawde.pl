@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Polityka prywatności serwisu ilenaprawde.pl i aplikacji Ile Naprawdę Fabryka.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/favicon-192.png">
+<link rel="canonical" href="https://ilenaprawde.pl/prywatnosc/">
+<title>PRÓBA – Polityka prywatności – Ile Naprawdę</title>
+<meta name="theme-color" content="#0F1115">
+<link rel="stylesheet" href="/proba.css?v=30420a6b">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="dz-zakupy doc" data-baza="/proba">
+<div class="intro" id="intro" aria-hidden="true"><div class="ilogo"><span>ILE</span><span class="q">?</span><span class="n">&nbsp;NAPRAWDĘ</span></div></div>
+<script>(function(){var el=document.getElementById('intro'),d=new Date(),dz=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(),pokaz=false;
+try{if(/[?&]intro=1(&|$)/.test(location.search))pokaz=true;else if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&localStorage.getItem('in_intro')!==dz)pokaz=true;if(pokaz)localStorage.setItem('in_intro',dz)}catch(e){pokaz=false}
+function koniec(){if(!el.parentNode)return;el.remove();document.dispatchEvent(new Event('intro-koniec'))}
+if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classList.add('on');
+var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
+el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>
+<header class="ban k" id="ban"><a class="bback" href="/proba/">← wszystkie rachunki</a><div class="bin">
+<a class="ey" href="/proba/"><picture><source type="image/webp" srcset="/img/awatar/awatar-28.webp 1x, /img/awatar/awatar-56.webp 2x"><img class="awa" src="/img/awatar/awatar-28.png" srcset="/img/awatar/awatar-28.png 1x, /img/awatar/awatar-56.png 2x" width="28" height="28" alt=""></picture><span>ILE NAPRAWDĘ</span></a>
+<p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>codzienne życie?</span></span></span></p>
+</div></header>
+<script>(function(){var D={"L":["codzienne życie?","gwarancja?","oświetlenie?","airfryer?","zakup na raty?","choinka?","ogrzewanie?","komplet opon?","abonament?","promocja?","Black Friday?"],"stop":"codzienne życie?"},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
+ruch=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var L=D.stop?D.L.filter(function(x){return x!==D.stop}).slice(0,3).concat(D.stop):D.L.slice();
+if(!D.stop&&L.length>1)L.push(L[0]);
+w.innerHTML='';L.forEach(function(t){var s=document.createElement('span');s.textContent=t;w.appendChild(s)});
+var m=document.createElement('span');m.style.cssText='visibility:hidden;position:absolute;white-space:nowrap';var dl=D.L.concat(D.stop||[]).reduce(function(a,b){return b.length>a.length?b:a},'');
+var mx=0;D.L.concat(D.stop||[]).forEach(function(t){m.textContent=t;box.appendChild(m);mx=Math.max(mx,m.getBoundingClientRect().width);m.remove()});
+box.style.width=(Math.ceil(mx)+28)+'px';
+var i=0,n=L.length-1,T=D.stop?1100:2400,widoczny=true,tm=null;
+function krok(){i++;w.style.transition='transform .35s cubic-bezier(.6,0,.2,1)';w.style.transform='translateY(-'+(i*1.3)+'em)';
+ if(D.stop){if(i>=n){clearInterval(tm);tm=null}}else if(i===n)setTimeout(function(){w.style.transition='none';i=0;w.style.transform='translateY(0)'},380)}
+function steruj(){var ok=widoczny&&document.visibilityState==='visible';if(ok&&!tm&&(!D.stop||i<n))tm=setInterval(krok,T);if(!ok&&tm){clearInterval(tm);tm=null}}
+function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transform='translateY(-'+(n*1.3)+'em)'}return}
+ if('IntersectionObserver' in window)new IntersectionObserver(function(e){widoczny=e[0].isIntersecting;steruj()}).observe(ban);
+ document.addEventListener('visibilitychange',steruj);steruj()}
+if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>
+<main class="col nad">
+<section class="card tresc">
+
+ 
+ <p class="brand c"><a href="/proba/">ILE NAPRAWDĘ</a></p>
+ <hr class="dots">
+ <h1>Polityka prywatności</h1>
+  <p class="small">Ostatnia aktualizacja: 16.11.2026</p>
+  <h2>1. Kto odpowiada za dane</h2>
+  <p>Administratorem danych jest właściciel serwisu ilenaprawde.pl. Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a>.</p>
+  <h2>2. Kalkulatory</h2>
+  <p>Kalkulatory liczą wyłącznie w Twojej przeglądarce. Liczby, które wpisujesz, nie są nigdzie wysyłane ani zapisywane.</p>
+  <h2>3. Ciasteczka</h2>
+  <p>Strona nie używa ciasteczek (cookies) ani nie zapisuje niczego w Twojej przeglądarce.</p>
+  <h2>4. Statystyki odwiedzin</h2>
+  <p>Korzystamy z Cloudflare Web Analytics, aby wiedzieć, ile osób odwiedza stronę i które kalkulatory są używane. Narzędzie nie używa ciasteczek i nie tworzy profili odwiedzających; zbiera zanonimizowane dane techniczne (np. odwiedzona podstrona, przybliżony kraj, typ przeglądarki i urządzenia, strona, z której przyszedłeś). Dostawca: Cloudflare, Inc. (polityka prywatności: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">https://www.cloudflare.com/privacypolicy/</a>).</p>
+  <h2>5. Hosting</h2>
+  <p>Strona jest hostowana w usłudze GitHub Pages (GitHub, Inc.). Jak każdy serwer, GitHub może technicznie przetwarzać adres IP w celu dostarczenia strony i ochrony przed nadużyciami (<a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement</a>).</p>
+  <h2>6. Kontakt e-mail</h2>
+  <p>Jeśli napiszesz na <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a>, przetwarzamy Twój adres i treść wiadomości wyłącznie po to, by odpowiedzieć (podstawa: art. 6 ust. 1 lit. f RODO – nasz uzasadniony interes w prowadzeniu korespondencji). Wiadomości przechowujemy nie dłużej, niż to potrzebne do załatwienia sprawy.</p>
+  <h2>7. Aplikacja „Ile Naprawdę Fabryka” (TikTok, YouTube)</h2>
+  <p>„Ile Naprawdę Fabryka” to nasze wewnętrzne narzędzie do publikacji, używane wyłącznie na jednym, naszym własnym koncie twórcy (@ilenaprawde na TikToku i YouTube). Nie jest dostępne dla innych osób i nie loguje innych użytkowników.</p>
+  <p><b>Co robi:</b> wysyła gotowe filmy do skrzynki (wersje robocze) w aplikacji TikTok – publikujemy je ręcznie, po sprawdzeniu – oraz odczytuje statystyki naszego własnego konta (liczba obserwujących, wyświetlenia, polubienia, komentarze i udostępnienia naszych filmów) do prywatnego zestawienia. Na YouTube wrzuca nasze filmy i odczytuje ich statystyki (YouTube Data API, YouTube Analytics API).</p>
+  <p><b>Uprawnienia TikTok:</b> user.info.basic (identyfikator i nazwa konta – sprawdzenie, że to nasze konto), user.info.stats (liczba obserwujących), video.list (lista naszych filmów z liczbą wyświetleń, polubień, komentarzy, udostępnień), video.upload (wysłanie filmu do skrzynki jako wersji roboczej). Narzędzie nie publikuje bezpośrednio, nie czyta wiadomości, nie pobiera danych o widzach i nie ma dostępu do kont innych osób.</p>
+  <p><b>Przechowywanie:</b> token dostępu (OAuth) jest przechowywany wyłącznie jako zaszyfrowany sekret w GitHub Secrets naszego prywatnego repozytorium i używany tylko przez nasze automatyczne zadania. Nie zapisujemy go w plikach ani nie wyświetlamy. Zbiorcze liczby (statystyki naszych filmów) trzymamy w prywatnym repozytorium jako historię do porównań.</p>
+  <p><b>Udostępnianie:</b> nie udostępniamy ani nie sprzedajemy tych danych nikomu. Przetwarzają je technicznie tylko dostawcy infrastruktury: TikTok, Google (YouTube), GitHub (przechowywanie i uruchamianie zadań), Cloudflare (bot powiadomień) i Telegram (powiadomienia do nas).</p>
+  <p><b>Jak cofnąć dostęp:</b> w aplikacji TikTok: Profil → menu ☰ → Ustawienia i prywatność → Bezpieczeństwo (lub Bezpieczeństwo i uprawnienia) → Aplikacje i usługi → „Ile Naprawdę Fabryka” → Usuń dostęp. Na koncie Google: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">https://myaccount.google.com/permissions</a>. Po cofnięciu dostępu token przestaje działać, a my usuwamy go z GitHub Secrets; zebrane statystyki usuniemy na prośbę wysłaną na <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a>.</p>
+  <h2>8. Twoje prawa</h2>
+  <p>Masz prawo do dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu oraz skargi do Prezesa Urzędu Ochrony Danych Osobowych (uodo.gov.pl). Napisz: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a>.</p>
+  <h2>9. Linki partnerskie i reklamy</h2>
+  <p>Obecnie strona nie zawiera reklam ani linków partnerskich. Jeśli się pojawią, będą oznaczone („Reklama”, „Link partnerski”), a ta polityka zostanie zaktualizowana.</p>
+ <hr class="dash">
+ <h2 lang="en">Privacy summary in English – “Ile Naprawdę Fabryka” app</h2>
+ <div lang="en">
+  <p>“Ile Naprawdę Fabryka” is an internal publishing tool used only for our own single creator account, @ilenaprawde (TikTok and YouTube). It does not offer login or any features to other users.</p>
+  <p><b>What it does:</b> uploads our finished videos to our TikTok inbox as drafts, which we review and publish manually in the TikTok app (no direct posting), and reads our own account’s statistics (follower count; views, likes, comments and shares of our own videos) for a private dashboard.</p>
+  <p><b>TikTok scopes:</b> user.info.basic (account id and display name, to confirm it is our account), user.info.stats (follower count), video.list (our own videos and their view/like/comment/share counts), video.upload (upload a video to our inbox as a draft). The tool does not post directly, does not read messages, does not collect any data about viewers and has no access to other people’s accounts.</p>
+  <p><b>Storage:</b> the OAuth token is stored only as an encrypted secret in GitHub Secrets of our private repository and is used only by our own automated jobs; it is never written to files or logs. Aggregate statistics of our own videos are kept in our private repository as history.</p>
+  <p><b>Sharing:</b> we do not share or sell this data. It is processed technically only by infrastructure providers: TikTok, Google (YouTube), GitHub, Cloudflare and Telegram (notifications to us).</p>
+  <p><b>Revoking access:</b> in the TikTok app go to Profile → ☰ → Settings and privacy → Security (or Security and permissions) → Apps and services → “Ile Naprawdę Fabryka” → Remove access. Google: <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">https://myaccount.google.com/permissions</a>. After revocation the token stops working and we delete it; stored statistics are deleted on request to <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a>.</p>
+ </div>
+ <hr class="dots">
+ <p class="fine">Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/proba/prywatnosc/">Prywatność</a> · <a href="/proba/regulamin/">Regulamin</a></p>
+
+</section>
+<footer class="pstop"><picture><source type="image/webp" srcset="/img/awatar/awatar-56.webp 1x, /img/awatar/awatar-112.webp 2x"><img class="awa" src="/img/awatar/awatar-56.png" srcset="/img/awatar/awatar-56.png 1x, /img/awatar/awatar-112.png 2x" width="56" height="56" alt=""></picture><p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>
+<p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. To nie jest porada finansowa.<br>Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/proba/prywatnosc/">Prywatność</a> · <a href="/proba/regulamin/">Regulamin</a><br>Strona nie używa ciasteczek. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics).</p>
+</main>
+
+</body>
+</html>

@@ -328,5 +328,44 @@ const KALK=[
 // N161: słowo do baneru „Ile naprawdę kosztuje …?” (pole bw kalkulatora; max 16 znaków z „?”, liczba pojedyncza). Osobna mapa, żeby nie ruszać wierszy KALK (lastmod w sitemap).
 const BANER_BW={'czuwanie':'tryb czuwania?','czajnik':'czajnik?','urzadzenie':'prąd w domu?','pralka':'pranie?','suszarka':'suszarka?','g12':'prąd?','led':'żarówka?','lodowka':'lodówka?','telefon':'ładowanie?','ogrzewanie':'ogrzewanie?','lampki':'oświetlenie?','airfryer':'airfryer?','choinka':'choinka?','obnizka':'promocja?','stopien':'1°C w domu?','gwarancja':'gwarancja?','dostawa':'dostawa?','streaming':'Netflix?','bnpl':'zakup na raty?','dojazd':'dojazd do pracy?','sto-km':'100 km jazdy?','opony':'komplet opon?','lpg':'tankowanie?','auto-czy-bilet':'podróż autem?','podroz':'podróż?','allegro-smart':'Allegro Smart?','pizza':'pizza?','opakowanie':'duże opakowanie?','lek-dawka':'tabletka?','zamiennik':'lek z apteki?','abonament':'abonament?'};
 KALK.forEach(c=>{if(BANER_BW[c.id])c.bw=BANER_BW[c.id]});
-window.ILE={KALK,ODCINKI,CATS,STRONY,num,f2,f1,zl,kwh,yrs};
+// N164: zdanie wyniku do nowego wyglądu („W domu wydasz 978 zł mniej rocznie”) – pole zd kalkulatora. Funkcja dostaje wynik c.f (r) i pola (v);
+// zwraca {a: przed kwotą, k: kwota (liczba zł – zaokrąglana na stronie – albo gotowy tekst), b: po kwocie, kol: green|red|'' , p: druga linijka}; null = zdanie z SK.
+const ZD=(a,k,b,kol,p)=>({a,k,b:b||'',kol:kol||'',p:p||''});
+const ujemne=r=>/^[−-]/.test(String(r.svt||''))||r.sv<0;
+const okresSk=r=>{const m=/\(([^)]+)\)/.exec(r.sk||'');return m?'przez '+m[1].toLowerCase():''};
+const ZDANIA={
+ czuwanie:r=>ZD('Tryb czuwania kosztuje',r.sv,'rocznie'),
+ czajnik:r=>ZD('Czajnik kosztuje',r.sv,'rocznie'),
+ urzadzenie:r=>ZD('To urządzenie kosztuje',r.sv,'rocznie'),
+ pralka:r=>ZD('Pranie kosztuje',r.sv,'rocznie'),
+ suszarka:r=>ZD('Prąd do suszarki kosztuje',r.sv,'rocznie'),
+ g12:r=>/SPRAWDŹ/.test(r.sk)?null:ujemne(r)?ZD('W G12 zapłacisz',Math.abs(r.sv),'mniej rocznie','green','niż w G11'):ZD('W G12 zapłacisz',Math.abs(r.sv),'więcej rocznie','red','niż w G11'),
+ led:r=>ZD('Z żarówką LED zaoszczędzisz',r.sv,'rocznie','green'),
+ lodowka:r=>r.sv>=0?ZD('Nowa lodówka zaoszczędzi',r.sv,'rocznie','green'):ZD('Nowa lodówka kosztuje',-r.sv,'więcej rocznie','red'),
+ telefon:r=>ZD('Ładowanie telefonu kosztuje',r.sv,'rocznie'),
+ ogrzewanie:r=>{const w=r.l.filter(([a])=>/ rocznie$/.test(a)).map(([a,b])=>[a.replace(/ rocznie$/,''),num(String(b).replace(/[^\d,]/g,''))]).sort((x,y)=>x[1]-y[1])[0];return w?ZD(w[0]+' wyjdzie najtaniej:',r.sv,'rocznie','green'):null},
+ lampki:r=>ZD('Lampki kosztują',r.sv,'za sezon'),
+ airfryer:r=>/DROŻSZY/.test(r.sk)?ZD('Airfryer kosztuje',r.sv,'więcej rocznie','red'):ZD('Z airfryerem zaoszczędzisz',r.sv,'rocznie','green','w porównaniu z piekarnikiem'),
+ choinka:r=>/^SZTUCZNA/.test(r.sk)?ZD('Sztuczna choinka wyjdzie',r.sv,'taniej '+okresSk(r),'green'):ZD('Żywa choinka wyjdzie',r.sv,'taniej '+okresSk(r),'green'),
+ obnizka:r=>/^PRAWDZIWY RABAT/.test(r.sk)?ZD('Prawdziwy rabat to',r.svt,'','green','a nie ten z przekreślonej ceny'):null,
+ stopien:r=>/OSZCZ/.test(r.sk)?ZD('Zaoszczędzisz',r.sv,'za sezon grzewczy','green'):/WZROST/.test(r.sk)?ZD('Zapłacisz',r.sv,'więcej za sezon grzewczy','red'):null,
+ gwarancja:r=>/^SKŁADKA/.test(r.sk)?ZD('Przedłużona gwarancja kosztuje',r.sv,r.sk.replace(/^SKŁADKA ?/,'').toLowerCase()):null,
+ dostawa:r=>r.sk==='PRZEPŁACASZ'?ZD('Dorzucając do darmowej dostawy, przepłacasz',r.sv,'','red'):r.sk==='OSZCZĘDZASZ'?ZD('Dorzucając do darmowej dostawy, oszczędzasz',r.sv,'','green'):r.sk==='DOSTAWA'?ZD('Masz już',null,'darmową dostawę','green'):null,
+ streaming:r=>/OSZCZ/.test(r.sk)?ZD('Oglądając po kolei, zaoszczędzisz',r.sv,'rocznie','green','w porównaniu ze wszystkimi serwisami naraz'):/ROCZNIE/.test(r.sk)?ZD('Streaming kosztuje',r.sv,'rocznie'):null,
+ bnpl:r=>/ODSETKI/.test(r.sk)?ZD('Spóźnienie kosztuje',r.sv,'odsetek','red'):/KOSZT RAT/.test(r.sk)?ZD('Raty kosztują',r.sv,'za cały okres','red'):null,
+ dojazd:r=>ZD('Dojazd autem kosztuje',r.sv,'rocznie'),
+ 'sto-km':r=>ZD('Jazda autem kosztuje',r.sv,'rocznie'),
+ opony:r=>/^CAŁOROCZNE/.test(r.sk)?ZD('Opony całoroczne wyjdą',r.sv,'taniej '+okresSk(r),'green'):ZD('Dwa komplety opon wyjdą',r.sv,'taniej '+okresSk(r),'green'),
+ lpg:r=>r.sv>=0?ZD('Na LPG zaoszczędzisz',r.sv,'rocznie','green','w porównaniu z benzyną'):ZD('LPG kosztuje',-r.sv,'więcej rocznie','red'),
+ 'auto-czy-bilet':r=>/DROŻSZE/.test(r.sk)?ZD('Autem wydasz',r.sv,'więcej rocznie','red','niż na bilety'):ZD('Autem wydasz',r.sv,'mniej rocznie','green','niż na bilety'),
+ podroz:r=>{const m=/^NAJTAŃSZE: ([^,]+)/.exec(r.sk||'');if(!m)return null;const n=m[1].toLowerCase();return ZD(n.charAt(0).toUpperCase()+n.slice(1)+' wyjdzie najtaniej:',r.sv,'tam i z powrotem','green')},
+ 'allegro-smart':r=>!/RÓŻNICA/.test(r.sk)?null:ujemne(r)?ZD('Ze Smart! rocznym zaoszczędzisz',Math.abs(r.sv),'rocznie','green','w porównaniu z płaceniem za dostawy'):ZD('Smart! roczny kosztuje',Math.abs(r.sv),'więcej niż dostawy','red'),
+ pizza:r=>ujemne(r)?ZD('W domu wydasz',Math.abs(r.sv),'mniej rocznie','green','niż zamawiając przez Pyszne / Glovo'):ZD('W domu wydasz',Math.abs(r.sv),'więcej rocznie','red','niż zamawiając przez Pyszne / Glovo'),
+ opakowanie:r=>{const m=/OPAKOWANIE (\d) ZAMIAST (\d)/.exec(r.sk||'');if(m)return ZD('Opakowanie '+m[1]+' oszczędzi',Math.abs(r.sv),'rocznie','green','w porównaniu z opakowaniem '+m[2]);const n=/NAJTAŃSZE: OPAKOWANIE (\d)/.exec(r.sk||'');return n?ZD('Najtańsze jest opakowanie '+n[1]+':',r.svt,'','green'):null},
+ 'lek-dawka':r=>/RÓŻNICA/.test(r.sk)?ZD('Najdroższa wersja kosztuje',r.sv,'więcej za kurację','red','niż najtańsza z tą samą substancją'):/^KURACJA/.test(r.sk)?ZD('Kuracja kosztuje',r.sv,''):null,
+ zamiennik:r=>ZD('Zamiennikiem zaoszczędzisz',r.sv,'rocznie','green'),
+ abonament:r=>{const m=/ZA (\d+) MIES/.exec(r.sk||'');return ZD('Tańsza oferta oszczędzi',r.sv,m?'za '+m[1]+' mies.':'za okres umowy','green')}
+};
+KALK.forEach(c=>{if(ZDANIA[c.id])c.zd=ZDANIA[c.id]});
+window.ILE={ZDANIA,KALK,ODCINKI,CATS,STRONY,num,f2,f1,zl,kwh,yrs};
 })();

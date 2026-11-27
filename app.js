@@ -6,7 +6,7 @@ const PINS=['#C62828','#1D4ED8','#15803D','#E0A800'];
 const ROT=[-1.6,1.3,1.0,-1.2,-0.8,1.5];
 const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l');
 const calc=id=>KALK.find(c=>c.id===id);
-const url=(id,params)=>'/kalkulatory/'+id+'/'+(params&&Object.keys(params).length?'?'+new URLSearchParams(params).toString():'');
+const url=(id,params)=>(window.ILE_BAZA||'')+'/kalkulatory/'+id+'/'+(params&&Object.keys(params).length?'?'+new URLSearchParams(params).toString():'');
 const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
 const opub=o=>!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa));   // film widoczny dopiero od godziny publikacji
 const filmUrl=o=>'https://youtube.com/shorts/'+o.yt;

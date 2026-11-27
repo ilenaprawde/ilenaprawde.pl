@@ -214,6 +214,7 @@ ${BEACON}
 </html>
 `);
 
+const SEO_KALK = {};
 // ---------- podstrony kalkulatorów ----------
 const pins = ['#C62828', '#1D4ED8', '#15803D', '#E0A800'];
 const tytuly = new Set();
@@ -230,6 +231,7 @@ KALK.forEach((c, i) => {
     thumbnailUrl: `${ORIGIN}/img/filmy/${o.nr}.jpg`, uploadDate: o.pa,
     contentUrl: `https://www.youtube.com/watch?v=${o.yt}`, embedUrl: `https://www.youtube.com/embed/${o.yt}` }));
   const ld = { '@context': 'https://schema.org', '@graph': graf };
+  SEO_KALK[c.id] = { title: seo.title, desc, canonical, img, ld, seo };   // N164: te same dane SEO dla nowego wyglądu po przełączeniu
   const sekcje = (seo.jak.length ? `<section class="about seo" aria-labelledby="jak"><h2 id="jak">JAK LICZYMY</h2>
 <p>${seo.jak.map(esc).join(' ')}</p></section>\n` : '') + (seo.faq.length ? `<section class="about seo" aria-labelledby="faq"><h2 id="faq">PYTANIA</h2>
 ${seo.faq.map(([q, a]) => `<h3>${esc(q)}</h3><p>${esc(a)}</p>`).join('\n')}</section>\n` : '');
@@ -416,13 +418,15 @@ el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passi
 // N162 pkt 5: oryginalny awatar przycięty do koła (img/awatar/awatar-N.webp + .png), 1x i 2x
 const awatar = (n, alt = '') => `<picture><source type="image/webp" srcset="/img/awatar/awatar-${n}.webp 1x, /img/awatar/awatar-${n * 2}.webp 2x"><img class="awa" src="/img/awatar/awatar-${n}.png" srcset="/img/awatar/awatar-${n}.png 1x, /img/awatar/awatar-${n * 2}.png 2x" width="${n}" height="${n}" alt="${alt}"></picture>`;
 const STOPKA_PROBA = `<footer class="pstop">${awatar(56)}<p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>`;
-const banerPremium = ({ kalk = null } = {}) => {
-  const L = bwLista(), stop = kalk && kalk.bw ? kalk.bw : null;
+// N164: k = wersja niska (kalkulatory i inne podstrony), stop = słowo, na którym się zatrzymuje (bw kalkulatora), baza = '/proba' na próbie
+const banerPremium = ({ kalk = null, k = !!kalk, stop = null, baza = '' } = {}) => {
+  const L = bwLista();
+  stop = stop || (kalk && kalk.bw) || null;
   const dane = JSON.stringify({ L, stop }).replace(/</g, '\\u003c');
-  return `<header class="ban${kalk ? ' k' : ''}" id="ban">${kalk ? '<a class="bback" href="/">← wszystkie rachunki</a>' : ''}<div class="bin">
-<a class="ey" href="/">${awatar(kalk ? 28 : 40)}<span>ILE NAPRAWDĘ</span></a>
+  return `<header class="ban${k ? ' k' : ''}" id="ban">${k ? `<a class="bback" href="${baza}/">← wszystkie rachunki</a>` : ''}<div class="bin">
+<a class="ey" href="${baza}/">${awatar(k ? 28 : 40)}<span>ILE NAPRAWDĘ</span></a>
 <p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>${esc(stop || L[0])}</span></span></span></p>
-${kalk ? '' : '<p class="bsub">Codziennie liczę. Ze wzorem i źródłem.</p>'}</div></header>
+${k ? '' : '<p class="bsub">Codziennie liczę. Ze wzorem i źródłem.</p>'}</div></header>
 <script>(function(){var D=${dane},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
 ruch=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 var L=D.stop?D.L.filter(function(x){return x!==D.stop}).slice(0,3).concat(D.stop):D.L.slice();
@@ -440,91 +444,159 @@ function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transf
  document.addEventListener('visibilitychange',steruj);steruj()}
 if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>`;
 };
-// ---------- N156: próba nowego wyglądu – /proba/pizza/ (noindex, poza sitemap; liczy ta sama funkcja z dane.js) ----------
+// ---------- N164: nowy wygląd całej strony – na razie pod /proba/ (noindex, poza sitemap); przełączenie: plik nowy_wyglad.json {"wlaczony": true} ----------
+// Silnik kalkulatorów bez zmian (dane.js + app.js); nowy.js dokłada zdanie wyniku, wykres i pasek. Nagłówki SEO (tytuł, opis, canonical, JSON-LD, og:)
+// biorę 1:1 z wygenerowanych wyżej starych stron – po przełączeniu adresy, tytuły, opisy, canonical, JSON-LD, FAQ i sitemap są te same.
 {
-  const c = KALK.find(k => k.id === 'pizza');
-  const faq = seoKalk(c).faq;
-  const VP = { css: V('proba.css'), js: V('proba.js') };
-  const ikona = `<svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44 6 10c11-6 25-6 36 0L24 44Z" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/><path d="M8.5 14.5c10-5 21-5 31 0" fill="none" stroke="var(--akc)" stroke-width="3" stroke-linecap="round"/><circle cx="19" cy="20" r="3.2" fill="var(--akc)"/><circle cx="29" cy="22" r="3.2" fill="var(--akc)"/><circle cx="24" cy="31" r="3.2" fill="var(--akc)"/></svg>`;
-  zapisz('proba/pizza/index.html', `<!doctype html>
-<html lang="pl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PRÓBA – ${esc(c.st)} | Ile Naprawdę</title>
-<meta name="robots" content="noindex, nofollow">
-<meta name="description" content="${esc(c.i)}">
-<link rel="canonical" href="${ORIGIN}/kalkulatory/pizza/">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="theme-color" content="#F5F3EE">
-<link rel="stylesheet" href="/proba.css?v=${VP.css}">
-${JSHEAD}
-</head>
-<body class="dz-zakupy">
+  const NW = (() => { try { return JSON.parse(fs.readFileSync('nowy_wyglad.json', 'utf8')); } catch (e) { return { wlaczony: false }; } })();
+  const NA_ZYWO = NW.wlaczony === true, BAZA = NA_ZYWO ? '' : '/proba';
+  const VN = { css: V('proba.css'), js: V('nowy.js') };
+  const DZ = ['dz-prad', 'dz-dom', 'dz-auto', 'dz-zakupy', 'dz-abonamenty', 'dz-apteka'];
+  const IKONY = [   // proste ikony działów (własne SVG)
+    '<path d="M27 4 10 27h12l-3 17 19-25H26l5-15Z" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/>',
+    '<path d="M6 23 24 8l18 15" fill="none" stroke="var(--akc)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 20v21h26V20" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/><path d="M20 41V29h8v12" fill="none" stroke="var(--akc)" stroke-width="3"/>',
+    '<path d="M7 31v-7l5-10h24l5 10v7Z" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/><path d="M7 24h34" stroke="var(--akc)" stroke-width="3"/><circle cx="15" cy="33" r="4" fill="#fff" stroke="var(--akc)" stroke-width="3"/><circle cx="33" cy="33" r="4" fill="#fff" stroke="var(--akc)" stroke-width="3"/>',
+    '<path d="M9 16h30l-3 26H12Z" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/><path d="M17 20v-6a7 7 0 0 1 14 0v6" fill="none" stroke="var(--akc)" stroke-width="3" stroke-linecap="round"/>',
+    '<rect x="14" y="5" width="20" height="38" rx="4" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3"/><path d="M21 37h6" stroke="var(--akc)" stroke-width="3" stroke-linecap="round"/>',
+    '<rect x="6" y="17" width="36" height="14" rx="7" transform="rotate(-35 24 24)" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3"/><path d="m19 13 10 22" transform="rotate(-35 24 24)" stroke="var(--akc)" stroke-width="3"/>'
+  ];
+  const PIZZA_IKONA = '<path d="M24 44 6 10c11-6 25-6 36 0L24 44Z" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/><path d="M8.5 14.5c10-5 21-5 31 0" fill="none" stroke="var(--akc)" stroke-width="3" stroke-linecap="round"/><circle cx="19" cy="20" r="3.2" fill="var(--akc)"/><circle cx="29" cy="22" r="3.2" fill="var(--akc)"/><circle cx="24" cy="31" r="3.2" fill="var(--akc)"/>';
+  const ikona = (cat, id) => `<svg class="ico" viewBox="0 0 48 48" aria-hidden="true">${id === 'pizza' ? PIZZA_IKONA : IKONY[cat] || IKONY[3]}</svg>`;
+  const doBazy = h => h.replace(/href="\/(?!\/)/g, `href="${BAZA}/`).replace(new RegExp(`href="${BAZA}/(img|dane|fonts)/`, 'g'), 'href="/$1/');
+  // nagłówek SEO ze starej strony (bez arkuszy i stylów) + nowy arkusz; na próbie: noindex i „PRÓBA – ” w tytule
+  const glowa = stary => {
+    const h = (/<head>([\s\S]*?)<\/head>/.exec(stary) || [, ''])[1].replace(/<style[\s\S]*?<\/style>/g, '');
+    let linie = h.split('\n').filter(l => /<title>|<meta |<link rel="(canonical|icon|apple-touch-icon)"|application\/ld\+json/.test(l) && !/name="robots"/.test(l));
+    const robots = (/<meta name="robots" content="([^"]+)"/.exec(h) || [])[1];
+    if (!NA_ZYWO) { linie = linie.map(l => l.replace(/<title>/, '<title>PRÓBA – ')); linie.splice(2, 0, '<meta name="robots" content="noindex, nofollow">'); }
+    else if (robots) linie.splice(2, 0, `<meta name="robots" content="${robots}">`);
+    return `<!doctype html>\n<html lang="pl">\n<head>\n${linie.join('\n')}\n<meta name="theme-color" content="#0F1115">\n<link rel="stylesheet" href="/proba.css?v=${VN.css}">\n${JSHEAD}\n</head>`;
+  };
+  const cel = p => (NA_ZYWO ? '' : 'proba/') + p;
+  const stopkaN = `${STOPKA_PROBA}
+<p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. To nie jest porada finansowa.<br>Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="${BAZA}/prywatnosc/">Prywatność</a> · <a href="${BAZA}/regulamin/">Regulamin</a><br>Strona nie używa ciasteczek. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics).</p>`;
+  const analityka = NA_ZYWO ? BEACON : '';
+
+  // ---- A. kalkulatory ----
+  KALK.forEach(c => {
+    const stary = fs.readFileSync(`kalkulatory/${c.id}/index.html`, 'utf8'), seo = seoKalk(c);
+    const lk = c.lk ? `<a class="cta" href="${BAZA}${c.lk[0]}">${esc(c.lk[1])}</a>` : '';
+    zapisz(cel(`kalkulatory/${c.id}/index.html`), glowa(stary) + `
+<body data-strona="kalk" data-id="${c.id}" data-baza="${BAZA}" class="${DZ[c.cat]}">
 ${INTRO}
-${banerPremium({ kalk: c })}
+${banerPremium({ kalk: c, baza: BAZA })}
 <main class="col nad">
 <section class="card hero" aria-labelledby="h1">
- <div class="dzial">${ikona}<span>Zakupy</span></div>
- <h1 id="h1">${esc(c.st)}</h1>
- <p class="pyt">Ile naprawdę kosztuje ta sama pizza z Pyszne, z aplikacji sieci i zrobiona w domu – w ciągu roku?</p>
- <div class="wynik" id="wynik" aria-live="polite"><p class="zd" id="zd">W domu wydasz <b class="kw" id="kw">978 zł</b> mniej rocznie</p><p class="pod" id="pod">niż zamawiając przez Pyszne / Glovo</p></div>
- <div class="paski" id="paski" aria-label="Porównanie rocznie"></div>
- <p class="uwaga">Ceny z przykładowego lokalu, listopad 2026. Wpisz swoje.</p>
+ <div class="dzial">${ikona(c.cat, c.id)}<span>${esc(CATS[c.cat])}</span></div>
+ <h1 id="h1">${esc(c.h1 || c.st || c.t)}</h1>
+ <p class="pyt">${esc(c.i)}</p>
+ <p class="ktag" id="ktag"></p>
+ <div class="wynik" id="wynik" aria-live="polite"><p class="zd" id="zd"><span id="za"></span> <b class="kw" id="kw">–</b> <span id="zb"></span></p><p class="pod" id="zp" hidden></p>
+  <div class="sum sr"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="blad" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
+ <div class="wyk" id="wyk" aria-label="Porównanie" hidden></div>
 </section>
 <section class="card" aria-labelledby="hz">
  <h2 id="hz">Zmień na swoje liczby</h2>
- <div id="pola" class="pola"></div>
- <p class="blad" id="blad" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p>
+ <div id="cf" class="pola2"></div>
 </section>
 <details class="card wyl" id="wyl">
  <summary><span>Pokaż wyliczenie</span><i aria-hidden="true">▾</i></summary>
  <div class="wyl-in">
-  <div class="paragon" id="paragon"><div class="ph">ILE NAPRAWDĘ<small>paragon z liczenia</small></div><div id="pr"></div></div>
-  <h3>Wzór</h3><p class="mono-s">${esc(c.w)}</p>
-  <h3>Źródła</h3><p class="mono-s">${esc(c.s)}</p>
-  <p class="spr" id="spr" hidden></p>
+  <div class="paragon"><div class="ph">ILE NAPRAWDĘ<small>paragon z liczenia</small></div><div id="cl"></div><div class="line psuma" id="psuma"></div></div>
+  <div id="bars" hidden></div>
+  <h3>Wzór</h3><p class="mono-s" id="cw"></p>
+  <h3>Źródła</h3><p class="mono-s" id="cs"></p>
+  ${seo.jak.length ? `<h3>Jak liczymy</h3><p class="mono-s">${seo.jak.map(esc).join(' ')}</p>` : ''}
+  <p class="spr" id="csd" hidden></p>
  </div>
 </details>
-<a class="cta" href="/promocje-pizza/">Sprawdź promocje na pizzę dziś →</a>
-<section class="card faq" aria-labelledby="hf">
+${lk}
+<div class="akcje"><button class="rst2" id="share" type="button">Udostępnij wynik</button><div class="msg" id="msg" role="status"></div></div>
+<section class="filmy" id="filmy" aria-label="Film"></section>
+${seo.faq.length ? `<section class="card faq" aria-labelledby="hf">
  <h2 id="hf">Pytania</h2>
-${faq.map(([q, a]) => ` <details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')}
-</section>
-<p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. Wyliczenie poglądowe, to nie jest porada.<br><a href="/kalkulatory/pizza/">Obecna wersja kalkulatora</a> · <a href="/prywatnosc/">Prywatność</a></p>
-${STOPKA_PROBA}
+${seo.faq.map(([q, a]) => ` <details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')}
+</section>` : ''}
+<section class="card powiazane" aria-labelledby="hp"><h2 id="hp">Powiązane</h2><div class="mini" id="mini"></div></section>
+${stopkaN}
 </main>
-<div class="lepki" id="lepki" aria-hidden="true"><b id="lk-k">−978 zł rocznie</b><span id="lk-n">W domu</span></div>
-<noscript><p class="stopka">Kalkulator wymaga włączonego JavaScriptu.</p></noscript>
+<div class="lepki" id="lepki" aria-hidden="true"><b id="lk-k"></b></div>
+<noscript><p class="stopka">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
 <script src="/dane.js?v=${VER.dane}"></script>
-<script src="/proba.js?v=${VP.js}"></script>
+<script src="/nowy.js?v=${VN.js}"></script>
+<script src="/app.js?v=${VER.app}"></script>
+${analityka}
 </body>
 </html>
 `);
-}
+  });
 
-{
-zapisz('proba/glowna-baner/index.html', `<!doctype html>
-<html lang="pl">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PRÓBA – baner strony głównej | Ile Naprawdę</title>
-<meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="${ORIGIN}/">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<meta name="theme-color" content="#F5F3EE">
-<link rel="stylesheet" href="/proba.css?v=${V('proba.css')}">
-${JSHEAD}
-</head>
-<body class="dz-zakupy">
+  // ---- B. strona główna ----
+  {
+    const stary = fs.readFileSync('index.html', 'utf8'), STR = window.ILE.STRONY || [];
+    const dzialy = CATS.map((n, i) => {
+      const k = KALK.filter(c => c.cat === i), s = STR.filter(x => x.cat === i);
+      if (!k.length && !s.length) return '';
+      return `<section class="card dzk ${DZ[i]}" aria-labelledby="dz${i}"><div class="dzh">${ikona(i)}<h2 id="dz${i}">${esc(n)}</h2><span class="ile">${k.length + s.length}</span></div>
+<ul>${k.map(c => `<li><a href="${BAZA}/kalkulatory/${c.id}/">${esc(c.krot)}</a></li>`).join('')}${s.map(x => `<li><a href="${BAZA}${x.href}">${esc(x.nazwa)}</a> <small>${esc(x.tag)}</small></li>`).join('')}</ul></section>`;
+    }).join('\n');
+    zapisz(cel('index.html'), glowa(stary) + `
+<body data-strona="home2" data-baza="${BAZA}">
 ${INTRO}
-${banerPremium()}
-<main class="col nad"><section class="card"><h2>Podgląd baneru strony głównej</h2><p class="pyt">Wersja na stronę główną (na razie tylko próba): słowa zmieniają się co 2,4 s w kółko. Na kalkulatorze baner jest niższy i zatrzymuje się na temacie strony.</p><a class="cta" href="/proba/pizza/">Zobacz wersję na kalkulatorze →</a></section>
-${STOPKA_PROBA}</main>
+${banerPremium({ baza: BAZA })}
+<main class="col nad szeroka">
+<section class="card" aria-labelledby="hn"><h2 id="hn">Najnowsze filmy</h2><div class="filmy3" id="wall"></div></section>
+<div class="dzialy">
+${dzialy}
+</div>
+<section class="card"><h2>Skąd liczby</h2><p class="pyt">Liczymy na danych publicznych: przepisy UE, GUS, URE, NBP, Eurostat, etykiety energetyczne. Przy każdym rachunku podajemy wzór i zaznaczamy, które liczby są przykładem.</p></section>
+${stopkaN}
+</main>
+<script src="/dane.js?v=${VER.dane}"></script>
+<script>(function(){var I=window.ILE,B='${BAZA}',w=document.getElementById('wall');if(!I||!w)return;
+var opub=function(o){return!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa))};
+I.ODCINKI.filter(function(o){return!o.plan&&!o.href&&opub(o)}).sort(function(a,b){return b.nr-a.nr}).slice(0,3).forEach(function(o){var c=I.KALK.find(function(k){return k.id===o.id});if(!c)return;
+var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var im=document.createElement('img');im.src='/img/filmy/'+o.nr+'.jpg';im.alt='';im.width=60;im.height=107;im.loading='lazy';im.onerror=function(){im.remove()};a.appendChild(im);
+var t=document.createElement('span');var s=document.createElement('small');s.textContent='#'+o.nr;var b=document.createElement('b');b.textContent=o.tytul||o.nazwa||c.krot;t.appendChild(s);t.appendChild(b);a.appendChild(t);w.appendChild(a)})})()</script>
+${analityka}
 </body>
 </html>
 `);
+  }
+
+  // ---- C. pozostałe strony: ta sama treść w nowym wyglądzie ----
+  const owin = (plik, wnetrze, stop, klasa = '', zrodloGlowy = plik) => zapisz(cel(plik), glowa(fs.readFileSync(zrodloGlowy, 'utf8')) + `
+<body class="dz-zakupy ${klasa}" data-baza="${BAZA}">
+${INTRO}
+${banerPremium({ k: true, stop, baza: BAZA })}
+<main class="col nad">
+<section class="card tresc">
+${doBazy(wnetrze)}
+</section>
+${stopkaN}
+</main>
+${analityka}
+</body>
+</html>
+`);
+  const srodek = (html, re) => { const m = re.exec(html); return m ? m[1] : ''; };
+  const czysc = t => t.replace(/<div class="brandbar">[\s\S]*?<\/div>/, '').replace(/<a class="back"[^>]*>[^<]*<\/a>/, '').replace(/<p class="small">\s*<\/p>/, '')
+    .replace(/<div class="cta">[\s\S]*?<\/nav>/, '').replace(/<p class="fine">Kontakt:[\s\S]*?<\/p>\s*<p class="fine">[\s\S]*?<\/p>/, '');
+  {
+    const p = fs.readFileSync('promocje-pizza/index.html', 'utf8');
+    const skr = (/<\/main>\s*(<script>\(function\(\)\{var t=new Intl[\s\S]*?<\/script>)/.exec(p) || [, ''])[1];
+    owin('promocje-pizza/index.html', czysc(srodek(p, /<main class="wrap">([\s\S]*?)<\/main>/)).replace('href="/kalkulatory/pizza/"', `href="${BAZA}/kalkulatory/pizza/"`) + '\n' + skr, 'pizza?', 'pzpage');
+  }
+  [['prywatnosc/index.html', 'strony_zrodlo/prywatnosc.html'], ['regulamin/index.html', 'strony_zrodlo/regulamin.html']].forEach(([f, zr]) => owin(f, czysc(srodek(fs.readFileSync(zr, 'utf8'), /<main class="paper doc">([\s\S]*?)<\/main>/)), 'codzienne życie?', 'doc', zr));
+  owin('404.html', czysc(srodek(fs.readFileSync('404.html', 'utf8'), /<main class="wrap">([\s\S]*?)<\/main>/)).replace(/<mark>|<\/mark>/g, ''), 'codzienne życie?');
+  // stare adresy próby → nowe
+  if (!NA_ZYWO) {
+    const prz = (p, do_) => zapisz(p, `<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=${do_}"><link rel="canonical" href="${ORIGIN}${do_}"><title>Przeniesione</title></head><body><a href="${do_}">${do_}</a></body></html>\n`);
+    prz('proba/pizza/index.html', '/proba/kalkulatory/pizza/');
+    prz('proba/glowna-baner/index.html', '/proba/');
+  } else {
+    try { fs.rmSync('proba', { recursive: true, force: true }); } catch (e) {}
+  }
 }
 
 // ---------- sitemap.xml + robots.txt ----------
