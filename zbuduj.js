@@ -164,6 +164,7 @@ const stopka = `<div class="cta">OBSERWUJ @ILENAPRAWDE</div>
   <a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener">TikTok</a>
   <a href="https://www.youtube.com/@ilenaprawde" target="_blank" rel="noopener">YouTube</a>
   <a href="https://www.facebook.com/ilenaprawde" target="_blank" rel="noopener" aria-label="Ile Naprawdę na Facebooku">Facebook</a>
+  <a href="/odcinki/">Wszystkie odcinki</a>
  </nav>`;
 const stopka2 = `<p class="fine">Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc/">Prywatność</a> · <a href="/regulamin/">Regulamin</a></p>
 <p class="fine">Strona nie używa ciasteczek i nie zbiera danych osobowych. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics). Kalkulatory liczą w Twojej przeglądarce.</p>`;
@@ -420,7 +421,7 @@ var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add(
 el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>`;
 // N162 pkt 5: oryginalny awatar przycięty do koła (img/awatar/awatar-N.webp + .png), 1x i 2x
 const awatar = (n, alt = '') => `<picture><source type="image/webp" srcset="/img/awatar/awatar-${n}.webp?v=n175 1x, /img/awatar/awatar-${n * 2}.webp?v=n175 2x"><img class="awa" src="/img/awatar/awatar-${n}.png?v=n175" srcset="/img/awatar/awatar-${n}.png?v=n175 1x, /img/awatar/awatar-${n * 2}.png?v=n175 2x" width="${n}" height="${n}" alt="${alt}"></picture>`;
-const STOPKA_PROBA = `<footer class="pstop">${awatar(56)}<p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a> · <a href="https://www.facebook.com/ilenaprawde" target="_blank" rel="noopener" aria-label="Ile Naprawdę na Facebooku">Facebook</a></p></footer>`;
+const STOPKA_PROBA = `<footer class="pstop">${awatar(56)}<p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a> · <a href="https://www.facebook.com/ilenaprawde" target="_blank" rel="noopener" aria-label="Ile Naprawdę na Facebooku">Facebook</a> · <a href="/odcinki/">Wszystkie odcinki</a></p></footer>`;
 // N164: k = wersja niska (kalkulatory i inne podstrony), stop = słowo, na którym się zatrzymuje (bw kalkulatora), baza = '/proba' na próbie
 const banerPremium = ({ kalk = null, k = !!kalk, stop = null, baza = '' } = {}) => {
   const L = bwLista();
@@ -447,6 +448,7 @@ function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transf
  document.addEventListener('visibilitychange',steruj);steruj()}
 if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>`;
 };
+let OD_LASTMOD = null;   // N181: data ostatniego opublikowanego odcinka (lastmod /odcinki/ w sitemap)
 // ---------- N164: nowy wygląd całej strony – na razie pod /proba/ (noindex, poza sitemap); przełączenie: plik nowy_wyglad.json {"wlaczony": true} ----------
 // Silnik kalkulatorów bez zmian (dane.js + app.js); nowy.js dokłada zdanie wyniku, wykres i pasek. Nagłówki SEO (tytuł, opis, canonical, JSON-LD, og:)
 // biorę 1:1 z wygenerowanych wyżej starych stron – po przełączeniu adresy, tytuły, opisy, canonical, JSON-LD, FAQ i sitemap są te same.
@@ -566,7 +568,7 @@ ${INTRO}
 ${banerPremium({ baza: BAZA })}
 <main class="col nad szeroka">
 <div class="card szukaj"><label class="sr" for="q">Szukaj rachunku</label><input id="q" type="search" placeholder="Szukaj: np. czajnik, LED, pizza" autocomplete="off"><p class="none" id="none" hidden>Nie mam jeszcze takiego rachunku. Nowe dodaję na bieżąco.</p></div>
-<section class="card" id="nowe" aria-labelledby="hn"><h2 id="hn">Najnowsze filmy</h2><div class="filmy3" id="wall"></div></section>
+<section class="card" id="nowe" aria-labelledby="hn"><h2 id="hn">Najnowsze filmy</h2><div class="filmy3" id="wall"></div><a class="wszystkie" href="${BAZA}/odcinki/">Wszystkie odcinki →</a></section>
 <div class="dzialy">
 ${dzialy}
 </div>
@@ -620,6 +622,47 @@ ${analityka}
     owin('abonamenty/index.html', czysc(srodek(a, /<main class="wrap">([\s\S]*?)<\/main>/)), 'abonament?', 'cmp dz-abonamenty', 'abonamenty/index.html', `<script src="/abonamenty.js?v=${VER.ab}"></script>`);
   }
   owin('404.html', czysc(srodek(fs.readFileSync('404.html', 'utf8'), /<main class="wrap">([\s\S]*?)<\/main>/)).replace(/<mark>|<\/mark>/g, ''), 'codzienne życie?');
+  // ---- N181: /odcinki/ – wszystkie OPUBLIKOWANE odcinki (rosnąco). Statyczna lista budowana przy każdym buildzie (codziennie ok. 6:00):
+  //      pozycja trafia do HTML dopiero, gdy minęła data i godzina publikacji (pa) i jest film (yt). Zaplanowane odcinki nie występują
+  //      ani na liście, ani w kodzie tej strony (strona nie ładuje dane.js ani app.js).
+  {
+    const MIES = ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sierpnia', 'września', 'października', 'listopada', 'grudnia'];
+    const dlugaData = iso => { const [y, m, d] = dataPL(Date.parse(iso)).split('-'); return `${+d} ${MIES[+m - 1]} ${y}`; };
+    const teraz = Date.now();
+    const lista = ODCINKI.filter(o => !o.plan && o.yt && o.pa && Date.parse(o.pa) <= teraz).sort((a, b) => a.nr - b.nr);
+    OD_LASTMOD = lista.length ? dataPL(Math.max(...lista.map(o => Date.parse(o.pa)))) : null;
+    const wersja = 'n181';
+    const karta = o => {
+      const c = KALK.find(k => k.id === o.id);
+      const yt = 'https://youtube.com/shorts/' + o.yt;
+      const tt = o.tt ? `https://www.tiktok.com/@ilenaprawde/video/${o.tt}` : 'https://www.tiktok.com/@ilenaprawde';
+      const glowny = c ? `${BAZA}/kalkulatory/${c.id}/` : yt;
+      const tyt = esc(o.tytul || o.nazwa || (c && c.krot) || '');
+      const mini = fs.existsSync(`img/filmy/mini/${o.nr}.webp`) ? `<picture><source type="image/webp" srcset="/img/filmy/mini/${o.nr}.webp?v=${wersja}"><img src="/img/filmy/mini/${o.nr}.png?v=${wersja}" alt="" width="112" height="112" loading="lazy"></picture>` : '';
+      return `<article class="oc" id="odc-${o.nr}">
+<div class="oc-th" aria-hidden="true">${mini}</div>
+<div class="oc-tx"><span class="oc-nr">Odc. #${o.nr}</span><h2><a class="oc-main" href="${glowny}"${c ? '' : ' target="_blank" rel="noopener"'}>${tyt}</a></h2><time datetime="${dataPL(Date.parse(o.pa))}">${dlugaData(o.pa)}</time>${c ? `<span class="oc-kalk">Kalkulator: ${esc(c.krot)}</span>` : ''}</div>
+<div class="oc-btn"><a href="${yt}" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #${o.nr} na YouTube"><img src="/img/youtube.svg?v=${wersja}" alt="" width="26" height="18"><span>YouTube</span></a><a href="${tt}" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #${o.nr} na TikToku"><img src="/img/tiktok.svg?v=${wersja}" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>`;
+    };
+    const tytul = 'Wszystkie odcinki – Ile Naprawdę';
+    const opis = `Wszystkie odcinki „Ile naprawdę” po kolei od #1: ${lista.length} krótkich filmów z rachunkiem i kalkulator do każdego. Ze wzorem i źródłem.`;
+    zapisz(cel('odcinki/index.html'), glowa(head({ title: tytul, desc: opis, canonical: ORIGIN + '/odcinki/' })) + `
+<body class="dz-zakupy odcinki" data-baza="${BAZA}">
+${INTRO}
+${banerPremium({ k: true, stop: 'wszystkie odcinki?', baza: BAZA })}
+<main class="col nad szeroka">
+<section class="card oc-glowa"><h1>Wszystkie odcinki</h1><p class="oc-lead">${lista.length ? `Opublikowane odcinki po kolei, od #1 do #${lista[lista.length - 1].nr}. ` : ''}Kliknij kartę, żeby przeliczyć na swoje liczby, albo obejrzyj film.</p></section>
+<section class="oc-lista" aria-label="Lista odcinków">
+${lista.map(karta).join('\n')}
+</section>
+${stopkaN}
+</main>
+${analityka}
+</body>
+</html>
+`);
+  }
   // stare adresy próby → nowe
   if (!NA_ZYWO) {
     // cofnięcie przełączenia: prywatność i regulamin to pliki statyczne – wracają z kopii źródłowej
@@ -644,7 +687,7 @@ const kurls = KALK.map(c => { const u = `${ORIGIN}/kalkulatory/${c.id}/`; return
 const naj = kurls.map(x => x[1]).sort().pop();
 const inne = [['/abonamenty/', 'abonamenty.js'], ['/promocje-pizza/', 'dane/promocje_pizza.json'],['/prywatnosc/', 'prywatnosc.html'], ['/regulamin/', 'regulamin.html']]
   .map(([p, f]) => { const u = ORIGIN + p; return [u, (PLYTKI ? null : plikData(f)) || staraMapa[u] || dzis]; });
-const urls = [[ORIGIN + '/', naj], ...kurls, ...inne];
+const urls = [[ORIGIN + '/', naj], ...kurls, ...inne, ...(OD_LASTMOD ? [[ORIGIN + '/odcinki/', OD_LASTMOD]] : [])];
 zapisz('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(([u, d]) => `<url><loc>${u}</loc><lastmod>${d}</lastmod></url>`).join('\n')}

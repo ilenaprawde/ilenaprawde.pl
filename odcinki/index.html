@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wszystkie odcinki – Ile Naprawdę</title>
+<meta name="description" content="Wszystkie odcinki „Ile naprawdę” po kolei od #1: 17 krótkich filmów z rachunkiem i kalkulator do każdego. Ze wzorem i źródłem.">
+<link rel="canonical" href="https://ilenaprawde.pl/odcinki/">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=n175">
+<link rel="apple-touch-icon" href="/favicon-192.png?v=n175">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ile Naprawdę">
+<meta property="og:title" content="Wszystkie odcinki – Ile Naprawdę">
+<meta property="og:description" content="Wszystkie odcinki „Ile naprawdę” po kolei od #1: 17 krótkich filmów z rachunkiem i kalkulator do każdego. Ze wzorem i źródłem.">
+<meta property="og:url" content="https://ilenaprawde.pl/odcinki/">
+<meta property="og:image" content="https://ilenaprawde.pl/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pl_PL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wszystkie odcinki – Ile Naprawdę">
+<meta name="twitter:description" content="Wszystkie odcinki „Ile naprawdę” po kolei od #1: 17 krótkich filmów z rachunkiem i kalkulator do każdego. Ze wzorem i źródłem.">
+<meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
+<meta name="theme-color" content="#0F1115">
+<link rel="stylesheet" href="/proba.css?v=3a0cb04a">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="dz-zakupy odcinki" data-baza="">
+<div class="intro" id="intro" aria-hidden="true"><div class="ilogo"><span>ILE</span><span class="q">?</span><span class="n">&nbsp;NAPRAWDĘ</span></div></div>
+<script>(function(){var el=document.getElementById('intro'),d=new Date(),dz=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(),pokaz=false;
+try{if(/[?&]intro=1(&|$)/.test(location.search))pokaz=true;else if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&localStorage.getItem('in_intro')!==dz)pokaz=true;if(pokaz)localStorage.setItem('in_intro',dz)}catch(e){pokaz=false}
+function koniec(){if(!el.parentNode)return;el.remove();document.dispatchEvent(new Event('intro-koniec'))}
+if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classList.add('on');
+var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
+el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>
+<header class="ban k" id="ban"><a class="bback" href="/">← wszystkie rachunki</a><div class="bin">
+<a class="ey" href="/"><picture><source type="image/webp" srcset="/img/awatar/awatar-28.webp?v=n175 1x, /img/awatar/awatar-56.webp?v=n175 2x"><img class="awa" src="/img/awatar/awatar-28.png?v=n175" srcset="/img/awatar/awatar-28.png?v=n175 1x, /img/awatar/awatar-56.png?v=n175 2x" width="28" height="28" alt=""></picture><span>ILE NAPRAWDĘ</span></a>
+<p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>wszystkie odcinki?</span></span></span></p>
+</div></header>
+<script>(function(){var D={"L":["codzienne życie?","gwarancja?","oświetlenie?","airfryer?","zakup na raty?","choinka?","ogrzewanie?","komplet opon?","abonament?","promocja?","Black Friday?"],"stop":"wszystkie odcinki?"},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
+ruch=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var L=D.stop?D.L.filter(function(x){return x!==D.stop}).slice(0,3).concat(D.stop):D.L.slice();
+if(!D.stop&&L.length>1)L.push(L[0]);
+w.innerHTML='';L.forEach(function(t){var s=document.createElement('span');s.textContent=t;w.appendChild(s)});
+var m=document.createElement('span');m.style.cssText='visibility:hidden;position:absolute;white-space:nowrap';var dl=D.L.concat(D.stop||[]).reduce(function(a,b){return b.length>a.length?b:a},'');
+var mx=0;D.L.concat(D.stop||[]).forEach(function(t){m.textContent=t;box.appendChild(m);mx=Math.max(mx,m.getBoundingClientRect().width);m.remove()});
+box.style.width=(Math.ceil(mx)+28)+'px';
+var i=0,n=L.length-1,T=D.stop?1100:2400,widoczny=true,tm=null;
+function krok(){i++;w.style.transition='transform .35s cubic-bezier(.6,0,.2,1)';w.style.transform='translateY(-'+(i*1.3)+'em)';
+ if(D.stop){if(i>=n){clearInterval(tm);tm=null}}else if(i===n)setTimeout(function(){w.style.transition='none';i=0;w.style.transform='translateY(0)'},380)}
+function steruj(){var ok=widoczny&&document.visibilityState==='visible';if(ok&&!tm&&(!D.stop||i<n))tm=setInterval(krok,T);if(!ok&&tm){clearInterval(tm);tm=null}}
+function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transform='translateY(-'+(n*1.3)+'em)'}return}
+ if('IntersectionObserver' in window)new IntersectionObserver(function(e){widoczny=e[0].isIntersecting;steruj()}).observe(ban);
+ document.addEventListener('visibilitychange',steruj);steruj()}
+if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>
+<main class="col nad szeroka">
+<section class="card oc-glowa"><h1>Wszystkie odcinki</h1><p class="oc-lead">Opublikowane odcinki po kolei, od #1 do #17. Kliknij kartę, żeby przeliczyć na swoje liczby, albo obejrzyj film.</p></section>
+<section class="oc-lista" aria-label="Lista odcinków">
+<article class="oc" id="odc-1">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/1.webp?v=n181"><img src="/img/filmy/mini/1.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #1</span><h2><a class="oc-main" href="/kalkulatory/czuwanie/">Tryb czuwania TV: ile zjada czerwona dioda? (96 zł)</a></h2><time datetime="2026-11-11">11 listopada 2026</time><span class="oc-kalk">Kalkulator: Tryb czuwania</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/uru9NgthJB4" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #1 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #1 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-2">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/2.webp?v=n181"><img src="/img/filmy/mini/2.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #2</span><h2><a class="oc-main" href="/kalkulatory/czajnik/">Pełny czajnik na jedną herbatę: ile przepłacasz?</a></h2><time datetime="2026-11-12">12 listopada 2026</time><span class="oc-kalk">Kalkulator: Czajnik</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/Jy7j-4YCH3s" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #2 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #2 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-3">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/3.webp?v=n181"><img src="/img/filmy/mini/3.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #3</span><h2><a class="oc-main" href="/kalkulatory/zamiennik/">Ibuprofen: ile płacisz za markę? (−77%)</a></h2><time datetime="2026-11-13">13 listopada 2026</time><span class="oc-kalk">Kalkulator: Zamiennik leku</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/aHd9EIZBv8s" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #3 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #3 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-4">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/4.webp?v=n181"><img src="/img/filmy/mini/4.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #4</span><h2><a class="oc-main" href="/kalkulatory/zamiennik/">Krople do nosa: ile płacisz za markę? (−48%)</a></h2><time datetime="2026-11-14">14 listopada 2026</time><span class="oc-kalk">Kalkulator: Zamiennik leku</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/FDqv7ivoM6A" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #4 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #4 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-5">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/5.webp?v=n181"><img src="/img/filmy/mini/5.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #5</span><h2><a class="oc-main" href="/kalkulatory/telefon/">Ładowanie telefonu przez rok: 9,66 zł</a></h2><time datetime="2026-11-15">15 listopada 2026</time><span class="oc-kalk">Kalkulator: Ładowanie telefonu</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/M6WJQECgtIg" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #5 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #5 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-6">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/6.webp?v=n181"><img src="/img/filmy/mini/6.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #6</span><h2><a class="oc-main" href="/kalkulatory/lpg/">LPG czy benzyna: ile oszczędzasz? (2 558 zł)</a></h2><time datetime="2026-11-16">16 listopada 2026</time><span class="oc-kalk">Kalkulator: Benzyna czy LPG</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/VS2NXSWgz3g" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #6 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #6 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-7">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/7.webp?v=n181"><img src="/img/filmy/mini/7.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #7</span><h2><a class="oc-main" href="/kalkulatory/ogrzewanie/">Ogrzewanie domu: co najtaniej? (3 427 zł)</a></h2><time datetime="2026-11-17">17 listopada 2026</time><span class="oc-kalk">Kalkulator: Ogrzewanie domu</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/48EevVKBYPA" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #7 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #7 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-8">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/8.webp?v=n181"><img src="/img/filmy/mini/8.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #8</span><h2><a class="oc-main" href="/kalkulatory/abonament/">Play, Orange, T-Mobile, Plus: ile przepłacasz? (do 660 zł)</a></h2><time datetime="2026-11-18">18 listopada 2026</time><span class="oc-kalk">Kalkulator: Abonament komórkowy</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/WCxyY4WAMB8" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #8 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #8 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-9">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/9.webp?v=n181"><img src="/img/filmy/mini/9.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #9</span><h2><a class="oc-main" href="/kalkulatory/opony/">Opony całoroczne czy sezonowe: co taniej? (2013 zł)</a></h2><time datetime="2026-11-19">19 listopada 2026</time><span class="oc-kalk">Kalkulator: Opony: dwa komplety czy całoroczne</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/fs1JL1UXHpc" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #9 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #9 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-10">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/10.webp?v=n181"><img src="/img/filmy/mini/10.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #10</span><h2><a class="oc-main" href="/kalkulatory/lampki/">Lampki choinkowe całą dobę: ile kosztują? (27 zł)</a></h2><time datetime="2026-11-20">20 listopada 2026</time><span class="oc-kalk">Kalkulator: Lampki świąteczne</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/9tTl2HM42kQ" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #10 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #10 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-11">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/11.webp?v=n181"><img src="/img/filmy/mini/11.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #11</span><h2><a class="oc-main" href="/kalkulatory/choinka/">Choinka żywa czy sztuczna: co taniej? (1040 zł)</a></h2><time datetime="2026-11-21">21 listopada 2026</time><span class="oc-kalk">Kalkulator: Choinka żywa czy sztuczna</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/aPxKQ7POt2o" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #11 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #11 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-12">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/12.webp?v=n181"><img src="/img/filmy/mini/12.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #12</span><h2><a class="oc-main" href="/kalkulatory/airfryer/">Airfryer czy piekarnik: co tańsze? (160 zł)</a></h2><time datetime="2026-11-22">22 listopada 2026</time><span class="oc-kalk">Kalkulator: Airfryer czy piekarnik</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/2l1yRRDC_9g" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #12 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #12 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-13">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/13.webp?v=n181"><img src="/img/filmy/mini/13.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #13</span><h2><a class="oc-main" href="/kalkulatory/obnizka/">Black Friday: prawdziwy rabat z najniższej ceny z 30 dni</a></h2><time datetime="2026-11-23">23 listopada 2026</time><span class="oc-kalk">Kalkulator: Prawdziwy rabat</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/_1sTdNgNmFE" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #13 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #13 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-14">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/14.webp?v=n181"><img src="/img/filmy/mini/14.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #14</span><h2><a class="oc-main" href="/kalkulatory/bnpl/">Kup teraz, zapłać później (Allegro Pay, PayPo, BLIK): ile kosztuje?</a></h2><time datetime="2026-11-24">24 listopada 2026</time><span class="oc-kalk">Kalkulator: Kup teraz, zapłać później</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/svLr6UJ1E8c" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #14 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #14 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-15">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/15.webp?v=n181"><img src="/img/filmy/mini/15.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #15</span><h2><a class="oc-main" href="/kalkulatory/stopien/">Ile daje 1°C mniej w domu? (294 zł)</a></h2><time datetime="2026-11-25">25 listopada 2026</time><span class="oc-kalk">Kalkulator: 1°C mniej w domu</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/e1-Py2yQLH0" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #15 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #15 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-16">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/16.webp?v=n181"><img src="/img/filmy/mini/16.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #16</span><h2><a class="oc-main" href="/kalkulatory/gwarancja/">Czy przedłużona gwarancja się opłaca? (400 zł)</a></h2><time datetime="2026-11-26">26 listopada 2026</time><span class="oc-kalk">Kalkulator: Przedłużona gwarancja</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/RCeH2r-fcig" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #16 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #16 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+<article class="oc" id="odc-17">
+<div class="oc-th" aria-hidden="true"><picture><source type="image/webp" srcset="/img/filmy/mini/17.webp?v=n181"><img src="/img/filmy/mini/17.png?v=n181" alt="" width="112" height="112" loading="lazy"></picture></div>
+<div class="oc-tx"><span class="oc-nr">Odc. #17</span><h2><a class="oc-main" href="/kalkulatory/dostawa/">Dorzucić do darmowej dostawy? (+24 zł)</a></h2><time datetime="2026-11-27">27 listopada 2026</time><span class="oc-kalk">Kalkulator: Darmowa dostawa zamówienia</span></div>
+<div class="oc-btn"><a href="https://youtube.com/shorts/WfXkGxeCeb0" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #17 na YouTube"><img src="/img/youtube.svg?v=n181" alt="" width="26" height="18"><span>YouTube</span></a><a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener" aria-label="Obejrzyj odcinek #17 na TikToku"><img src="/img/tiktok.svg?v=n181" alt="" width="20" height="20"><span>TikTok</span></a></div>
+</article>
+</section>
+<footer class="pstop"><picture><source type="image/webp" srcset="/img/awatar/awatar-56.webp?v=n175 1x, /img/awatar/awatar-112.webp?v=n175 2x"><img class="awa" src="/img/awatar/awatar-56.png?v=n175" srcset="/img/awatar/awatar-56.png?v=n175 1x, /img/awatar/awatar-112.png?v=n175 2x" width="56" height="56" alt=""></picture><p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a> · <a href="https://www.facebook.com/ilenaprawde" target="_blank" rel="noopener" aria-label="Ile Naprawdę na Facebooku">Facebook</a> · <a href="/odcinki/">Wszystkie odcinki</a></p></footer>
+<p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. To nie jest porada finansowa.<br>Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc/">Prywatność</a> · <a href="/regulamin/">Regulamin</a><br>Strona nie używa ciasteczek. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics).</p>
+</main>
+<!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

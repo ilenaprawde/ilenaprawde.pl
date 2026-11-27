@@ -201,7 +201,9 @@ def main():
         if not zr:
             continue
         cel = os.path.join(OUT, f'{nr}.webp')
-        if not wszystkie and os.path.exists(cel) and os.path.getmtime(cel) >= max(os.path.getmtime(zr), skrypt_t):
+        # w CI (świeży checkout = losowe czasy plików) generujemy tylko brakujące; lokalnie także starsze niż źródło/skrypt
+        stare = (not os.environ.get('CI')) and os.path.exists(cel) and os.path.getmtime(cel) < max(os.path.getmtime(zr), skrypt_t)
+        if not wszystkie and os.path.exists(cel) and not stare:
             continue
         rozm, info = zrob(zr, nr)
         print(f'#{nr}: {rozm[0]}x{rozm[1]} źródło: {skad} {os.path.basename(zr)}' + (' | ' + '; '.join(info) if info else ''))
