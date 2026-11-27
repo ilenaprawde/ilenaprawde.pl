@@ -155,8 +155,8 @@ details>summary::-webkit-details-marker{display:none}
 @media(prefers-reduced-motion:reduce){.intro{display:none!important}}
 @media(prefers-reduced-motion:reduce){.js .ban .ey,.js .ban .bsub,.js .ban .bh1{opacity:1;transform:none}}
 /* N162 pkt 5: awatar nad „ILE NAPRAWDĘ” (jeden link) i w stopce */
-.ban .ey{display:inline-flex;flex-direction:column;align-items:center;gap:8px;padding:2px 0}
-.ban .ey .awa{display:block;width:40px;height:40px;border-radius:50%}
+.ban .ey{display:inline-flex;flex-direction:column;align-items:center;gap:10px;padding:2px 0}
+.ban .ey .awa{display:block;width:80px;height:80px;border-radius:50%}
 .ban.k .ey{gap:6px}.ban.k .ey .awa{width:28px;height:28px}
 .ban .ey span{padding-left:5px}
 .ban.k .bback{top:12px}
@@ -238,12 +238,12 @@ details>summary::-webkit-details-marker{display:none}
 .cmpl{display:block;text-align:center;background:var(--akc);color:#fff;font-weight:800;text-decoration:none;padding:14px 18px;border-radius:14px;margin-bottom:12px}
 .filmy{display:flex;flex-direction:column;gap:10px}
 .filmy[hidden],.filmy:empty{display:none}
-.filmy .film,.film3{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:10px;box-shadow:var(--cien);text-decoration:none;color:var(--tekst)}
-.filmy .film picture,.film3 picture{display:block;flex:none;width:116px}
-.filmy .film img,.film3 img{display:block;width:100%;height:auto}
+.film3{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:10px;box-shadow:var(--cien);text-decoration:none;color:var(--tekst)}
+.film3 picture{display:block;flex:none;width:116px}
+.film3 img{display:block;width:100%;height:auto}
 @media(min-width:720px){.film3 picture{width:140px}}
-.filmy .fx,.film3 span{display:flex;flex-direction:column}
-.filmy .fx b{color:var(--akc)}.filmy .fx small,.film3 small{color:var(--mut);font-size:13px}
+.film3 span{display:flex;flex-direction:column}
+.film3 small{color:var(--mut);font-size:13px}
 .film3 b{font-size:15px}
 .filmy .soonl{text-align:center;color:var(--mut);font-size:14px}
 .filmy .tk{text-align:center;font-size:14px;margin:0}
@@ -384,3 +384,21 @@ html{scrollbar-gutter:stable}   /* N166: krótka strona (404) bez paska przewija
 .przyk{margin:14px auto 0;max-width:720px;text-align:center;font-size:13.5px;line-height:1.45;color:var(--mut)}
 .przyk.twoje{font-weight:700;color:var(--tekst)}
 .przyk:empty{display:none}
+
+/* N180: blok filmu na stronie kalkulatora – miniaturka na środku, tytuł, przyciski YouTube / TikTok */
+.fblok{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;background:#fff;border-radius:14px;padding:18px 16px 20px;box-shadow:var(--cien)}
+.fth{display:block;width:min(260px,100%);border-radius:16px}
+.fth picture,.fth img{display:block;width:100%;height:auto}
+.fth:focus-visible,.ftyt:focus-visible{outline:3px solid var(--akc);outline-offset:3px}
+.ftyt{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--tekst)}
+.ftyt small{font-size:13px;font-weight:700;color:var(--mut);letter-spacing:.04em}
+.ftyt b{font-size:17px;line-height:1.3}
+.ftyt:hover b{text-decoration:underline}
+.fbtn{display:flex;gap:10px;width:100%;max-width:340px}
+.fbtn a{flex:1 1 0;min-width:0;min-height:46px;display:flex;align-items:center;justify-content:center;gap:9px;padding:8px 10px;border:2px solid var(--tekst);border-radius:12px;background:#fff;color:var(--tekst);font-weight:800;font-size:15px;text-decoration:none;transition:background .15s,transform .15s}
+.fbtn a:hover{background:#f3f1ea;transform:translateY(-1px)}
+.fbtn a:focus-visible{outline:3px solid var(--akc);outline-offset:2px}
+.fbtn img{display:block;flex:none;width:auto;height:20px}
+.fb-tt img{height:22px}
+.filmy{gap:12px}
+@media(min-width:720px){.fth{width:min(300px,100%)}.ftyt b{font-size:18px}}

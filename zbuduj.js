@@ -427,7 +427,7 @@ const banerPremium = ({ kalk = null, k = !!kalk, stop = null, baza = '' } = {}) 
   stop = stop || (kalk && kalk.bw) || null;
   const dane = JSON.stringify({ L, stop }).replace(/</g, '\\u003c');
   return `<header class="ban${k ? ' k' : ''}" id="ban">${k ? `<a class="bback" href="${baza}/">← wszystkie rachunki</a>` : ''}<div class="bin">
-<a class="ey" href="${baza}/">${awatar(k ? 28 : 40)}<span>ILE NAPRAWDĘ</span></a>
+<a class="ey" href="${baza}/">${awatar(k ? 28 : 80)}<span>ILE NAPRAWDĘ</span></a>
 <p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>${esc(stop || L[0])}</span></span></span></p>
 ${k ? '' : '<p class="bsub">Codziennie liczę. Ze wzorem i źródłem.</p>'}</div></header>
 <script>(function(){var D=${dane},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
@@ -578,7 +578,7 @@ ${stopkaN}
 <script>(function(){var I=window.ILE,B='${BAZA}',w=document.getElementById('wall');if(!I||!w)return;
 var opub=function(o){return!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa))};
 I.ODCINKI.filter(function(o){return!o.plan&&!o.href&&opub(o)}).sort(function(a,b){return b.nr-a.nr}).slice(0,3).forEach(function(o){var c=I.KALK.find(function(k){return k.id===o.id});if(!c)return;
-var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var pc=document.createElement('picture');var so=document.createElement('source');so.type='image/webp';so.srcset='/img/filmy/mini/'+o.nr+'.webp?v=n179';pc.appendChild(so);var im=document.createElement('img');im.src='/img/filmy/mini/'+o.nr+'.png?v=n179';im.alt='';im.width=116;im.height=116;im.loading='lazy';im.onerror=function(){pc.remove()};pc.appendChild(im);a.appendChild(pc);
+var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var pc=document.createElement('picture');var so=document.createElement('source');so.type='image/webp';so.srcset='/img/filmy/mini/'+o.nr+'.webp?v=n180';pc.appendChild(so);var im=document.createElement('img');im.src='/img/filmy/mini/'+o.nr+'.png?v=n180';im.alt='';im.width=116;im.height=116;im.loading='lazy';im.onerror=function(){pc.remove()};pc.appendChild(im);a.appendChild(pc);
 var t=document.createElement('span');var s=document.createElement('small');s.textContent='#'+o.nr;var b=document.createElement('b');b.textContent=o.tytul||o.nazwa||c.krot;t.appendChild(s);t.appendChild(b);a.appendChild(t);w.appendChild(a)})})();
 (function(){var q=document.getElementById('q');if(!q)return;var norm=function(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l')};
 var dz=[].slice.call(document.querySelectorAll('.dzk'));function f(){var ws=norm(q.value.trim()).split(/\\s+/).filter(Boolean),ile=0;

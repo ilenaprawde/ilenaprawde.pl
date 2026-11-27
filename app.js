@@ -69,17 +69,27 @@ function home(){
 }
 
 /* ---------- podstrona kalkulatora ---------- */
+const filmTT=o=>o.tt?'https://www.tiktok.com/@ilenaprawde/video/'+o.tt:'https://www.tiktok.com/@ilenaprawde';   // o.tt = ID filmu na TikToku (opcjonalne); bez niego – profil kanału
+const link=(u,cls,lbl)=>{const a=el('a',cls);a.href=u;a.target='_blank';a.rel='noopener';if(lbl)a.setAttribute('aria-label',lbl);return a};
+const ikona=(src,w,h)=>{const i=document.createElement('img');i.src=src;i.alt='';i.width=w;i.height=h;return i};
+const blokFilmu=o=>{
+ const bl=el('div','fblok'),yt=filmUrl(o),lbl=n=>'Obejrzyj odcinek #'+o.nr+' na '+n;
+ const th=link(yt,'fth',lbl('YouTube'));
+ const pc=document.createElement('picture'),so=document.createElement('source');so.type='image/webp';so.srcset='/img/filmy/mini/'+o.nr+'.webp?v=n180';pc.appendChild(so);
+ const im=document.createElement('img');im.src='/img/filmy/mini/'+o.nr+'.png?v=n180';im.alt='';im.width=300;im.height=300;im.loading='lazy';im.onerror=()=>{th.remove()};pc.appendChild(im);th.appendChild(pc);bl.appendChild(th);
+ const t=link(yt,'ftyt');t.appendChild(el('small',null,'Odc. #'+o.nr));if(opis(o))t.appendChild(el('b',null,opis(o)));bl.appendChild(t);
+ const bt=el('div','fbtn');
+ const by=link(yt,'fb-yt',lbl('YouTube'));by.appendChild(ikona('/img/youtube.svg?v=n180',29,20));by.appendChild(el('span',null,'YouTube'));bt.appendChild(by);
+ const bk=link(filmTT(o),'fb-tt',lbl('TikToku'));bk.appendChild(ikona('/img/tiktok.svg?v=n180',22,22));bk.appendChild(el('span',null,'TikTok'));bt.appendChild(bk);
+ bl.appendChild(bt);return bl};
 function kalk(c){
  const eps=ODCINKI.filter(o=>o.id===c.id).map(o=>o.nr).sort((a,b)=>b-a);
  const P=new URLSearchParams(location.search);
  const hasP=id=>P.has(id)&&!(id==='z'&&/^[a-z]+$/i.test(P.get(id)));   // ?z=fb to znacznik promocji, nie wartość pola 'z'
  if(c.id==='abonament'){const ln=el('a','cmpl','Porównaj oferty wszystkich sieci →');ln.href=(window.ILE_BAZA||'')+'/abonamenty/';const sh=$('share');if(sh)sh.parentNode.insertBefore(ln,sh)}
  const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);if(fb)fb.hidden=!fl.length;
- if(fb&&fl.length){let jest=false;fl.forEach(o=>{if(opub(o)){jest=true;const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
-   const pc=document.createElement('picture');const so=document.createElement('source');so.type='image/webp';so.srcset='/img/filmy/mini/'+o.nr+'.webp?v=n179';pc.appendChild(so);const im=document.createElement('img');im.src='/img/filmy/mini/'+o.nr+'.png?v=n179';im.alt='';im.width=116;im.height=116;im.loading='lazy';im.onerror=()=>{pc.remove()};pc.appendChild(im);a.appendChild(pc);
-   const fx=el('span','fx');fx.appendChild(el('b',null,'▶ OBEJRZYJ FILM #'+o.nr));if(opis(o))fx.appendChild(el('small',null,opis(o)));a.appendChild(fx);fb.appendChild(a)}
-   else fb.appendChild(el('div','soonl',wkrotce(o)))});
-  if(jest){const tk=el('p','small tk');const ta=el('a',null,'także na TikToku');ta.href='https://www.tiktok.com/@ilenaprawde';ta.target='_blank';ta.rel='noopener';tk.appendChild(ta);fb.appendChild(tk)}}
+ if(fb&&fl.length){fl.forEach(o=>{if(opub(o)){fb.appendChild(blokFilmu(o))}
+   else fb.appendChild(el('div','soonl',wkrotce(o)))})}
  const asc=[...eps].sort((x,y)=>x-y),ktag=$('ktag');ktag.innerHTML='';
  if(asc.length){ktag.appendChild(document.createTextNode('ODC. '));
   asc.forEach((n,i)=>{if(i>0)ktag.appendChild(document.createTextNode(i===asc.length-1?' i ':', '));ktag.appendChild(document.createTextNode('#'+n));
