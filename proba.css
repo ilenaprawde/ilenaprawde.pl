@@ -350,3 +350,19 @@ details>summary::-webkit-details-marker{display:none}
 .abf small{font-size:12px;color:var(--mut)}
 .cmp .fine2{font-size:13px;color:var(--mut);margin:14px 0 0;line-height:1.5}
 .cmp .cmpl{margin-top:16px}
+/* ===================== N166: jedna szerokość wszystkich stron + układ kalkulatora na komputerze ===================== */
+.col,.col.szeroka{max-width:1152px}   /* 1120 px kart + 2 × 16 px marginesu – ta sama lewa i prawa krawędź kart na każdej stronie */
+.paragon{max-width:520px}
+@media(min-width:640px){
+ .pola2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;align-items:start}
+ .pola2>.kchips,.pola2>.lwrap,.pola2>.fsek{grid-column:1/-1}
+}
+@media(min-width:960px){
+ .pola2{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:36px;align-items:center}
+ .hero>*{grid-column:1/-1}
+ .hero>.wynik{grid-column:1;margin:0}
+ .hero>.wyk{grid-column:2;margin:0}
+ .hero:has(>.wyk[hidden])>.wynik{grid-column:1/-1;width:100%;max-width:560px;justify-self:center}
+ .hero .pyt{max-width:680px}
+}
