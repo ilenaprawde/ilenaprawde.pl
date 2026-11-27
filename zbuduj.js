@@ -607,7 +607,12 @@ ${analityka}
     prz('proba/pizza/index.html', '/proba/kalkulatory/pizza/');
     prz('proba/glowna-baner/index.html', '/proba/');
   } else {
+    // N167: po przełączeniu stare adresy próby przekierowują na prawdziwe (noindex, canonical na prawdziwy adres)
     try { fs.rmSync('proba', { recursive: true, force: true }); } catch (e) {}
+    const prz = (p, do_) => zapisz(p, `<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=${do_}"><link rel="canonical" href="${ORIGIN}${do_}"><title>Przeniesione – Ile Naprawdę</title><script>location.replace(${JSON.stringify(do_)}+location.search+location.hash)</script></head><body><a href="${do_}">${do_}</a></body></html>\n`);
+    [['proba/index.html', '/'], ['proba/pizza/index.html', '/kalkulatory/pizza/'], ['proba/glowna-baner/index.html', '/'], ['proba/abonamenty/index.html', '/abonamenty/'],
+     ['proba/promocje-pizza/index.html', '/promocje-pizza/'], ['proba/prywatnosc/index.html', '/prywatnosc/'], ['proba/regulamin/index.html', '/regulamin/'], ['proba/404.html', '/'],
+     ...KALK.map(c => [`proba/kalkulatory/${c.id}/index.html`, `/kalkulatory/${c.id}/`])].forEach(([p, d]) => prz(p, d));
   }
 }
 

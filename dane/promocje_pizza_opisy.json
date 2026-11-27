@@ -13,7 +13,7 @@
   "Super Duo Premium": {"zaw": "Zestaw 2 pizz: z grupy Premium albo własna kompozycja do 2 składników; tylko średnie lub duże", "uwaga": "Cena za każdą pizzę w zestawie. Codziennie, w lokalu i w dostawie."},
   "Super Trio Classic": {"zaw": "Zestaw 3 pizz z grupy Bestsellery; tylko średnie lub duże", "uwaga": "Cena za każdą pizzę w zestawie. Codziennie, w lokalu i w dostawie."},
   "Super Trio Premium": {"zaw": "Zestaw 3 pizz z grupy Bestsellery (tak w regulaminie); tylko średnie lub duże", "uwaga": "Cena za każdą pizzę w zestawie. Codziennie, w lokalu i w dostawie."},
-  "2za1 na Bestsellery": {"zaw": "Tylko duże z kategorii Bestsellery; w dostawie i online, bez agregatorów (np. Pyszne, Glovo)", "uwaga": "Raz na zamówienie; dostawa od 45 zł, odbiór osobisty bez minimum; nie łączy się z innymi ofertami."},
+  "2za1 na Bestsellery": {"zaw": "Tylko duże z kategorii Bestsellery; w dostawie i online, bez agregatorów (np. Pyszne.pl, Glovo)", "uwaga": "Raz na zamówienie; dostawa od 45 zł, odbiór osobisty bez minimum; nie łączy się z innymi ofertami."},
   "-50% na wszystkie pizze": {"zaw": "Tylko średnie, kategorie Klasyczne i Bestsellery (bez nowości); we wszystkich kanałach", "uwaga": "Dostawa od 45 zł; nie łączy się z innymi ofertami."},
   "Pizza Poniedziałkowa": {"zaw": "Tylko mała pizza z kategorii Bestsellery; tylko w lokalu (na miejscu i na wynos); tylko w poniedziałki", "uwaga": "Aktywuje się automatycznie, bez kodu."},
   "Pizza duża w dostawie za 40,95 zł": {"zaw": "Rozmiar XXL (mimo nazwy „duża”), 5 wybranych pizz: Uśmiech Boryny, Wegetariańska, Carbonara, Margherita, Biesiada Serowa; tylko dostawa; pon. i czw.", "uwaga": "Dostawa od 45 zł; bez kodu."},
