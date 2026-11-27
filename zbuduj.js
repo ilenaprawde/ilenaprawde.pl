@@ -329,7 +329,7 @@ let PZ = null; try { PZ = JSON.parse(fs.readFileSync('dane/promocje_pizza.json',
 let PZ_OP = {}; try { PZ_OP = JSON.parse(fs.readFileSync('dane/promocje_pizza_opisy.json', 'utf8')); } catch (e) {}   // opisy ręczne (N153) – automat ich nie nadpisuje
 const PZ_INNE = [['Pizza Hut', 'https://pizzahut.pl/'], ['Da Grasso', 'https://www.dagrasso.pl/promocje'], ["Papa John's", 'https://papajohns.pl/']];
 const PZ_FAQ = [
-  ['Skąd są te promocje?', "Z regulaminów promocji publikowanych przez sieci: Domino's (PDF „Regulamin promocji”) i T-Pizza (strona „Regulaminy Promocji”). Sprawdzamy je codziennie rano i pokazujemy tylko promocje ogólnopolskie, które obowiązują dziś."],
+  ['Skąd są te promocje?', "Z regulaminów promocji publikowanych przez sieci: Domino's (PDF „Regulamin promocji”) i T-Pizza (dawna Telepizza; strona „Regulaminy Promocji”). Sprawdzamy je codziennie rano i pokazujemy tylko promocje ogólnopolskie, które obowiązują dziś."],
   ['Dlaczego nie ma tu Pizza Hut, Da Grasso i Papa John’s?', 'Ich regulaminy nie podają dat albo cen (cena zależy od lokalu), a aktualne oferty widać dopiero w aplikacji lub po wyborze adresu. Dlatego dajemy tylko linki do ich stron promocji.'],
   ['Czy cena z promocji to cena w moim lokalu?', 'Nie zawsze. Ceny mogą się różnić w niektórych lokalach, do zamówienia z dostawą dochodzą opłaty za opakowanie i minimalna wartość zamówienia. Przed zamówieniem sprawdź koszyk.'],
   ['Co znaczy „tylko aplikacja”, „z kodem” i „wybrane dni”?', 'Tylko aplikacja – promocja działa wyłącznie w aplikacji mobilnej sieci. Z kodem – trzeba mieć kod promocyjny. Wybrane dni – promocja działa tylko w niektóre dni tygodnia (pokazujemy ją, gdy dziś jest taki dzień).'],
@@ -368,8 +368,8 @@ ${s.promocje.map(p => karta(p, s.id)).join('\n')}
   const ld = { '@context': 'https://schema.org', '@graph': [
     { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Ile Naprawdę', item: ORIGIN + '/' }, { '@type': 'ListItem', position: 2, name: 'Promocje na pizzę dziś', item: PZ_URL }] },
     { '@type': 'FAQPage', mainEntity: PZ_FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] };
-  const pzDesc = "Promocje na pizzę dziś w Domino's i T-Pizza: ceny, terminy, „tylko aplikacja”, „z kodem”. Z regulaminów sieci, sprawdzane codziennie rano.";
-  zapisz('promocje-pizza/index.html', head({ title: "Promocje na pizzę dziś – Domino's i T-Pizza | Ile Naprawdę", desc: pzDesc, canonical: PZ_URL, ld }) + `
+  const pzDesc = "Promocje na pizzę dziś w Domino's i T-Pizza (dawna Telepizza): ceny, terminy, „tylko aplikacja”, „z kodem”. Z regulaminów sieci, sprawdzane codziennie rano.";
+  zapisz('promocje-pizza/index.html', head({ title: "Promocje na pizzę dziś – Domino's i T-Pizza (dawna Telepizza) | Ile Naprawdę", desc: pzDesc, canonical: PZ_URL, ld }) + `
 <body data-strona="pizza" class="pzpage">
 <main class="wrap">
 ${brand}
