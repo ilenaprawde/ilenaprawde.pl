@@ -17,6 +17,7 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 
 // ---------- SEO podstron kalkulatorów (N101): tytuł, opis, „Jak liczymy”, „Pytania”, JSON-LD, okładka OG, lastmod ----------
 const { execFileSync } = require('child_process');
+try { const o = execFileSync('python', ['ogobrazy.py'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); if (/^og /m.test(o)) console.log(o.trim()); } catch (e) { console.log('UWAGA: ogobrazy.py nie zadziałał – ' + String(e.message).split('\n')[0]); }
 // N178: miniaturki odcinków (sam paragon, bez beżowego blatu) – tylko brakujące/starsze od okładki; bez Pythona/Pillow pomija
 try { const o = execFileSync('python', ['miniatury.py'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); if (/miniatur: [1-9]/.test(o)) console.log(o.trim()); } catch (e) { console.log('UWAGA: miniatury.py nie zadziałał – ' + String(e.message).split('\n')[0]); }
 const num = window.ILE.num;
@@ -131,6 +132,9 @@ function lastmodKalk(c, url) {
 const plikData = f => { try { return execFileSync('git', ['log', '-1', '--format=%cs', '--', f], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() || null; } catch (e) { return null; } };
 const ldJson = o => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`;
 
+// N182: podglądy linków (og:image 1200×630). Nowa nazwa pliku wymusza odświeżenie podglądu w serwisach (stary og-image.png zostaje na dysku).
+const OG_DOMYSLNY = ORIGIN + '/og-ilenaprawde-v2.png', OG_ALT = 'Ile naprawdę kosztuje codzienne życie? Kalkulatory z paragonem – ilenaprawde.pl';
+const ogKalk = c => fs.existsSync(`img/og/${c.id}.png`) ? { url: `${ORIGIN}/img/og/${c.id}.png?v=${V('img/og/' + c.id + '.png')}`, w: 1200, h: 630, alt: `Ile naprawdę kosztuje ${c.krot}? – kalkulator, ilenaprawde.pl` } : null;
 function head({ title, desc, canonical, robots, img, ld }) {
   return `<!doctype html>
 <html lang="pl">
@@ -147,14 +151,16 @@ function head({ title, desc, canonical, robots, img, ld }) {
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${canonical}">
-<meta property="og:image" content="${img ? img.url : ORIGIN + '/og-image.png'}">
+<meta property="og:image" content="${img ? img.url : OG_DOMYSLNY}">
 <meta property="og:image:width" content="${img ? img.w : 1200}">
 <meta property="og:image:height" content="${img ? img.h : 630}">
+<meta property="og:image:alt" content="${esc(img && img.alt ? img.alt : OG_ALT)}">
 <meta property="og:locale" content="pl_PL">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(desc)}">
-<meta name="twitter:image" content="${img ? img.url : ORIGIN + '/og-image.png'}">
+<meta name="twitter:image" content="${img ? img.url : OG_DOMYSLNY}">
+<meta name="twitter:image:alt" content="${esc(img && img.alt ? img.alt : OG_ALT)}">
 <link rel="stylesheet" href="/strona.css?v=${VER.css}">${ld ? '\n' + ldJson(ld) : ''}
 </head>`;
 }
@@ -224,7 +230,7 @@ const pins = ['#C62828', '#1D4ED8', '#15803D', '#E0A800'];
 const tytuly = new Set();
 KALK.forEach((c, i) => {
   const canonical = `${ORIGIN}/kalkulatory/${c.id}/`;   // zawsze bez parametrów (?z=, pola formularza)
-  const seo = seoKalk(c), desc = seo.desc, img = okladka(c.id);
+  const seo = seoKalk(c), desc = seo.desc, img = ogKalk(c);
   if (tytuly.has(seo.title)) throw new Error('Powtórzony tytuł: ' + seo.title); tytuly.add(seo.title);
   const graf = [{ '@type': 'BreadcrumbList', itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Ile Naprawdę', item: ORIGIN + '/' },
@@ -472,6 +478,7 @@ let OD_LASTMOD = null;   // N181: data ostatniego opublikowanego odcinka (lastmo
   const glowa = stary => {
     const h = (/<head>([\s\S]*?)<\/head>/.exec(stary) || [, ''])[1].replace(/<style[\s\S]*?<\/style>/g, '');
     let linie = h.split('\n').filter(l => /<title>|<meta |<link rel="(canonical|icon|apple-touch-icon)"|application\/ld\+json/.test(l) && !/name="robots"/.test(l));
+    if (!linie.some(l => /og:image/.test(l))) linie.push(`<meta property="og:image" content="${OG_DOMYSLNY}">`, '<meta property="og:image:width" content="1200">', '<meta property="og:image:height" content="630">', `<meta property="og:image:alt" content="${esc(OG_ALT)}">`, '<meta name="twitter:card" content="summary_large_image">', `<meta name="twitter:image" content="${OG_DOMYSLNY}">`);
     const robots = (/<meta name="robots" content="([^"]+)"/.exec(h) || [])[1];
     if (!NA_ZYWO) { linie = linie.map(l => l.replace(/<title>/, '<title>PRÓBA – ')); linie.splice(2, 0, '<meta name="robots" content="noindex, nofollow">'); }
     else if (robots) linie.splice(2, 0, `<meta name="robots" content="${robots}">`);
