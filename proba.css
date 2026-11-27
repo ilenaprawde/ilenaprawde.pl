@@ -306,3 +306,47 @@ details>summary::-webkit-details-marker{display:none}
 .pzpage .pzc p,.pzpage .pzc div{margin:0}
 .pzpage .pzc{gap:8px}
 .tresc mark{background:#FFE04A;color:var(--tekst);padding:0 4px;border-radius:4px}
+/* ===================== N165 ===================== */
+/* odcinki: oficjalna ikona YouTube (bez zmian kolorów i proporcji, min. 20 px, odstęp wokół) + „Odc. #N” = jeden link */
+.ktag{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin:-6px 0 18px}
+.ktag[hidden]{display:none}
+.ytl{display:inline-flex;align-items:center;gap:8px;padding:4px 6px;color:var(--tekst);font-weight:700;font-size:14px;text-decoration:none;border-radius:8px}
+.ytl img{display:block;width:24px;height:auto;margin:2px}
+.ytl:hover span,.ytl:focus-visible span{text-decoration:underline}
+.ytl:focus-visible{outline:3px solid var(--akc);outline-offset:2px}
+.ytw{font-size:14px;color:var(--mut);padding:4px 6px}
+.wynik .spod[hidden],.wynik p.op[hidden]{display:none}
+/* wyszukiwarka na stronie głównej */
+.szukaj{padding:14px}
+.szukaj input{display:block;width:100%;font:inherit;font-size:17px;padding:12px 14px;border:1.5px solid var(--linia);border-radius:12px;background:#FBFAF7;color:var(--tekst)}
+.szukaj input:focus{outline:none;border-color:var(--tekst);box-shadow:0 0 0 3px #FFE04A}
+.szukaj .none{margin:12px 0 0;text-align:center;color:var(--mut)}
+.dzk[hidden],.dzk li[hidden],#nowe[hidden]{display:none}
+/* porównywarka abonamentów (style z strona.css, kolor działu Abonamenty) */
+.cmp .tresc h1{font-size:clamp(24px,7vw,32px)}
+.cmp .stan{font-size:13px;color:var(--mut);margin:0 0 14px}
+.cmp .opts{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:0 0 16px}
+.cmp .chips{display:flex;gap:8px;flex-wrap:wrap;margin:0}
+.cmp .chip{font:inherit;font-size:14px;background:#fff;color:var(--tekst);border:1.5px solid var(--linia);border-radius:999px;padding:7px 12px;cursor:pointer}
+.cmp .chip[aria-pressed=true]{background:var(--akc);border-color:var(--akc);color:#fff}
+.cmp .tog{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
+.cmp .tog input{width:20px;height:20px;accent-color:var(--akc)}
+.cmp .wn{font-size:15px;font-weight:700;margin:0 0 14px;background:var(--akc-tlo);padding:12px 14px;border-radius:12px}
+.ab{background:#fff;padding:16px 14px 14px;margin:0 0 14px;border:1.5px solid var(--linia);border-radius:14px}
+.ab.chk{border:2px dashed var(--amber)}
+.abh{display:flex;gap:10px;align-items:flex-start}
+.abn{font-weight:700;font-size:15px;color:var(--mut);min-width:24px}
+.abt{flex:1;min-width:0}.abt b{display:block;font-size:17px;line-height:1.2}
+.abk{text-align:right;flex:none}
+.abkv{display:block;font-weight:900;font-size:clamp(19px,5.6vw,24px);line-height:1.1;font-variant-numeric:tabular-nums}
+.abkl{display:block;font-size:12px;color:var(--mut);margin-top:2px}
+.abwarn{margin:10px 0 0;padding:8px 10px;background:#FEF3C7;border-left:4px solid var(--amber);font-size:13px;border-radius:6px}
+.abwarn.abold{background:#FDECEA;border-left-color:var(--red)}
+.abd{display:grid;grid-template-columns:minmax(0,42%) minmax(0,1fr);gap:4px 10px;margin:12px 0 0;font-size:14px}
+.abd dt{color:var(--mut);font-size:13px;line-height:1.35}.abd dd{margin:0;text-align:right;overflow-wrap:anywhere}
+.abx{font-size:13px;font-weight:600;margin:6px 0 0}
+.abu{font-size:13px;color:var(--mut);margin:6px 0 0;line-height:1.4}
+.abf{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:10px;font-size:13px}
+.abf small{font-size:12px;color:var(--mut)}
+.cmp .fine2{font-size:13px;color:var(--mut);margin:14px 0 0;line-height:1.5}
+.cmp .cmpl{margin-top:16px}

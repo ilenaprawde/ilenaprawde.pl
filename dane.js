@@ -361,10 +361,10 @@ const ZDANIA={
  podroz:r=>{const m=/^NAJTAŃSZE: ([^,]+)/.exec(r.sk||'');if(!m)return null;const n=m[1].toLowerCase();return ZD(n.charAt(0).toUpperCase()+n.slice(1)+' wyjdzie najtaniej:',r.sv,'tam i z powrotem','green')},
  'allegro-smart':r=>!/RÓŻNICA/.test(r.sk)?null:ujemne(r)?ZD('Ze Smart! rocznym zaoszczędzisz',Math.abs(r.sv),'rocznie','green','w porównaniu z płaceniem za dostawy'):ZD('Smart! roczny kosztuje',Math.abs(r.sv),'więcej niż dostawy','red'),
  pizza:r=>ujemne(r)?ZD('W domu wydasz',Math.abs(r.sv),'mniej rocznie','green','niż zamawiając przez Pyszne / Glovo'):ZD('W domu wydasz',Math.abs(r.sv),'więcej rocznie','red','niż zamawiając przez Pyszne / Glovo'),
- opakowanie:r=>{const m=/OPAKOWANIE (\d) ZAMIAST (\d)/.exec(r.sk||'');if(m)return ZD('Opakowanie '+m[1]+' oszczędzi',Math.abs(r.sv),'rocznie','green','w porównaniu z opakowaniem '+m[2]);const n=/NAJTAŃSZE: OPAKOWANIE (\d)/.exec(r.sk||'');return n?ZD('Najtańsze jest opakowanie '+n[1]+':',r.svt,'','green'):null},
- 'lek-dawka':r=>/RÓŻNICA/.test(r.sk)?ZD('Najdroższa wersja kosztuje',r.sv,'więcej za kurację','red','niż najtańsza z tą samą substancją'):/^KURACJA/.test(r.sk)?ZD('Kuracja kosztuje',r.sv,''):null,
+ opakowanie:(r,v)=>{const m=/OPAKOWANIE (\d) ZAMIAST (\d)/.exec(r.sk||'');if(m){const qa=v['q'+m[1]],qb=v['q'+m[2]],kto=qa>qb?'Większe':qa<qb?'Mniejsze':'Opakowanie '+m[1];return ZD(kto+(kto.length>9?'':' opakowanie')+' oszczędzi',Math.abs(r.sv),'rocznie','green','opakowanie '+m[1]+' zamiast '+m[2])}const n=/NAJTAŃSZE: OPAKOWANIE (\d)/.exec(r.sk||'');return n?ZD('Najtańsze jest opakowanie '+n[1]+':',r.svt,'','green'):null},
+ 'lek-dawka':r=>/RÓŻNICA/.test(r.sk)?ZD('Najtańsza wersja oszczędzi',r.sv,'na kuracji','green'):/^KURACJA/.test(r.sk)?ZD('Kuracja kosztuje',r.sv,''):null,
  zamiennik:r=>ZD('Zamiennikiem zaoszczędzisz',r.sv,'rocznie','green'),
- abonament:r=>{const m=/ZA (\d+) MIES/.exec(r.sk||'');return ZD('Tańsza oferta oszczędzi',r.sv,m?'za '+m[1]+' mies.':'za okres umowy','green')}
+ abonament:(r,v)=>{const n=v.am===v.bm?v.am:null,lata=n&&n%12===0?n/12:null,okr=!n?'za okres umowy':lata===1?'przez rok':lata?'przez '+lata+(lata>=2&&lata<=4?' lata':' lat'):'przez '+String(n).replace('.',',')+' mies.';return ZD('Tańsza oferta oszczędzi',r.sv,okr,'green')}
 };
 KALK.forEach(c=>{if(ZDANIA[c.id])c.zd=ZDANIA[c.id]});
 window.ILE={ZDANIA,KALK,ODCINKI,CATS,STRONY,num,f2,f1,zl,kwh,yrs};

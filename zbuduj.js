@@ -538,14 +538,15 @@ ${analityka}
       const k = KALK.filter(c => c.cat === i), s = STR.filter(x => x.cat === i);
       if (!k.length && !s.length) return '';
       return `<section class="card dzk ${DZ[i]}" aria-labelledby="dz${i}"><div class="dzh">${ikona(i)}<h2 id="dz${i}">${esc(n)}</h2><span class="ile">${k.length + s.length}</span></div>
-<ul>${k.map(c => `<li><a href="${BAZA}/kalkulatory/${c.id}/">${esc(c.krot)}</a></li>`).join('')}${s.map(x => `<li><a href="${BAZA}${x.href}">${esc(x.nazwa)}</a> <small>${esc(x.tag)}</small></li>`).join('')}</ul></section>`;
+<ul>${k.map(c => `<li data-s="${esc([c.krot, c.t, c.k, n, ...ODCINKI.filter(o => o.id === c.id && !o.plan && !o.href).map(o => o.nr + ' ' + (o.nazwa || ''))].join(' '))}"><a href="${BAZA}/kalkulatory/${c.id}/">${esc(c.krot)}</a></li>`).join('')}${s.map(x => `<li data-s="${esc(x.nazwa + ' ' + (x.szukaj || '') + ' ' + n)}"><a href="${BAZA}${x.href}">${esc(x.nazwa)}</a> <small>${esc(x.tag)}</small></li>`).join('')}</ul></section>`;
     }).join('\n');
     zapisz(cel('index.html'), glowa(stary) + `
 <body data-strona="home2" data-baza="${BAZA}">
 ${INTRO}
 ${banerPremium({ baza: BAZA })}
 <main class="col nad szeroka">
-<section class="card" aria-labelledby="hn"><h2 id="hn">Najnowsze filmy</h2><div class="filmy3" id="wall"></div></section>
+<div class="card szukaj"><label class="sr" for="q">Szukaj rachunku</label><input id="q" type="search" placeholder="Szukaj: np. czajnik, LED, pizza" autocomplete="off"><p class="none" id="none" hidden>Nie mam jeszcze takiego rachunku. Nowe dodaję na bieżąco.</p></div>
+<section class="card" id="nowe" aria-labelledby="hn"><h2 id="hn">Najnowsze filmy</h2><div class="filmy3" id="wall"></div></section>
 <div class="dzialy">
 ${dzialy}
 </div>
@@ -557,7 +558,11 @@ ${stopkaN}
 var opub=function(o){return!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa))};
 I.ODCINKI.filter(function(o){return!o.plan&&!o.href&&opub(o)}).sort(function(a,b){return b.nr-a.nr}).slice(0,3).forEach(function(o){var c=I.KALK.find(function(k){return k.id===o.id});if(!c)return;
 var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var im=document.createElement('img');im.src='/img/filmy/'+o.nr+'.jpg';im.alt='';im.width=60;im.height=107;im.loading='lazy';im.onerror=function(){im.remove()};a.appendChild(im);
-var t=document.createElement('span');var s=document.createElement('small');s.textContent='#'+o.nr;var b=document.createElement('b');b.textContent=o.tytul||o.nazwa||c.krot;t.appendChild(s);t.appendChild(b);a.appendChild(t);w.appendChild(a)})})()</script>
+var t=document.createElement('span');var s=document.createElement('small');s.textContent='#'+o.nr;var b=document.createElement('b');b.textContent=o.tytul||o.nazwa||c.krot;t.appendChild(s);t.appendChild(b);a.appendChild(t);w.appendChild(a)})})();
+(function(){var q=document.getElementById('q');if(!q)return;var norm=function(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l')};
+var dz=[].slice.call(document.querySelectorAll('.dzk'));function f(){var ws=norm(q.value.trim()).split(/\\s+/).filter(Boolean),ile=0;
+dz.forEach(function(s){var k=0;[].slice.call(s.querySelectorAll('li')).forEach(function(li){var t=norm(li.dataset.s||li.textContent),ok=ws.every(function(x){return t.indexOf(x)>=0});li.hidden=!ok;if(ok)k++});s.hidden=!k;var e=s.querySelector('.ile');if(e)e.textContent=k;ile+=k});
+document.getElementById('nowe').hidden=ws.length>0;document.getElementById('none').hidden=ile>0}q.addEventListener('input',f);f()})()</script>
 ${analityka}
 </body>
 </html>
@@ -565,8 +570,8 @@ ${analityka}
   }
 
   // ---- C. pozostałe strony: ta sama treść w nowym wyglądzie ----
-  const owin = (plik, wnetrze, stop, klasa = '', zrodloGlowy = plik) => zapisz(cel(plik), glowa(fs.readFileSync(zrodloGlowy, 'utf8')) + `
-<body class="dz-zakupy ${klasa}" data-baza="${BAZA}">
+  const owin = (plik, wnetrze, stop, klasa = '', zrodloGlowy = plik, skrypty = '') => zapisz(cel(plik), glowa(fs.readFileSync(zrodloGlowy, 'utf8')) + `
+<body class="${/dz-/.test(klasa) ? '' : 'dz-zakupy '}${klasa}" data-baza="${BAZA}">
 ${INTRO}
 ${banerPremium({ k: true, stop, baza: BAZA })}
 <main class="col nad">
@@ -575,6 +580,7 @@ ${doBazy(wnetrze.indexOf('<h1') >= 0 ? wnetrze.slice(wnetrze.indexOf('<h1')) : w
 </section>
 ${stopkaN}
 </main>
+${skrypty}
 ${analityka}
 </body>
 </html>
@@ -588,6 +594,10 @@ ${analityka}
     owin('promocje-pizza/index.html', czysc(srodek(p, /<main class="wrap">([\s\S]*?)<\/main>/)) + '\n' + skr, 'pizza?', 'pzpage');
   }
   [['prywatnosc/index.html', 'strony_zrodlo/prywatnosc.html'], ['regulamin/index.html', 'strony_zrodlo/regulamin.html']].forEach(([f, zr]) => owin(f, czysc(srodek(fs.readFileSync(zr, 'utf8'), /<main class="paper doc">([\s\S]*?)<\/main>/)), 'codzienne życie?', 'doc', zr));
+  {   // N165: porównywarka abonamentów – dane i działanie bez zmian (abonamenty.js), nowy wygląd
+    const a = fs.readFileSync('abonamenty/index.html', 'utf8');
+    owin('abonamenty/index.html', czysc(srodek(a, /<main class="wrap">([\s\S]*?)<\/main>/)), 'abonament?', 'cmp dz-abonamenty', 'abonamenty/index.html', `<script src="/abonamenty.js?v=${VER.ab}"></script>`);
+  }
   owin('404.html', czysc(srodek(fs.readFileSync('404.html', 'utf8'), /<main class="wrap">([\s\S]*?)<\/main>/)).replace(/<mark>|<\/mark>/g, ''), 'codzienne życie?');
   // stare adresy próby → nowe
   if (!NA_ZYWO) {

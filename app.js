@@ -73,7 +73,7 @@ function kalk(c){
  const eps=ODCINKI.filter(o=>o.id===c.id).map(o=>o.nr).sort((a,b)=>b-a);
  const P=new URLSearchParams(location.search);
  const hasP=id=>P.has(id)&&!(id==='z'&&/^[a-z]+$/i.test(P.get(id)));   // ?z=fb to znacznik promocji, nie wartość pola 'z'
- if(c.id==='abonament'){const ln=el('a','cmpl','Porównaj oferty wszystkich sieci →');ln.href='/abonamenty/';const sh=$('share');if(sh)sh.parentNode.insertBefore(ln,sh)}
+ if(c.id==='abonament'){const ln=el('a','cmpl','Porównaj oferty wszystkich sieci →');ln.href=(window.ILE_BAZA||'')+'/abonamenty/';const sh=$('share');if(sh)sh.parentNode.insertBefore(ln,sh)}
  const fb=$('filmy'),fl=ODCINKI.filter(o=>o.id===c.id).sort((x,y)=>x.nr-y.nr);if(fb)fb.hidden=!fl.length;
  if(fb&&fl.length){let jest=false;fl.forEach(o=>{if(opub(o)){jest=true;const a=el('a','film');a.href=filmUrl(o);a.target='_blank';a.rel='noopener';
    const im=document.createElement('img');im.src='/img/filmy/'+o.nr+'.jpg';im.alt='';im.width=60;im.height=107;im.loading='lazy';im.onerror=()=>{im.remove()};a.appendChild(im);

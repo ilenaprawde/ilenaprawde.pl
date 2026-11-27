@@ -11,7 +11,7 @@
  const el = (t, cl, tx) => { const e = document.createElement(t); if (cl) e.className = cl; if (tx != null) e.textContent = tx; return e; };
  const num = I.num;
  const ruch = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
- const zlc = v => (Math.abs(v) < 0.5 && v !== 0 ? Math.abs(v).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : Math.round(Math.abs(v)).toLocaleString('pl-PL', { useGrouping: true })).replace(/ /g, ' ') + ' zł';
+ const zlc = v => (Math.abs(v) < 9.995 && v !== 0 ? Math.abs(v).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : Math.round(Math.abs(v)).toLocaleString('pl-PL', { useGrouping: true })).replace(/ /g, ' ') + ' zł';
  const kwota = s => { const m = /(-|−|\+)?\s*([\d\s ]+(?:,\d+)?)\s*zł/.exec(String(s)); return m ? (m[1] === '-' || m[1] === '−' ? -1 : 1) * num(m[2].replace(/[\s ]/g, '')) : NaN; };
  const liczba = s => { const m = /([\d\s ]+(?:,\d+)?)/.exec(String(s)); return m ? num(m[1].replace(/[\s ]/g, '')) : NaN; };
 
@@ -21,6 +21,14 @@
   'allegro-smart': { re: /^Roczny zwraca się od paczki/, ty: v => v.n, j: ' paczek', opis: 'paczek w roku', lepiej: 'wyzej', tak: 'Smart! roczny się zwraca', nie: 'Smart! roczny się nie zwraca' },
   opony: { re: /^Koszty równe przy/, ty: v => v.km, j: ' km', opis: 'km rocznie', lepiej: 'nizej', tak: 'całoroczne tańsze', nie: 'dwa komplety tańsze' }
  };
+ // ---- dopisek pod zdaniem (r.pod): zostaje tylko, gdy dodaje coś nowego; null = usuń, funkcja = przytnij ----
+ const POD = {
+  dostawa: () => null,                                                        // „Przepłacasz 24,01 zł.” = zdanie
+  'allegro-smart': () => null,                                                // „Roczny Smart zwraca się przy 6. paczce” = wykres progu
+  g12: t => t.replace(/\s*Próg opłacalności:[^.]*\.\s*$/, ''),              // próg jest na wykresie; „bo …” zostaje
+  podroz: t => t.replace(/^Dla .*?najtaniej wychodzi:[^.]*\.\s*/, '')      // kto najtańszy = zdanie; zostają zastrzeżenia
+ };
+ const BEZ_OP = { g12: 1, 'allegro-smart': 1, opony: 1 };                      // ramka progu = to samo co wykres progu
  // ---- jedna liczba: rozbicie dziennie / miesięcznie / rocznie (koszty roczne) ----
  const ROZBICIE = /^ROCZNIE$/;
 
@@ -90,6 +98,10 @@
    W.appendChild(g);
   }
   W.hidden = !jest;
+  // dopisek i ramka progu
+  const sp = $('spod');
+  if (sp && POD[c.id] && z && z.a) { const t = POD[c.id](r.pod || ''); if (!t) sp.hidden = true; else { sp.hidden = false; sp.textContent = t; } }
+  const opb = $('op'); if (opb && BEZ_OP[c.id] && W.querySelector('.prog')) opb.hidden = true;
   // suma paragonu
   const ps = $('psuma'); if (ps) { ps.innerHTML = ''; ps.appendChild(el('span', 'l', r.sk || '')); ps.appendChild(el('span', 'fill')); ps.appendChild(el('span', 'r', r.svt || (r.sv != null ? I.zl(r.sv) : ''))); }
  }
@@ -110,7 +122,20 @@
  document.addEventListener('input', () => { if (!gotowe) { gotowe = true; } }, true);
 
  document.addEventListener('DOMContentLoaded', () => {
-  const kt = $('ktag'); if (kt && !/^ODC/.test(kt.textContent)) kt.hidden = true;   // bez filmu: sama nazwa działu (jest już nad tytułem)
+  // odcinki: oficjalna ikona YouTube + „Odc. #N” = jeden link do filmu (nowa karta); zapowiedzi bez linku
+  const kt = $('ktag');
+  if (kt) {
+   kt.innerHTML = '';
+   const eps = I.ODCINKI.filter(o => o.id === c.id && !o.plan && !o.href).sort((a, b) => a.nr - b.nr);
+   eps.forEach(o => {
+    if (o.yt && o.pa && Date.now() >= Date.parse(o.pa)) {
+     const a = el('a', 'ytl'); a.href = 'https://youtube.com/shorts/' + o.yt; a.target = '_blank'; a.rel = 'noopener';
+     a.setAttribute('aria-label', 'Odcinek #' + o.nr + ' na YouTube (nowa karta)');
+     const im = el('img'); im.src = '/img/youtube.svg'; im.alt = ''; im.width = 24; im.height = 17; a.appendChild(im); a.appendChild(el('span', null, 'Odc. #' + o.nr)); kt.appendChild(a);
+    } else kt.appendChild(el('span', 'ytw', 'Odc. #' + o.nr + ' wkrótce'));
+   });
+   kt.hidden = !eps.length;
+  }
   // grupy pól: kolejne pola z tą samą nazwą przed „: ” w jednej ramce (np. „Pyszne / Glovo: …”)
   const cf = $('cf');
   if (cf) {
