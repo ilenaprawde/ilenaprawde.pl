@@ -1,0 +1,4 @@
+{
+ "wlaczony": false,
+ "_info": "N164: true = nowy wygląd pod prawdziwymi adresami; false = stary wygląd + próba pod /proba/. Zmieniaj przez: node przelacz_wyglad.js wlacz|wylacz"
+}

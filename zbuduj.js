@@ -591,7 +591,9 @@ ${analityka}
   owin('404.html', czysc(srodek(fs.readFileSync('404.html', 'utf8'), /<main class="wrap">([\s\S]*?)<\/main>/)).replace(/<mark>|<\/mark>/g, ''), 'codzienne życie?');
   // stare adresy próby → nowe
   if (!NA_ZYWO) {
-    const prz = (p, do_) => zapisz(p, `<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=${do_}"><link rel="canonical" href="${ORIGIN}${do_}"><title>Przeniesione</title></head><body><a href="${do_}">${do_}</a></body></html>\n`);
+    // cofnięcie przełączenia: prywatność i regulamin to pliki statyczne – wracają z kopii źródłowej
+    [['prywatnosc/index.html', 'strony_zrodlo/prywatnosc.html'], ['regulamin/index.html', 'strony_zrodlo/regulamin.html']].forEach(([f, zr]) => { const t = fs.readFileSync(zr); if (!fs.readFileSync(f).equals(t)) fs.writeFileSync(f, t); });
+    const prz =(p, do_) => zapisz(p, `<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=${do_}"><link rel="canonical" href="${ORIGIN}${do_}"><title>Przeniesione</title></head><body><a href="${do_}">${do_}</a></body></html>\n`);
     prz('proba/pizza/index.html', '/proba/kalkulatory/pizza/');
     prz('proba/glowna-baner/index.html', '/proba/');
   } else {
