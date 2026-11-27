@@ -415,6 +415,7 @@ ${BEACON}
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="${esc(c.i)}">
 <link rel="canonical" href="${ORIGIN}/kalkulatory/pizza/">
+<link rel="icon" type="image/svg+xml" href="/logo.svg?v=${V('logo.svg')}">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta name="theme-color" content="#F5F3EE">
 <link rel="stylesheet" href="/proba.css?v=${VP.css}">
