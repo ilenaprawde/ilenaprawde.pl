@@ -24,7 +24,9 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--tlo);color:var(--tekst);font:16px/1.5 var(--sans)}
 a{color:var(--akc)}
 .top{max-width:720px;margin:0 auto;padding:16px 16px 4px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{font-weight:800;letter-spacing:.08em;color:var(--tekst);text-decoration:none;font-size:15px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.08em;color:var(--tekst);text-decoration:none;font-size:15px}
+.logo{display:block;height:40px;width:auto;flex:none}
+@media(min-width:720px){.logo{height:44px}}
 .back{font-size:14px;color:var(--mut)}
 .col{max-width:720px;margin:0 auto;padding:8px 16px 96px;display:flex;flex-direction:column;gap:16px}
 .card{background:var(--karta);border-radius:var(--r);box-shadow:var(--cien);padding:24px 20px}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 840" role="img" aria-label="Ile Naprawdę">
+<path d="M0 6 L43 20 L85 8 L128 20 L170 4 L213 18 L255 6 L298 18 L340 2 L383 16 L425 6 L468 18 L510 4 L553 14 L595 6 L638 18 L680 2 V822 L638 836 L595 826 L553 838 L510 822 L468 834 L425 824 L383 838 L340 822 L298 834 L255 826 L213 838 L170 824 L128 836 L85 822 L43 838 L0 822 Z" fill="#FAF5E8" stroke="#CFC6B2" stroke-width="10" stroke-linejoin="round"/>
+<g transform="rotate(-1.5 340 290)"><rect x="40" y="165" width="600" height="250" rx="16" fill="#FFE04A"/>
+<g fill="#2A2722"><path d="M100 195h90v34h-30v122h30v34h-90v-34h30V229h-30z"/><path d="M215 195h40v156h50v34h-90z"/><path d="M330 195h95v34h-59v46h50v34h-50v42h59v34h-95z"/><rect x="480" y="351" width="36" height="34"/></g>
+<path d="M452 238c0-52 92-52 92 4 0 34-44 40-44 80" fill="none" stroke="#2A2722" stroke-width="36" stroke-linecap="butt"/></g>
+<g transform="rotate(-7 340 595)"><rect x="95" y="485" width="490" height="230" rx="28" fill="none" stroke="#D0453F" stroke-width="22"/><rect x="170" y="560" width="340" height="80" rx="10" fill="#D0453F"/></g>
+</svg>

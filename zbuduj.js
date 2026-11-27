@@ -420,7 +420,7 @@ ${BEACON}
 <link rel="stylesheet" href="/proba.css?v=${VP.css}">
 </head>
 <body class="dz-zakupy">
-<header class="top"><a class="brand" href="/">ILE NAPRAWDĘ</a><a class="back" href="/">← wszystkie rachunki</a></header>
+<header class="top"><a class="brand" href="/"><img class="logo" src="/logo.svg?v=${V('logo.svg')}" alt="" width="32" height="40"><span>ILE NAPRAWDĘ</span></a><a class="back" href="/">← wszystkie rachunki</a></header>
 <main class="col">
 <section class="card hero" aria-labelledby="h1">
  <div class="dzial">${ikona}<span>Zakupy</span></div>
