@@ -110,6 +110,7 @@
  document.addEventListener('input', () => { if (!gotowe) { gotowe = true; } }, true);
 
  document.addEventListener('DOMContentLoaded', () => {
+  const kt = $('ktag'); if (kt && !/^ODC/.test(kt.textContent)) kt.hidden = true;   // bez filmu: sama nazwa działu (jest już nad tytułem)
   // grupy pól: kolejne pola z tą samą nazwą przed „: ” w jednej ramce (np. „Pyszne / Glovo: …”)
   const cf = $('cf');
   if (cf) {
