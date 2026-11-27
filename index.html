@@ -22,7 +22,7 @@
 <meta name="twitter:description" content="Ile Naprawdę – kalkulatory codziennych kosztów: prąd, apteka, auto, ogrzewanie. Wzór i źródło przy każdym rachunku.">
 <meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
 <meta name="theme-color" content="#0F1115">
-<link rel="stylesheet" href="/proba.css?v=e1b5e741">
+<link rel="stylesheet" href="/proba.css?v=1ab4d69c">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body data-strona="home2" data-baza="">
@@ -91,7 +91,7 @@ fetch('https://ilenaprawde-bot.ilenaprawde.workers.dev/pomysl',{method:'POST',he
 <script>(function(){var I=window.ILE,B='',w=document.getElementById('wall');if(!I||!w)return;
 var opub=function(o){return!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa))};
 I.ODCINKI.filter(function(o){return!o.plan&&!o.href&&opub(o)}).sort(function(a,b){return b.nr-a.nr}).slice(0,3).forEach(function(o){var c=I.KALK.find(function(k){return k.id===o.id});if(!c)return;
-var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var im=document.createElement('img');im.src='/img/filmy/'+o.nr+'.jpg';im.alt='';im.width=60;im.height=107;im.loading='lazy';im.onerror=function(){im.remove()};a.appendChild(im);
+var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var pc=document.createElement('picture');var so=document.createElement('source');so.type='image/webp';so.srcset='/img/filmy/mini/'+o.nr+'.webp?v=n178';pc.appendChild(so);var im=document.createElement('img');im.src='/img/filmy/mini/'+o.nr+'.png?v=n178';im.alt='';im.width=116;im.height=95;im.loading='lazy';im.onerror=function(){pc.remove()};pc.appendChild(im);a.appendChild(pc);
 var t=document.createElement('span');var s=document.createElement('small');s.textContent='#'+o.nr;var b=document.createElement('b');b.textContent=o.tytul||o.nazwa||c.krot;t.appendChild(s);t.appendChild(b);a.appendChild(t);w.appendChild(a)})})();
 (function(){var q=document.getElementById('q');if(!q)return;var norm=function(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l')};
 var dz=[].slice.call(document.querySelectorAll('.dzk'));function f(){var ws=norm(q.value.trim()).split(/\s+/).filter(Boolean),ile=0;

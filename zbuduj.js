@@ -17,6 +17,8 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 
 // ---------- SEO podstron kalkulatorów (N101): tytuł, opis, „Jak liczymy”, „Pytania”, JSON-LD, okładka OG, lastmod ----------
 const { execFileSync } = require('child_process');
+// N178: miniaturki odcinków (sam paragon, bez beżowego blatu) – tylko brakujące/starsze od okładki; bez Pythona/Pillow pomija
+try { const o = execFileSync('python', ['miniatury.py'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); if (/miniatur: [1-9]/.test(o)) console.log(o.trim()); } catch (e) { console.log('UWAGA: miniatury.py nie zadziałał – ' + String(e.message).split('\n')[0]); }
 const num = window.ILE.num;
 const MIN = '−';
 const fk = v => { const x = Number.isInteger(v) ? String(v) : v.toFixed(2).replace('.', ','), [a, d] = x.split(','); return a.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + (d ? ',' + d : '') + ' zł'; };
@@ -576,7 +578,7 @@ ${stopkaN}
 <script>(function(){var I=window.ILE,B='${BAZA}',w=document.getElementById('wall');if(!I||!w)return;
 var opub=function(o){return!!(o.yt&&o.pa&&Date.now()>=Date.parse(o.pa))};
 I.ODCINKI.filter(function(o){return!o.plan&&!o.href&&opub(o)}).sort(function(a,b){return b.nr-a.nr}).slice(0,3).forEach(function(o){var c=I.KALK.find(function(k){return k.id===o.id});if(!c)return;
-var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var im=document.createElement('img');im.src='/img/filmy/'+o.nr+'.jpg';im.alt='';im.width=60;im.height=107;im.loading='lazy';im.onerror=function(){im.remove()};a.appendChild(im);
+var a=document.createElement('a');a.className='film3';a.href=B+'/kalkulatory/'+c.id+'/';var pc=document.createElement('picture');var so=document.createElement('source');so.type='image/webp';so.srcset='/img/filmy/mini/'+o.nr+'.webp?v=n178';pc.appendChild(so);var im=document.createElement('img');im.src='/img/filmy/mini/'+o.nr+'.png?v=n178';im.alt='';im.width=116;im.height=95;im.loading='lazy';im.onerror=function(){pc.remove()};pc.appendChild(im);a.appendChild(pc);
 var t=document.createElement('span');var s=document.createElement('small');s.textContent='#'+o.nr;var b=document.createElement('b');b.textContent=o.tytul||o.nazwa||c.krot;t.appendChild(s);t.appendChild(b);a.appendChild(t);w.appendChild(a)})})();
 (function(){var q=document.getElementById('q');if(!q)return;var norm=function(s){return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l')};
 var dz=[].slice.call(document.querySelectorAll('.dzk'));function f(){var ws=norm(q.value.trim()).split(/\\s+/).filter(Boolean),ile=0;

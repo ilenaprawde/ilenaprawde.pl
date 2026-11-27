@@ -239,7 +239,9 @@ details>summary::-webkit-details-marker{display:none}
 .filmy{display:flex;flex-direction:column;gap:10px}
 .filmy[hidden],.filmy:empty{display:none}
 .filmy .film,.film3{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:10px;box-shadow:var(--cien);text-decoration:none;color:var(--tekst)}
-.filmy .film img,.film3 img{width:48px;height:auto;border-radius:6px;flex:none}
+.filmy .film picture,.film3 picture{display:block;flex:none;width:116px}
+.filmy .film img,.film3 img{display:block;width:100%;height:auto}
+@media(min-width:720px){.film3 picture{width:140px}}
 .filmy .fx,.film3 span{display:flex;flex-direction:column}
 .filmy .fx b{color:var(--akc)}.filmy .fx small,.film3 small{color:var(--mut);font-size:13px}
 .film3 b{font-size:15px}
