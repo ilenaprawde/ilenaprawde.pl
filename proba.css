@@ -116,8 +116,9 @@ details>summary::-webkit-details-marker{display:none}
 .rst:hover,.rst:focus-visible{background:var(--akc);color:#fff}
 .rst[hidden]{display:none}
 /* N161: baner premium (wzór baner_premium_v6) – ciemne tło, siatka kropek, słowa jak tablica odjazdów */
-.ban{background:#0F1115;position:relative;text-align:center;color:#F4EFE3;padding:38px 20px 58px}
-.ban.k{padding:34px 20px 50px}
+.ban{background:#0F1115;position:relative;text-align:center;color:#F4EFE3;padding:19px 20px 45px}
+.ban.k{padding:17px 20px 43px}
+@media(max-width:360px){.ban.k{padding-top:36px}}
 .ban::before{content:"";position:absolute;inset:0;background-image:radial-gradient(#ffffff18 1px,transparent 1px);background-size:18px 18px;-webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);pointer-events:none}
 .ban .bin{position:relative;max-width:720px;margin:0 auto}
 .bback{position:absolute;left:16px;top:12px;font-size:13px;color:#C9C3B6;text-decoration:none;z-index:1}
@@ -134,7 +135,7 @@ details>summary::-webkit-details-marker{display:none}
 .js .ban .bh1{opacity:0;transform:translateY(10px)}
 .ban.go .ey{animation:bfi .5s .1s forwards}.ban.go .bh1{animation:bup .6s .25s cubic-bezier(.2,.8,.2,1) forwards}.ban.go .bsub{animation:bfi .6s .7s forwards}
 @keyframes bfi{to{opacity:1}}@keyframes bup{to{opacity:1;transform:none}}
-@media(min-width:720px){.bh1{font-size:40px}.k .bh1{font-size:30px}.ban{padding:48px 20px 66px}.ban.k{padding:40px 20px 56px}.ey{font-size:12px}}
+@media(min-width:720px){.bh1{font-size:40px}.k .bh1{font-size:30px}.ban{padding:24px 20px 50px}.ban.k{padding:20px 20px 46px}.ey{font-size:12px}}
 /* pierwsza karta nachodzi na baner o 26 px */
 .col.nad{margin-top:-26px;position:relative;z-index:1;padding-top:0}
 .col.nad>.card:first-child{box-shadow:0 10px 30px #0F111522}
