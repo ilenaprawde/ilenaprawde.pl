@@ -138,8 +138,8 @@ function head({ title, desc, canonical, robots, img, ld }) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canonical}">${robots ? `\n<meta name="robots" content="${robots}">` : ''}
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=n174">
-<link rel="apple-touch-icon" href="/favicon-192.png?v=n174">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=n175">
+<link rel="apple-touch-icon" href="/favicon-192.png?v=n175">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Ile Naprawdę">
 <meta property="og:title" content="${esc(title)}">
@@ -416,7 +416,7 @@ if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classL
 var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
 el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>`;
 // N162 pkt 5: oryginalny awatar przycięty do koła (img/awatar/awatar-N.webp + .png), 1x i 2x
-const awatar = (n, alt = '') => `<picture><source type="image/webp" srcset="/img/awatar/awatar-${n}.webp?v=n174 1x, /img/awatar/awatar-${n * 2}.webp?v=n174 2x"><img class="awa" src="/img/awatar/awatar-${n}.png?v=n174" srcset="/img/awatar/awatar-${n}.png?v=n174 1x, /img/awatar/awatar-${n * 2}.png?v=n174 2x" width="${n}" height="${n}" alt="${alt}"></picture>`;
+const awatar = (n, alt = '') => `<picture><source type="image/webp" srcset="/img/awatar/awatar-${n}.webp?v=n175 1x, /img/awatar/awatar-${n * 2}.webp?v=n175 2x"><img class="awa" src="/img/awatar/awatar-${n}.png?v=n175" srcset="/img/awatar/awatar-${n}.png?v=n175 1x, /img/awatar/awatar-${n * 2}.png?v=n175 2x" width="${n}" height="${n}" alt="${alt}"></picture>`;
 const STOPKA_PROBA = `<footer class="pstop">${awatar(56)}<p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>`;
 // N164: k = wersja niska (kalkulatory i inne podstrony), stop = słowo, na którym się zatrzymuje (bw kalkulatora), baza = '/proba' na próbie
 const banerPremium = ({ kalk = null, k = !!kalk, stop = null, baza = '' } = {}) => {
