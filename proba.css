@@ -102,9 +102,12 @@ details>summary::-webkit-details-marker{display:none}
 .faq p{margin:0 0 14px;color:var(--mut);font-size:15px}
 .stopka{text-align:center;font-size:13px;color:var(--mut);margin:8px 0 0}
 /* przyklejony pasek wyniku – tylko telefon, gdy wynik poza ekranem */
-.lepki{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;justify-content:center;align-items:baseline;gap:8px;background:var(--tekst);color:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 6px 24px #0000003d;transform:translateY(160%);transition:transform .3s ease;z-index:5;font-size:15px}
+.lepki{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;justify-content:center;align-items:baseline;gap:8px;background:var(--tekst);color:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 6px 24px #0000003d;z-index:50;font-size:15px;
+ opacity:0;visibility:hidden;transform:translateY(12px);pointer-events:none;transition:opacity .25s ease,transform .25s ease,visibility 0s linear .25s}
 .lepki b{font-size:18px;font-weight:900;color:#86EFAC;font-variant-numeric:tabular-nums}
 .lepki b.drozej{color:#FCA5A5}
-.lepki.wid{transform:none}
-@media(min-width:720px){.lepki{display:none}.card{padding:32px 36px}.wyl{padding:0}.wyl-in{padding:0 36px 32px}}
+.lepki.wid{opacity:1;visibility:visible;transform:none;transition:opacity .25s ease,transform .25s ease,visibility 0s}
+/* N157: pasek chowamy tylko na komputerze z myszą (telefon w trybie „wersja na komputer” ma szerokość > 720 px) */
+@media(min-width:720px) and (hover:hover) and (pointer:fine){.lepki{display:none}}
+@media(min-width:720px){.card{padding:32px 36px}.wyl{padding:0}.wyl-in{padding:0 36px 32px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
