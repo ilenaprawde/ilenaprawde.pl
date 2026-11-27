@@ -130,5 +130,5 @@ details>summary::-webkit-details-marker{display:none}
 .baner-p{padding:20px 16px}
 .baner-p .bt{padding:14px 0 6px}
 .baner-p .bt mark{font-size:clamp(24px,7.6vw,46px);padding:4px 14px}
-.baner-p .bh{font-size:clamp(13px,3.6vw,17px)}
+.baner-p .bh{font-size:clamp(11.5px,3.15vw,17px)}
 @media(min-width:720px){.baner-w .bt mark{font-size:26px}.baner-p .bin{display:grid;grid-template-columns:1fr auto;column-gap:24px;align-items:center}.baner-p .bl{grid-column:1/-1}.baner-p .bt{text-align:left}.baner-p .bh{text-align:left;grid-column:1}.baner-p .pie{grid-column:2;grid-row:2/4;margin:0}}
