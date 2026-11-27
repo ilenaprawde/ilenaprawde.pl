@@ -413,11 +413,14 @@ function koniec(){if(!el.parentNode)return;el.remove();document.dispatchEvent(ne
 if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classList.add('on');
 var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
 el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>`;
+// N162 pkt 5: oryginalny awatar przycięty do koła (img/awatar/awatar-N.webp + .png), 1x i 2x
+const awatar = (n, alt = '') => `<picture><source type="image/webp" srcset="/img/awatar/awatar-${n}.webp 1x, /img/awatar/awatar-${n * 2}.webp 2x"><img class="awa" src="/img/awatar/awatar-${n}.png" srcset="/img/awatar/awatar-${n}.png 1x, /img/awatar/awatar-${n * 2}.png 2x" width="${n}" height="${n}" alt="${alt}"></picture>`;
+const STOPKA_PROBA = `<footer class="pstop">${awatar(56)}<p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>`;
 const banerPremium = ({ kalk = null } = {}) => {
   const L = bwLista(), stop = kalk && kalk.bw ? kalk.bw : null;
   const dane = JSON.stringify({ L, stop }).replace(/</g, '\\u003c');
   return `<header class="ban${kalk ? ' k' : ''}" id="ban">${kalk ? '<a class="bback" href="/">← wszystkie rachunki</a>' : ''}<div class="bin">
-<a class="ey" href="/">ILE NAPRAWDĘ</a>
+<a class="ey" href="/">${awatar(kalk ? 28 : 40)}<span>ILE NAPRAWDĘ</span></a>
 <p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>${esc(stop || L[0])}</span></span></span></p>
 ${kalk ? '' : '<p class="bsub">Codziennie liczę. Ze wzorem i źródłem.</p>'}</div></header>
 <script>(function(){var D=${dane},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
@@ -489,6 +492,7 @@ ${banerPremium({ kalk: c })}
 ${faq.map(([q, a]) => ` <details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')}
 </section>
 <p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. Wyliczenie poglądowe, to nie jest porada.<br><a href="/kalkulatory/pizza/">Obecna wersja kalkulatora</a> · <a href="/prywatnosc/">Prywatność</a></p>
+${STOPKA_PROBA}
 </main>
 <div class="lepki" id="lepki" aria-hidden="true"><b id="lk-k">−978 zł rocznie</b><span id="lk-n">W domu</span></div>
 <noscript><p class="stopka">Kalkulator wymaga włączonego JavaScriptu.</p></noscript>
@@ -516,7 +520,8 @@ ${JSHEAD}
 <body class="dz-zakupy">
 ${INTRO}
 ${banerPremium()}
-<main class="col nad"><section class="card"><h2>Podgląd baneru strony głównej</h2><p class="pyt">Wersja na stronę główną (na razie tylko próba): słowa zmieniają się co 2,4 s w kółko. Na kalkulatorze baner jest niższy i zatrzymuje się na temacie strony.</p><a class="cta" href="/proba/pizza/">Zobacz wersję na kalkulatorze →</a></section></main>
+<main class="col nad"><section class="card"><h2>Podgląd baneru strony głównej</h2><p class="pyt">Wersja na stronę główną (na razie tylko próba): słowa zmieniają się co 2,4 s w kółko. Na kalkulatorze baner jest niższy i zatrzymuje się na temacie strony.</p><a class="cta" href="/proba/pizza/">Zobacz wersję na kalkulatorze →</a></section>
+${STOPKA_PROBA}</main>
 </body>
 </html>
 `);
