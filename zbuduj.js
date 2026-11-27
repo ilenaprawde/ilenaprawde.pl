@@ -400,6 +400,66 @@ ${BEACON}
 `);
 }
 
+// ---------- N156: próba nowego wyglądu – /proba/pizza/ (noindex, poza sitemap; liczy ta sama funkcja z dane.js) ----------
+{
+  const c = KALK.find(k => k.id === 'pizza');
+  const faq = seoKalk(c).faq;
+  const VP = { css: V('proba.css'), js: V('proba.js') };
+  const ikona = `<svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44 6 10c11-6 25-6 36 0L24 44Z" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/><path d="M8.5 14.5c10-5 21-5 31 0" fill="none" stroke="var(--akc)" stroke-width="3" stroke-linecap="round"/><circle cx="19" cy="20" r="3.2" fill="var(--akc)"/><circle cx="29" cy="22" r="3.2" fill="var(--akc)"/><circle cx="24" cy="31" r="3.2" fill="var(--akc)"/></svg>`;
+  zapisz('proba/pizza/index.html', `<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PRÓBA – ${esc(c.st)} | Ile Naprawdę</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="${esc(c.i)}">
+<link rel="canonical" href="${ORIGIN}/kalkulatory/pizza/">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="theme-color" content="#F5F3EE">
+<link rel="stylesheet" href="/proba.css?v=${VP.css}">
+</head>
+<body class="dz-zakupy">
+<header class="top"><a class="brand" href="/">ILE NAPRAWDĘ</a><a class="back" href="/">← wszystkie rachunki</a></header>
+<main class="col">
+<section class="card hero" aria-labelledby="h1">
+ <div class="dzial">${ikona}<span>Zakupy</span></div>
+ <h1 id="h1">${esc(c.st)}</h1>
+ <p class="pyt">Ile naprawdę kosztuje ta sama pizza z Pyszne, z aplikacji sieci i zrobiona w domu – w ciągu roku?</p>
+ <div class="wynik" id="wynik" aria-live="polite"><p class="zd" id="zd">W domu wydasz <b class="kw" id="kw">978 zł</b> mniej rocznie</p><p class="pod" id="pod">niż zamawiając przez Pyszne / Glovo</p></div>
+ <div class="paski" id="paski" aria-label="Porównanie rocznie"></div>
+ <p class="uwaga">Ceny z przykładowego lokalu, listopad 2026. Wpisz swoje.</p>
+</section>
+<section class="card" aria-labelledby="hz">
+ <h2 id="hz">Zmień na swoje liczby</h2>
+ <div id="pola" class="pola"></div>
+ <p class="blad" id="blad" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p>
+</section>
+<details class="card wyl" id="wyl">
+ <summary><span>Pokaż wyliczenie</span><i aria-hidden="true">▾</i></summary>
+ <div class="wyl-in">
+  <div class="paragon" id="paragon"><div class="ph">ILE NAPRAWDĘ<small>paragon z liczenia</small></div><div id="pr"></div></div>
+  <h3>Wzór</h3><p class="mono-s">${esc(c.w)}</p>
+  <h3>Źródła</h3><p class="mono-s">${esc(c.s)}</p>
+  <p class="spr" id="spr" hidden></p>
+ </div>
+</details>
+<a class="cta" href="/promocje-pizza/">Sprawdź promocje na pizzę dziś →</a>
+<section class="card faq" aria-labelledby="hf">
+ <h2 id="hf">Pytania</h2>
+${faq.map(([q, a]) => ` <details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')}
+</section>
+<p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. Wyliczenie poglądowe, to nie jest porada.<br><a href="/kalkulatory/pizza/">Obecna wersja kalkulatora</a> · <a href="/prywatnosc/">Prywatność</a></p>
+</main>
+<div class="lepki" id="lepki" aria-hidden="true"><b id="lk-k">−978 zł rocznie</b><span id="lk-n">W domu</span></div>
+<noscript><p class="stopka">Kalkulator wymaga włączonego JavaScriptu.</p></noscript>
+<script src="/dane.js?v=${VER.dane}"></script>
+<script src="/proba.js?v=${VP.js}"></script>
+</body>
+</html>
+`);
+}
+
 // ---------- sitemap.xml + robots.txt ----------
 // lastmod: data ostatniej zmiany danego kalkulatora (git blame jego wpisu w dane.js), nie dzisiejsza dla wszystkich
 const dzis = dataPL(Date.now());
