@@ -108,7 +108,8 @@
   if (pz && c.prz) {
    const zm = c.in.some(x => { const e = $('f_' + x.id); if (!e) return false; return x.chk ? (e.checked ? '1' : '0') !== x.v : x.opt ? e.value !== String(x.v) : !(num(e.value) === num(x.v)); });
    const dc = (/Ceny w polach domyślnych \(stan na (\d{2}\.\d{2}\.\d{4})\)/.exec(c.s || '') || [])[1] || c.prz.d;
-   pz.textContent = zm ? 'Twoje liczby.' : c.prz.t.replace('{data}', dc) + ' Wpisz swoje.';
+   const g12 = I.KALK.find(k => k.id === 'g12'), dp = ((g12 && /Ceny w polach domyślnych \(stan na (\d{2}\.\d{2}\.\d{4})\)/.exec(g12.s || '')) || [])[1] || '25.11.2026';   // N172: data ceny prądu (ta sama co G11 w G12)
+   pz.textContent = zm ? 'Twoje liczby.' : c.prz.t.replace('{data}', dc).replace('{prad}', (I.PRAD && I.PRAD.v) || '').replace('{data_pradu}', dp) + ' Wpisz swoje.';
    pz.classList.toggle('twoje', zm);
   }
   // suma paragonu
