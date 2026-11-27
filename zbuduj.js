@@ -242,7 +242,8 @@ ${brand}
  <div class="tag" id="ktag"></div>
  <h1>${esc(c.h1 || c.st || c.t)}</h1>
  <p class="i">${esc(c.i)}</p>
- <div class="wyn" aria-live="polite"><div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
+ <div class="wyn" aria-live="polite"><div class="sum"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="err" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>${c.lk ? `
+ <a class="lkb" href="${esc(c.lk[0])}">${esc(c.lk[1])}</a>` : ''}
  <hr class="dash">
  <h2 class="kh">TWOJE LICZBY</h2>
  <div id="cf"></div>
@@ -377,6 +378,7 @@ ${brand}
 <h1>Promocje na pizzę <mark>dziś</mark></h1>
 <p class="stan" id="pzstan" data-spr="${esc(spr || '')}">${spr ? `Sprawdzone ${spr.slice(0, 10) === dzisPL ? 'dziś' : dm(spr)} o ${esc(godz(spr))}` : 'Brak odczytu'}</p>
 <p class="lead">Promocje ogólnopolskie z regulaminów sieci, które obowiązują dziś. Cena, termin i warunki – bez rankingu.</p>
+<p class="pzk"><a class="lkb" href="/kalkulatory/pizza/">Policz, ile przepłacasz →</a></p>
 ${sieci.map(sekcja).join('\n')}
 <section class="pz" aria-labelledby="pz-inne"><h2 class="sec" id="pz-inne">SPRAWDŹ W ICH APLIKACJI <span>bez cen</span></h2>
 <ul class="pzi">${PZ_INNE.map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${esc(n)} – promocje →</a></li>`).join('')}</ul>
