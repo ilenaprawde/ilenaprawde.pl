@@ -21,13 +21,41 @@
 <meta name="twitter:title" content="Promocje na pizzę dziś – Domino's i T-Pizza (dawna Telepizza) | Ile Naprawdę">
 <meta name="twitter:description" content="Promocje na pizzę dziś w Domino's i T-Pizza (dawna Telepizza): ceny, terminy, „tylko aplikacja”, „z kodem”. Z regulaminów sieci, sprawdzane codziennie rano.">
 <meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
-<link rel="stylesheet" href="/strona.css?v=3aaae173">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ile Naprawdę","item":"https://ilenaprawde.pl/"},{"@type":"ListItem","position":2,"name":"Promocje na pizzę dziś","item":"https://ilenaprawde.pl/promocje-pizza/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Skąd są te promocje?","acceptedAnswer":{"@type":"Answer","text":"Z regulaminów promocji publikowanych przez sieci: Domino's (PDF „Regulamin promocji”) i T-Pizza (dawna Telepizza; strona „Regulaminy Promocji”). Sprawdzamy je codziennie rano i pokazujemy tylko promocje ogólnopolskie, które obowiązują dziś."}},{"@type":"Question","name":"Dlaczego nie ma tu Pizza Hut, Da Grasso i Papa John’s?","acceptedAnswer":{"@type":"Answer","text":"Ich regulaminy nie podają dat albo cen (cena zależy od lokalu), a aktualne oferty widać dopiero w aplikacji lub po wyborze adresu. Dlatego dajemy tylko linki do ich stron promocji."}},{"@type":"Question","name":"Czy cena z promocji to cena w moim lokalu?","acceptedAnswer":{"@type":"Answer","text":"Nie zawsze. Ceny mogą się różnić w niektórych lokalach, do zamówienia z dostawą dochodzą opłaty za opakowanie i minimalna wartość zamówienia. Przed zamówieniem sprawdź koszyk."}},{"@type":"Question","name":"Co znaczy „tylko aplikacja”, „z kodem” i „wybrane dni”?","acceptedAnswer":{"@type":"Answer","text":"Tylko aplikacja – promocja działa wyłącznie w aplikacji mobilnej sieci. Z kodem – trzeba mieć kod promocyjny. Wybrane dni – promocja działa tylko w niektóre dni tygodnia (pokazujemy ją, gdy dziś jest taki dzień)."}}]}]}</script>
+<meta name="theme-color" content="#0F1115">
+<link rel="stylesheet" href="/proba.css?v=1862d8ec">
+<script>document.documentElement.classList.add('js')</script>
 </head>
-<body data-strona="pizza" class="pzpage">
-<main class="wrap">
-<div class="brandbar"><a href="/">ILE NAPRAWDĘ</a><span>paragony z liczenia</span></div>
-<a class="back" href="/">← wszystkie rachunki</a>
+<body class="dz-zakupy pzpage" data-baza="">
+<div class="intro" id="intro" aria-hidden="true"><div class="ilogo"><span>ILE</span><span class="q">?</span><span class="n">&nbsp;NAPRAWDĘ</span></div></div>
+<script>(function(){var el=document.getElementById('intro'),d=new Date(),dz=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(),pokaz=false;
+try{if(/[?&]intro=1(&|$)/.test(location.search))pokaz=true;else if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&localStorage.getItem('in_intro')!==dz)pokaz=true;if(pokaz)localStorage.setItem('in_intro',dz)}catch(e){pokaz=false}
+function koniec(){if(!el.parentNode)return;el.remove();document.dispatchEvent(new Event('intro-koniec'))}
+if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classList.add('on');
+var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
+el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>
+<header class="ban k" id="ban"><a class="bback" href="/">← wszystkie rachunki</a><div class="bin">
+<a class="ey" href="/"><picture><source type="image/webp" srcset="/img/awatar/awatar-28.webp 1x, /img/awatar/awatar-56.webp 2x"><img class="awa" src="/img/awatar/awatar-28.png" srcset="/img/awatar/awatar-28.png 1x, /img/awatar/awatar-56.png 2x" width="28" height="28" alt=""></picture><span>ILE NAPRAWDĘ</span></a>
+<p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>pizza?</span></span></span></p>
+</div></header>
+<script>(function(){var D={"L":["codzienne życie?","gwarancja?","oświetlenie?","airfryer?","zakup na raty?","choinka?","ogrzewanie?","komplet opon?","abonament?","promocja?","Black Friday?"],"stop":"pizza?"},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
+ruch=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var L=D.stop?D.L.filter(function(x){return x!==D.stop}).slice(0,3).concat(D.stop):D.L.slice();
+if(!D.stop&&L.length>1)L.push(L[0]);
+w.innerHTML='';L.forEach(function(t){var s=document.createElement('span');s.textContent=t;w.appendChild(s)});
+var m=document.createElement('span');m.style.cssText='visibility:hidden;position:absolute;white-space:nowrap';var dl=D.L.concat(D.stop||[]).reduce(function(a,b){return b.length>a.length?b:a},'');
+var mx=0;D.L.concat(D.stop||[]).forEach(function(t){m.textContent=t;box.appendChild(m);mx=Math.max(mx,m.getBoundingClientRect().width);m.remove()});
+box.style.width=(Math.ceil(mx)+28)+'px';
+var i=0,n=L.length-1,T=D.stop?1100:2400,widoczny=true,tm=null;
+function krok(){i++;w.style.transition='transform .35s cubic-bezier(.6,0,.2,1)';w.style.transform='translateY(-'+(i*1.3)+'em)';
+ if(D.stop){if(i>=n){clearInterval(tm);tm=null}}else if(i===n)setTimeout(function(){w.style.transition='none';i=0;w.style.transform='translateY(0)'},380)}
+function steruj(){var ok=widoczny&&document.visibilityState==='visible';if(ok&&!tm&&(!D.stop||i<n))tm=setInterval(krok,T);if(!ok&&tm){clearInterval(tm);tm=null}}
+function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transform='translateY(-'+(n*1.3)+'em)'}return}
+ if('IntersectionObserver' in window)new IntersectionObserver(function(e){widoczny=e[0].isIntersecting;steruj()}).observe(ban);
+ document.addEventListener('visibilitychange',steruj);steruj()}
+if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>
+<main class="col nad">
+<section class="card tresc">
 <h1>Promocje na pizzę <mark>dziś</mark></h1>
 <p class="stan" id="pzstan" data-spr="2026-11-27T07:28+01:00">Sprawdzone dziś o 7:28</p>
 <p class="lead">Promocje ogólnopolskie z regulaminów sieci, które obowiązują dziś. Cena, termin i warunki – bez rankingu.</p>
@@ -208,18 +236,18 @@
 <h3>Dlaczego nie ma tu Pizza Hut, Da Grasso i Papa John’s?</h3><p>Ich regulaminy nie podają dat albo cen (cena zależy od lokalu), a aktualne oferty widać dopiero w aplikacji lub po wyborze adresu. Dlatego dajemy tylko linki do ich stron promocji.</p>
 <h3>Czy cena z promocji to cena w moim lokalu?</h3><p>Nie zawsze. Ceny mogą się różnić w niektórych lokalach, do zamówienia z dostawą dochodzą opłaty za opakowanie i minimalna wartość zamówienia. Przed zamówieniem sprawdź koszyk.</p>
 <h3>Co znaczy „tylko aplikacja”, „z kodem” i „wybrane dni”?</h3><p>Tylko aplikacja – promocja działa wyłącznie w aplikacji mobilnej sieci. Z kodem – trzeba mieć kod promocyjny. Wybrane dni – promocja działa tylko w niektóre dni tygodnia (pokazujemy ją, gdy dziś jest taki dzień).</p></section>
-<div class="cta">OBSERWUJ @ILENAPRAWDE</div>
- <nav class="soc" aria-label="Profile w mediach społecznościowych">
-  <a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener">TikTok</a>
-  <a href="https://www.youtube.com/@ilenaprawde" target="_blank" rel="noopener">YouTube</a>
- </nav>
-<p class="fine">Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc/">Prywatność</a> · <a href="/regulamin/">Regulamin</a></p>
-<p class="fine">Strona nie używa ciasteczek i nie zbiera danych osobowych. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics). Kalkulatory liczą w Twojej przeglądarce.</p>
-</main>
+
+
+
 <script>(function(){var t=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Warsaw'}).format(new Date()),w=new Date(t+'T12:00:00Z').getUTCDay()||7;
 document.querySelectorAll('.pz').forEach(function(s){var n=0;s.querySelectorAll('.pzc').forEach(function(c){var d=c.dataset.dni,ok=c.dataset.od<=t&&c.dataset.do>=t&&(!d||d.split(',').indexOf(String(w))>=0);c.hidden=!ok;if(ok)n++});
  var l=s.querySelector('.pzn');if(l)l.textContent=n+' '+(n===1?'promocja':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?'promocje':'promocji')+' dziś';var z=s.querySelector('.pz0');if(z)z.hidden=n>0});
 var e=document.getElementById('pzstan'),s=e&&e.dataset.spr;if(s&&s.slice(0,10)!==t)e.textContent='Sprawdzone '+(+s.slice(8,10))+'.'+s.slice(5,7)+' o '+s.slice(11,16).replace(/^0/,'')})()</script>
+</section>
+<footer class="pstop"><picture><source type="image/webp" srcset="/img/awatar/awatar-56.webp 1x, /img/awatar/awatar-112.webp 2x"><img class="awa" src="/img/awatar/awatar-56.png" srcset="/img/awatar/awatar-56.png 1x, /img/awatar/awatar-112.png 2x" width="56" height="56" alt=""></picture><p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>
+<p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. To nie jest porada finansowa.<br>Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc/">Prywatność</a> · <a href="/regulamin/">Regulamin</a><br>Strona nie używa ciasteczek. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics).</p>
+</main>
+
 <!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
