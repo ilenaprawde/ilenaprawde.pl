@@ -59,7 +59,7 @@ h2.sec span{font-weight:400;font-size:12px;color:var(--mut);letter-spacing:0;tex
 .about{margin-top:34px;font-size:13px;color:var(--mut);display:grid;gap:8px}
 .about h2{font-size:14px;letter-spacing:2px;color:var(--ink);margin:0}
 .cta{margin-top:26px;background:var(--ink);color:var(--paper);text-align:center;font-weight:700;font-size:14px;letter-spacing:.06em;padding:14px 12px}
-.soc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.soc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
 .soc a{display:block;text-align:center;padding:11px 4px;border:2px solid var(--ink);color:var(--ink);font-weight:700;font-size:13px;letter-spacing:.04em;text-decoration:none;background:var(--paper)}
 .soc a:hover,.soc a:focus-visible{background:var(--ink);color:var(--paper)}
 .fine{font-size:12px;color:var(--mut);text-align:center;margin-top:12px}

@@ -161,6 +161,7 @@ const stopka = `<div class="cta">OBSERWUJ @ILENAPRAWDE</div>
  <nav class="soc" aria-label="Profile w mediach społecznościowych">
   <a href="https://www.tiktok.com/@ilenaprawde" target="_blank" rel="noopener">TikTok</a>
   <a href="https://www.youtube.com/@ilenaprawde" target="_blank" rel="noopener">YouTube</a>
+  <a href="https://www.facebook.com/ilenaprawde" target="_blank" rel="noopener" aria-label="Ile Naprawdę na Facebooku">Facebook</a>
  </nav>`;
 const stopka2 = `<p class="fine">Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc/">Prywatność</a> · <a href="/regulamin/">Regulamin</a></p>
 <p class="fine">Strona nie używa ciasteczek i nie zbiera danych osobowych. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics). Kalkulatory liczą w Twojej przeglądarce.</p>`;
@@ -417,7 +418,7 @@ var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add(
 el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>`;
 // N162 pkt 5: oryginalny awatar przycięty do koła (img/awatar/awatar-N.webp + .png), 1x i 2x
 const awatar = (n, alt = '') => `<picture><source type="image/webp" srcset="/img/awatar/awatar-${n}.webp?v=n175 1x, /img/awatar/awatar-${n * 2}.webp?v=n175 2x"><img class="awa" src="/img/awatar/awatar-${n}.png?v=n175" srcset="/img/awatar/awatar-${n}.png?v=n175 1x, /img/awatar/awatar-${n * 2}.png?v=n175 2x" width="${n}" height="${n}" alt="${alt}"></picture>`;
-const STOPKA_PROBA = `<footer class="pstop">${awatar(56)}<p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>`;
+const STOPKA_PROBA = `<footer class="pstop">${awatar(56)}<p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a> · <a href="https://www.facebook.com/ilenaprawde" target="_blank" rel="noopener" aria-label="Ile Naprawdę na Facebooku">Facebook</a></p></footer>`;
 // N164: k = wersja niska (kalkulatory i inne podstrony), stop = słowo, na którym się zatrzymuje (bw kalkulatora), baza = '/proba' na próbie
 const banerPremium = ({ kalk = null, k = !!kalk, stop = null, baza = '' } = {}) => {
   const L = bwLista();
