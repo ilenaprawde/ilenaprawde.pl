@@ -400,6 +400,8 @@ ${BEACON}
 `);
 }
 
+// ---------- N160: baner (HTML/CSS) – wąski na kalkulatorach, pełny na stronę główną (podgląd /proba/glowna-baner/) ----------
+const baner = pelny => `<a class="baner ${pelny ? 'baner-p' : 'baner-w'}" href="/" aria-label="Ile Naprawdę – strona główna"><span class="bin"><span class="bl" aria-hidden="true"></span><span class="bt"><mark>ILE NAPRAWDĘ</mark></span>${pelny ? `<span class="bh">Codziennie liczę, ile coś naprawdę kosztuje.<br>Bez straszenia, ze wzorem i źródłem.</span><span class="pie" aria-hidden="true">KALKULATORY</span>` : ''}<span class="bl" aria-hidden="true"></span></span></a>`;
 // ---------- N156: próba nowego wyglądu – /proba/pizza/ (noindex, poza sitemap; liczy ta sama funkcja z dane.js) ----------
 {
   const c = KALK.find(k => k.id === 'pizza');
@@ -415,13 +417,13 @@ ${BEACON}
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="${esc(c.i)}">
 <link rel="canonical" href="${ORIGIN}/kalkulatory/pizza/">
-<link rel="icon" type="image/svg+xml" href="/logo.svg?v=${V('logo.svg')}">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta name="theme-color" content="#F5F3EE">
 <link rel="stylesheet" href="/proba.css?v=${VP.css}">
 </head>
 <body class="dz-zakupy">
-<header class="top"><a class="brand" href="/"><img class="logo" src="/logo.svg?v=${V('logo.svg')}" alt="" width="32" height="40"><span>ILE NAPRAWDĘ</span></a><a class="back" href="/">← wszystkie rachunki</a></header>
+${baner(false)}
+<div class="top"><a class="back" href="/">← wszystkie rachunki</a></div>
 <main class="col">
 <section class="card hero" aria-labelledby="h1">
  <div class="dzial">${ikona}<span>Zakupy</span></div>
@@ -456,6 +458,27 @@ ${faq.map(([q, a]) => ` <details><summary>${esc(q)}</summary><p>${esc(a)}</p></d
 <noscript><p class="stopka">Kalkulator wymaga włączonego JavaScriptu.</p></noscript>
 <script src="/dane.js?v=${VER.dane}"></script>
 <script src="/proba.js?v=${VP.js}"></script>
+</body>
+</html>
+`);
+}
+
+{
+zapisz('proba/glowna-baner/index.html', `<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PRÓBA – baner strony głównej | Ile Naprawdę</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="${ORIGIN}/">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<meta name="theme-color" content="#F5F3EE">
+<link rel="stylesheet" href="/proba.css?v=${V('proba.css')}">
+</head>
+<body class="dz-zakupy">
+${baner(true)}
+<main class="col"><section class="card"><h2>Podgląd pełnego baneru</h2><p class="pyt">To jest wersja na stronę główną (na razie tylko próba). Na kalkulatorach jest wąska: sam pasek „ILE NAPRAWDĘ”.</p><a class="cta" href="/proba/pizza/">Zobacz wąską wersję na kalkulatorze →</a></section></main>
 </body>
 </html>
 `);
