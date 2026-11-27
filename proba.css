@@ -367,3 +367,14 @@ details>summary::-webkit-details-marker{display:none}
  .hero .pyt{max-width:680px}
 }
 html{scrollbar-gutter:stable}   /* N166: krótka strona (404) bez paska przewijania nie przesuwa kart */
+/* N168: formularz „Co mam policzyć?” */
+.pomysl textarea{display:block;width:100%;font:inherit;font-size:16px;line-height:1.45;padding:12px 14px;border:1.5px solid var(--linia);border-radius:12px;background:#FBFAF7;color:var(--tekst);resize:vertical;min-height:84px}
+.pomysl textarea:focus{outline:none;border-color:var(--tekst);box-shadow:0 0 0 3px #FFE04A}
+.pomysl .licz{margin:4px 0 12px;text-align:right;font-size:13px;color:var(--mut)}
+.pomysl .cta{width:100%;border:0;cursor:pointer;font-family:inherit}
+.pomysl .cta:disabled{opacity:.6;cursor:wait}
+.pomysl .cf-turnstile{margin:0 0 12px}
+.pmsg{min-height:1.4em;margin:12px 0 0;text-align:center;font-weight:700}
+.pmsg.ok{color:#166534}.pmsg.zle{color:#B91C1C}
+.pinf{margin:8px 0 0;text-align:center;font-size:13px;color:var(--mut)}
+@media(min-width:960px){.pomysl form{max-width:640px;margin:0 auto}}

@@ -1,0 +1,5 @@
+{
+ "_info": "N168: formularz „Co mam policzyć?”. url = punkt Workera bota; turnstile_sitekey = PUBLICZNY klucz witryny Turnstile (sekret tylko w GitHub Secrets TURNSTILE_SECRET). Pusty klucz = formularz bez Turnstile.",
+ "url": "https://ilenaprawde-bot.ilenaprawde.workers.dev/pomysl",
+ "turnstile_sitekey": ""
+}

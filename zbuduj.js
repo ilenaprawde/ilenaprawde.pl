@@ -476,6 +476,21 @@ if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});el
   const stopkaN = `${STOPKA_PROBA}
 <p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. To nie jest porada finansowa.<br>Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="${BAZA}/prywatnosc/">Prywatność</a> · <a href="${BAZA}/regulamin/">Regulamin</a><br>Strona nie używa ciasteczek. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics).</p>`;
   const analityka = NA_ZYWO ? BEACON : '';
+  // N168: „Co mam policzyć?” – pomysł od widza → Worker bota (POST /pomysl) → Telegram. Bez e-maila i danych osobowych; nic nie jest publikowane.
+  const FCFG = (() => { try { return JSON.parse(fs.readFileSync('dane/formularz.json', 'utf8')); } catch (e) { return {}; } })();
+  const FORMULARZ = `<section class="card pomysl" aria-labelledby="hpom"><h2 id="hpom">Co mam policzyć?</h2>
+<form id="fpom" novalidate><label class="sr" for="tpom">Twój pomysł na rachunek</label><textarea id="tpom" name="tekst" maxlength="200" rows="3" placeholder="Np. ile kosztuje pies przez rok?" required></textarea>
+<p class="licz"><span id="lpom">0</span>/200</p><input class="sr" tabindex="-1" autocomplete="off" name="www" id="wpom" aria-hidden="true">
+${FCFG.turnstile_sitekey ? `<div class="cf-turnstile" data-sitekey="${esc(FCFG.turnstile_sitekey)}" data-size="flexible" data-appearance="interaction-only"></div>` : ''}<button class="cta" type="submit" id="bpom">Wyślij pomysł</button>
+<p class="pmsg" id="mpom" role="status" aria-live="polite"></p><p class="pinf">Nie wpisuj danych osobowych. Nic nie publikujemy na stronie. <a href="${BAZA}/prywatnosc/">Prywatność</a></p></form></section>
+${FCFG.turnstile_sitekey ? '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>' : ''}
+<script>(function(){var f=document.getElementById('fpom');if(!f)return;var t=document.getElementById('tpom'),l=document.getElementById('lpom'),m=document.getElementById('mpom'),b=document.getElementById('bpom'),t0=Date.now();
+t.addEventListener('input',function(){l.textContent=t.value.length});
+f.addEventListener('submit',function(e){e.preventDefault();var x=t.value.trim();if(!x){m.textContent='Wpisz, co mam policzyć.';m.className='pmsg zle';t.focus();return}
+b.disabled=true;m.className='pmsg';m.textContent='Wysyłam…';var ts=f.querySelector('[name="cf-turnstile-response"]');
+fetch('${FCFG.url || 'https://ilenaprawde-bot.ilenaprawde.workers.dev/pomysl'}',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({tekst:x,strona:location.origin+location.pathname,www:document.getElementById('wpom').value,ms:Date.now()-t0,ts:ts?ts.value:''})})
+.then(function(r){return r.json().catch(function(){return{ok:false,tekst:'Nie udało się wysłać. Spróbuj jeszcze raz.'}})}).then(function(j){m.textContent=j.tekst||(j.ok?'Dzięki! Najciekawsze tematy liczę w filmach.':'Nie udało się wysłać.');m.className='pmsg '+(j.ok?'ok':'zle');if(j.ok){t.value='';l.textContent='0'}b.disabled=false;if(window.turnstile)try{turnstile.reset()}catch(e){}})
+.catch(function(){m.textContent='Nie udało się wysłać. Sprawdź internet i spróbuj jeszcze raz.';m.className='pmsg zle';b.disabled=false})})})()</script>`;
 
   // ---- A. kalkulatory ----
   KALK.forEach(c => {
@@ -518,6 +533,7 @@ ${seo.faq.length ? `<section class="card faq" aria-labelledby="hf">
 ${seo.faq.map(([q, a]) => ` <details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')}
 </section>` : ''}
 <section class="card powiazane" aria-labelledby="hp"><h2 id="hp">Powiązane</h2><div class="mini" id="mini"></div></section>
+${FORMULARZ}
 ${stopkaN}
 </main>
 <div class="lepki" id="lepki" aria-hidden="true"><b id="lk-k"></b></div>
@@ -551,6 +567,7 @@ ${banerPremium({ baza: BAZA })}
 ${dzialy}
 </div>
 <section class="card"><h2>Skąd liczby</h2><p class="pyt">Liczymy na danych publicznych: przepisy UE, GUS, URE, NBP, Eurostat, etykiety energetyczne. Przy każdym rachunku podajemy wzór i zaznaczamy, które liczby są przykładem.</p></section>
+${FORMULARZ}
 ${stopkaN}
 </main>
 <script src="/dane.js?v=${VER.dane}"></script>

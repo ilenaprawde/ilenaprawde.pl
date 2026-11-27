@@ -22,7 +22,7 @@
 <meta name="twitter:description" content="Ile Naprawdę – kalkulatory codziennych kosztów: prąd, apteka, auto, ogrzewanie. Wzór i źródło przy każdym rachunku.">
 <meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
 <meta name="theme-color" content="#0F1115">
-<link rel="stylesheet" href="/proba.css?v=1862d8ec">
+<link rel="stylesheet" href="/proba.css?v=00873091">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body data-strona="home2" data-baza="">
@@ -71,6 +71,19 @@ if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});el
 <ul><li data-s="Lek: cena za tabletkę Lek: cena za tabletkę i za kurację paracetamol apap efferalgan tabletki musujące lek apteka cena za sztukę kuracja opakowanie ibuprofen ból gorączka Apteka 19 Ten sam lek, 5× drożej: paracetamol"><a href="/kalkulatory/lek-dawka/">Lek: cena za tabletkę</a></li><li data-s="Zamiennik leku Zamiennik leku: ile oszczędzasz lek leki apteka zamiennik generyk ibuprofen paracetamol krople przeziębienie Apteka 3 Ibuprofen: marka czy zamiennik 4 Krople do nosa: marka czy zamiennik"><a href="/kalkulatory/zamiennik/">Zamiennik leku</a></li></ul></section>
 </div>
 <section class="card"><h2>Skąd liczby</h2><p class="pyt">Liczymy na danych publicznych: przepisy UE, GUS, URE, NBP, Eurostat, etykiety energetyczne. Przy każdym rachunku podajemy wzór i zaznaczamy, które liczby są przykładem.</p></section>
+<section class="card pomysl" aria-labelledby="hpom"><h2 id="hpom">Co mam policzyć?</h2>
+<form id="fpom" novalidate><label class="sr" for="tpom">Twój pomysł na rachunek</label><textarea id="tpom" name="tekst" maxlength="200" rows="3" placeholder="Np. ile kosztuje pies przez rok?" required></textarea>
+<p class="licz"><span id="lpom">0</span>/200</p><input class="sr" tabindex="-1" autocomplete="off" name="www" id="wpom" aria-hidden="true">
+<button class="cta" type="submit" id="bpom">Wyślij pomysł</button>
+<p class="pmsg" id="mpom" role="status" aria-live="polite"></p><p class="pinf">Nie wpisuj danych osobowych. Nic nie publikujemy na stronie. <a href="/prywatnosc/">Prywatność</a></p></form></section>
+
+<script>(function(){var f=document.getElementById('fpom');if(!f)return;var t=document.getElementById('tpom'),l=document.getElementById('lpom'),m=document.getElementById('mpom'),b=document.getElementById('bpom'),t0=Date.now();
+t.addEventListener('input',function(){l.textContent=t.value.length});
+f.addEventListener('submit',function(e){e.preventDefault();var x=t.value.trim();if(!x){m.textContent='Wpisz, co mam policzyć.';m.className='pmsg zle';t.focus();return}
+b.disabled=true;m.className='pmsg';m.textContent='Wysyłam…';var ts=f.querySelector('[name="cf-turnstile-response"]');
+fetch('https://ilenaprawde-bot.ilenaprawde.workers.dev/pomysl',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({tekst:x,strona:location.origin+location.pathname,www:document.getElementById('wpom').value,ms:Date.now()-t0,ts:ts?ts.value:''})})
+.then(function(r){return r.json().catch(function(){return{ok:false,tekst:'Nie udało się wysłać. Spróbuj jeszcze raz.'}})}).then(function(j){m.textContent=j.tekst||(j.ok?'Dzięki! Najciekawsze tematy liczę w filmach.':'Nie udało się wysłać.');m.className='pmsg '+(j.ok?'ok':'zle');if(j.ok){t.value='';l.textContent='0'}b.disabled=false;if(window.turnstile)try{turnstile.reset()}catch(e){}})
+.catch(function(){m.textContent='Nie udało się wysłać. Sprawdź internet i spróbuj jeszcze raz.';m.className='pmsg zle';b.disabled=false})})})()</script>
 <footer class="pstop"><picture><source type="image/webp" srcset="/img/awatar/awatar-56.webp 1x, /img/awatar/awatar-112.webp 2x"><img class="awa" src="/img/awatar/awatar-56.png" srcset="/img/awatar/awatar-56.png 1x, /img/awatar/awatar-112.png 2x" width="56" height="56" alt=""></picture><p>Oglądaj na <a href="https://www.youtube.com/@ilenaprawde" rel="noopener">YouTube</a> / <a href="https://www.tiktok.com/@ilenaprawde" rel="noopener">TikToku</a></p></footer>
 <p class="stopka">Treści przygotowujemy z udziałem AI i sprawdzamy obliczenia. To nie jest porada finansowa.<br>Kontakt: <a href="mailto:ilenaprawde@gmail.com">ilenaprawde@gmail.com</a> · <a href="/prywatnosc/">Prywatność</a> · <a href="/regulamin/">Regulamin</a><br>Strona nie używa ciasteczek. Liczymy tylko anonimowe odwiedziny (Cloudflare Web Analytics).</p>
 </main>
