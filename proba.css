@@ -302,3 +302,7 @@ details>summary::-webkit-details-marker{display:none}
 .lkb{display:block;margin:12px auto 0;max-width:440px;padding:10px 8px;border:2px solid var(--ink);background:var(--ink);color:var(--paper,#fff);font-weight:700;font-size:14px;text-align:center;text-decoration:none;letter-spacing:.02em}
 .lkb:hover,.lkb:focus{background:transparent;color:var(--ink)}
 .pzk{margin:10px 0 4px}
+.pzpage .pzc h3{text-transform:none;letter-spacing:0;color:var(--tekst);font-size:16px;margin:0}
+.pzpage .pzc p,.pzpage .pzc div{margin:0}
+.pzpage .pzc{gap:8px}
+.tresc mark{background:#FFE04A;color:var(--tekst);padding:0 4px;border-radius:4px}

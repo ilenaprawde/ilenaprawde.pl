@@ -571,7 +571,7 @@ ${INTRO}
 ${banerPremium({ k: true, stop, baza: BAZA })}
 <main class="col nad">
 <section class="card tresc">
-${doBazy(wnetrze)}
+${doBazy(wnetrze.indexOf('<h1') >= 0 ? wnetrze.slice(wnetrze.indexOf('<h1')) : wnetrze)}
 </section>
 ${stopkaN}
 </main>
@@ -585,7 +585,7 @@ ${analityka}
   {
     const p = fs.readFileSync('promocje-pizza/index.html', 'utf8');
     const skr = (/<\/main>\s*(<script>\(function\(\)\{var t=new Intl[\s\S]*?<\/script>)/.exec(p) || [, ''])[1];
-    owin('promocje-pizza/index.html', czysc(srodek(p, /<main class="wrap">([\s\S]*?)<\/main>/)).replace('href="/kalkulatory/pizza/"', `href="${BAZA}/kalkulatory/pizza/"`) + '\n' + skr, 'pizza?', 'pzpage');
+    owin('promocje-pizza/index.html', czysc(srodek(p, /<main class="wrap">([\s\S]*?)<\/main>/)) + '\n' + skr, 'pizza?', 'pzpage');
   }
   [['prywatnosc/index.html', 'strony_zrodlo/prywatnosc.html'], ['regulamin/index.html', 'strony_zrodlo/regulamin.html']].forEach(([f, zr]) => owin(f, czysc(srodek(fs.readFileSync(zr, 'utf8'), /<main class="paper doc">([\s\S]*?)<\/main>/)), 'codzienne życie?', 'doc', zr));
   owin('404.html', czysc(srodek(fs.readFileSync('404.html', 'utf8'), /<main class="wrap">([\s\S]*?)<\/main>/)).replace(/<mark>|<\/mark>/g, ''), 'codzienne życie?');
