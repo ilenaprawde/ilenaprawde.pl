@@ -23,7 +23,7 @@
 <meta name="twitter:image" content="https://ilenaprawde.pl/og-image.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Ile Naprawdę","item":"https://ilenaprawde.pl/"},{"@type":"ListItem","position":2,"name":"Suszarka do ubrań","item":"https://ilenaprawde.pl/kalkulatory/suszarka/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Czy suszenie na kaloryferze jest za darmo?","acceptedAnswer":{"@type":"Answer","text":"Nie: odparowanie 1 l wody zabiera ok. 0,68 kWh ciepła z domu. Koszt tego ciepła zależy od źródła: gaz ok. 0,33 zł/kWh, pompa ciepła 1,10÷3, grzejnik elektryczny 1,10 zł/kWh."}},{"@type":"Question","name":"Ile wyszło w filmie #20?","acceptedAnswer":{"@type":"Answer","text":"Koszt: 293 zł / rok – prąd suszarki przy 4 praniach w tygodniu. Tyle wychodzi przy przykładowych danych z filmu. Wpisz swoje liczby w kalkulatorze, żeby policzyć własny wynik."}},{"@type":"Question","name":"Jak to policzyć samemu?","acceptedAnswer":{"@type":"Answer","text":"Wzór: kWh × cena prądu × prania × 52 tygodnie; kaloryfer: litry × 0,68 kWh × koszt ciepła."}},{"@type":"Question","name":"Skąd są liczby?","acceptedAnswer":{"@type":"Answer","text":"Odparowanie 1 l wody zabiera ok. 0,68 kWh ciepła. Wilgotność po wirowaniu zależy od obrotów pralki (ok. 45–55%). Suszysz w domu – wietrz. Koszt ciepła: gaz ok. 0,31÷0,95 = 0,33 zł/kWh, pompa ciepła 1,10÷3, grzejnik elektryczny 1,10 zł/kWh."}}]}]}</script>
 <meta name="theme-color" content="#0F1115">
-<link rel="stylesheet" href="/proba.css?v=00873091">
+<link rel="stylesheet" href="/proba.css?v=e1b5e741">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body data-strona="kalk" data-id="suszarka" data-baza="" class="dz-dom">
@@ -63,6 +63,7 @@ if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});el
  <div class="wynik" id="wynik" aria-live="polite"><p class="zd" id="zd"><span id="za"></span> <b class="kw" id="kw">–</b> <span id="zb"></span></p><p class="pod" id="zp" hidden></p>
   <div class="sum sr"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="blad" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
  <div class="wyk" id="wyk" aria-label="Porównanie" hidden></div>
+ <p class="przyk" id="przyk"></p>
 </section>
 <section class="card" aria-labelledby="hz">
  <h2 id="hz">Zmień na swoje liczby</h2>
@@ -108,8 +109,8 @@ fetch('https://ilenaprawde-bot.ilenaprawde.workers.dev/pomysl',{method:'POST',he
 </main>
 <div class="lepki" id="lepki" aria-hidden="true"><b id="lk-k"></b></div>
 <noscript><p class="stopka">Kalkulator wymaga włączonego JavaScriptu (liczy w Twojej przeglądarce).</p></noscript>
-<script src="/dane.js?v=d209349b"></script>
-<script src="/nowy.js?v=13063a94"></script>
+<script src="/dane.js?v=d5127eb4"></script>
+<script src="/nowy.js?v=b72060c0"></script>
 <script src="/app.js?v=46957b15"></script>
 <!-- Cloudflare Web Analytics (bez ciasteczek; pomijany przy testach automatycznych i ?test=1). Znacznik promocji ?z=fb: na czas wysłania odwiedzin ścieżka to /z-fb/..., potem wraca oryginalny adres --><script>(function(){try{if(window.__nb||navigator.webdriver||/[?&]test=1(&|$)/.test(location.search))return}catch(e){}var o=null;try{var m=/[?&]z=([a-z]{2,12})(&|$)/i.exec(location.search);if(m&&history.replaceState){o=location.pathname+location.search+location.hash;window.__p0=o;history.replaceState(null,'','/z-'+m[1].toLowerCase()+location.pathname+location.search)}}catch(e){}function back(){if(o){try{history.replaceState(null,'',o)}catch(e){}o=null}}try{new PerformanceObserver(function(l,ob){l.getEntries().forEach(function(e){if(e.name.indexOf('cdn-cgi/rum')>0){ob.disconnect();setTimeout(back,300)}})}).observe({type:'resource',buffered:true})}catch(e){}setTimeout(back,8000);var s=document.createElement('script');s.type='module';s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon','{"token": "433148455d314f7e988566097f1515ce"}');s.onerror=back;document.head.appendChild(s)})()</script><!-- End Cloudflare Web Analytics -->
 </body>

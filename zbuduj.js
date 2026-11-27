@@ -509,6 +509,7 @@ ${banerPremium({ kalk: c, baza: BAZA })}
  <div class="wynik" id="wynik" aria-live="polite"><p class="zd" id="zd"><span id="za"></span> <b class="kw" id="kw">–</b> <span id="zb"></span></p><p class="pod" id="zp" hidden></p>
   <div class="sum sr"><span class="k" id="sk">SUMA</span><span class="v" id="sv">–</span></div><p class="blad" id="cerr" hidden>Wpisz liczby, np. 0,5 albo 1,10.</p></div>
  <div class="wyk" id="wyk" aria-label="Porównanie" hidden></div>
+ <p class="przyk" id="przyk"></p>
 </section>
 <section class="card" aria-labelledby="hz">
  <h2 id="hz">Zmień na swoje liczby</h2>

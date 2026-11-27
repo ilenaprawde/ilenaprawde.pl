@@ -48,6 +48,8 @@ const ODCINKI=[
 ];
 // ceny opon za sztukę [zimowe, letnie, całoroczne]: mediana oponeo.pl 15.11.2026 (N058b)
 const OPONY_KLASY=[[268,225,252],[358,251,314],[420,338,397]];
+// N171: nazwy opakowań z przykładu (odc. #24, Rossmann.pl) – w etykietach pól i w rachunku
+const OPAK_NAZ=['Finish 39 szt.','Finish 55 szt.','Finish Plus 35 szt.'];
 const KALK=[
 {id:'czuwanie',krot:'Tryb czuwania',st:"Ile prądu zjada tryb czuwania – koszt w zł",faq:[["Jaki jest limit mocy w trybie czuwania?","Unijne przepisy o ekoprojekcie ograniczają tryb czuwania do 0,5 W. Starszy sprzęt może pobierać więcej, a roczny koszt liczymy wzorem: moc [W] × 8 760 h ÷ 1000 × cena kWh."]],cat:0,t:'Tryb czuwania: ile kosztuje „czerwona dioda”',k:'czuwanie standby telewizor tv dekoder konsola dioda',
  i:'Ile rocznie kosztuje urządzenie, które tylko czuwa? Zwykłe czuwanie nowego sprzętu to najwyżej 0,5 W (limit UE).',
@@ -289,27 +291,27 @@ const KALK=[
  w:'Pyszne.pl / Glovo = pizze + opłata za usługę (kwota z podsumowania koszyka) + dostawa; aplikacja sieci = pizze + opakowanie + dostawa; w domu = składniki + prąd; rocznie = jedno zamówienie × zamówienia w miesiącu × 12; różnica = koszt rocznie opcji − koszt rocznie Pyszne.pl (minus = taniej)',s:'Ceny pizz: 2 duże margherity z przykładowego lokalu sieci, zrzuty koszyka z 26.11.2026 – Pyszne.pl 93,94 zł + opłata za usługę 2,99 zł (w Pyszne.pl to 4,5% zamówienia, najwyżej 2,99 zł; kwotę przepisz z koszyka), dostawa 0 zł; aplikacja sieci 89,96 zł + opakowanie 3,98 zł, dostawa 0 zł; ceny regularne, bez promocji. W domu: składniki na 2 pizze wg przepisu imagazine.pl („Najlepsza pizza na świecie”) – mąka SARITA wrocławska typ 500 1 kg (500 g), drożdże LALLEMAND świeże 100 g (30 g), passata DAWTONA klasyczna 690 g (ok. 190 g), 2 × mozzarella BUONA 125 g, oliwa MAKŁOWICZ I SYNOWIE extra vergine 0,5 l (ok. 35 ml); ceny regularne Frisco.pl; koszt = użyta część opakowania × cena, każda pozycja zaokrąglona do grosza; bez soli, cukru i oregano. Prąd: 1,0 kWh na wypiek (założenie jak w kalkulatorze „Airfryer czy piekarnik”, nie pomiar) × 1,10 zł/kWh. To nie jest porada.'},
 {id:'opakowanie',krot:'Opakowanie: małe czy duże',tk:'Tabletki do zmywarki: małe czy duże?',st:"Małe czy duże opakowanie – cena za sztukę",faq:[["Dlaczego porównywać cenę za sztukę, a nie za opakowanie?","Opakowania mają różną ilość, więc cena za jednostkę = cena ÷ ilość. Dopłata za dodatkowe sztuki = (cena 2 − cena 1) ÷ (ilość 2 − ilość 1)."]],cat:3,sl:"koszt rocznie$",nr:24,t:'Opakowanie małe czy duże: cena za sztukę',k:'opakowanie małe duże rodzinne cena za sztukę kg litr tabletki kapsułki do zmywarki finish rossmann jednostka porównanie',
  i:'Które opakowanie jest tańsze? Wpisz cenę i ilość (sztuk, kg lub litrów) dwóch albo trzech opakowań tego samego produktu i roczne zużycie. Puste opakowanie jest pomijane. Na etykiecie w sklepie jest cena za sztukę, kg lub litr – porównuj ją, nie cenę opakowania.',
- in:[{id:'c1',l:'Opakowanie 1: cena',v:'74,99',u:'zł',opc:true},{id:'q1',l:'Opakowanie 1: ilość',v:'39',u:'szt./kg/l',opc:true},{id:'c2',l:'Opakowanie 2: cena',v:'79,99',u:'zł',opc:true},{id:'q2',l:'Opakowanie 2: ilość',v:'55',u:'szt./kg/l',opc:true},{id:'c3',l:'Opakowanie 3: cena',v:'74,99',u:'zł',opc:true},{id:'q3',l:'Opakowanie 3: ilość',v:'35',u:'szt./kg/l',opc:true},{id:'z',l:'Zużycie w roku',v:'365',u:'szt./kg/l'}],
+ in:[{id:'c1',l:'Finish 39 szt.: cena',v:'74,99',u:'zł',opc:true},{id:'q1',l:'Finish 39 szt.: ilość',v:'39',u:'szt./kg/l',opc:true},{id:'c2',l:'Finish 55 szt.: cena',v:'79,99',u:'zł',opc:true},{id:'q2',l:'Finish 55 szt.: ilość',v:'55',u:'szt./kg/l',opc:true},{id:'c3',l:'Finish Plus 35 szt.: cena',v:'74,99',u:'zł',opc:true},{id:'q3',l:'Finish Plus 35 szt.: ilość',v:'35',u:'szt./kg/l',opc:true},{id:'z',l:'Zużycie w roku',v:'365',u:'szt./kg/l'}],
  f:v=>{const r2=x=>Math.round(x*100)/100,zn=x=>(x<0?'−':'')+zl(Math.abs(x)),it=[[v.c1,v.q1],[v.c2,v.q2],[v.c3,v.q3]].map((x,i)=>({n:i+1,c:x[0],q:x[1]})).filter(x=>x.c>0&&x.q>0).map(x=>({...x,u:x.c/x.q,r:x.c/x.q*v.z}));
   if(it.length<2||!(v.z>0))return{l:[],sk:'SPRAWDŹ DANE',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Wpisz cenę i ilość przynajmniej dwóch opakowań oraz zużycie w roku.'};
   const best=it.reduce((a,b)=>b.u<a.u?b:a),l=[];
-  it.forEach(x=>{l.push(['Opakowanie '+x.n+': cena za sztukę',zl(x.u),x===best?'najtaniej':undefined]);l.push(['Opakowanie '+x.n+': koszt rocznie',zl(r2(x.r))])});
-  it.filter(x=>x!==best).forEach(x=>l.push(['Różnica: opakowanie '+best.n+' zamiast '+x.n+', rocznie',zn(r2(best.r-x.r))]));
+  it.forEach(x=>{l.push([OPAK_NAZ[x.n-1]+': cena za sztukę',zl(x.u),x===best?'najtaniej':undefined]);l.push([OPAK_NAZ[x.n-1]+': koszt rocznie',zl(r2(x.r))])});
+  it.filter(x=>x!==best).forEach(x=>l.push(['Różnica: '+OPAK_NAZ[best.n-1]+' zamiast '+OPAK_NAZ[x.n-1]+', rocznie',zn(r2(best.r-x.r))]));
   const p=it.find(x=>x.n===1),s=it.find(x=>x.n===2);
-  if(p&&s&&s.q>p.q)l.push(['Dopłata za każdą dodatkową sztukę (opak. 2 zamiast 1)',zl((s.c-p.c)/(s.q-p.q))]);
+  if(p&&s&&s.q>p.q)l.push(['Dopłata za każdą dodatkową sztukę ('+OPAK_NAZ[1]+' zamiast '+OPAK_NAZ[0]+')',zl((s.c-p.c)/(s.q-p.q))]);
   const d=p?r2(best.r-p.r):0;
-  return{l,sk:best.n===1||!p?'NAJTAŃSZE: OPAKOWANIE '+best.n:'RÓŻNICA ROCZNIE: OPAKOWANIE '+best.n+' ZAMIAST 1',sv:d,svt:best.n===1||!p?zl(best.u)+' za sztukę':zn(d),kol:'green',pod:'Najtańsze za sztukę jest opakowanie '+best.n+' ('+zl(best.u)+'). Porównuj cenę za sztukę, kg lub litr, nie cenę opakowania.'}},
+  return{l,sk:best.n===1||!p?'NAJTAŃSZE: OPAKOWANIE '+best.n:'RÓŻNICA ROCZNIE: OPAKOWANIE '+best.n+' ZAMIAST 1',sv:d,svt:best.n===1||!p?zl(best.u)+' za sztukę':zn(d),kol:'green',pod:'Najtaniej za sztukę: '+OPAK_NAZ[best.n-1]+' ('+zl(best.u)+'). Porównuj cenę za sztukę, kg lub litr, nie cenę opakowania.'}},
  w:'cena za jednostkę = cena ÷ ilość; koszt rocznie = cena za jednostkę × zużycie; różnica = koszt najtańszego − koszt opakowania; dopłata = (cena 2 − cena 1) ÷ (ilość 2 − ilość 1)',s:'Ceny domyślne z 26.11.2026 (Rossmann.pl, Finish Ultimate Lemon 39 szt. 74,99 zł i 55 szt. 79,99 zł, Finish Ultimate Plus Lemon 35 szt. 74,99 zł; ceny regularne, nie promocyjne). Zużycie 365 szt. = 1 kapsułka dziennie. To nie jest porada.'},
 {id:'lek-dawka',krot:'Lek: cena za tabletkę',tk:'Paracetamol zwykły czy musujący',st:"Cena za tabletkę – leki, apteka, kuracja",faq:[["Dlaczego musujący paracetamol wychodzi drożej?","Przykład z 24.11.2026: na sztukę 0,15 / 0,46 / 0,76 zł, za 12 szt. 1,79 / 5,50 / 9,15 zł (apteki internetowe; w stacjonarnych drożej)."]],cat:5,sl:": kuracja",nr:19,t:'Lek: cena za tabletkę i za kurację',k:'paracetamol apap efferalgan tabletki musujące lek apteka cena za sztukę kuracja opakowanie ibuprofen ból gorączka',
  i:'Porównaj opakowania leku z tą samą substancją: ile kosztuje jedna tabletka i cała kuracja. Wpisz cenę i liczbę sztuk w opakowaniu (cena 0 = pomijamy).',
- in:[{id:'ac',l:'Zwykła: cena opakowania',v:'2,99',u:'zł',opc:true},{id:'as',l:'Zwykła: liczba sztuk',v:'20',u:'szt.',opc:true},{id:'bc',l:'Markowa: cena opakowania',v:'10,99',u:'zł',opc:true},{id:'bs',l:'Markowa: liczba sztuk',v:'24',u:'szt.',opc:true},{id:'cc',l:'Musująca: cena opakowania',v:'12,20',u:'zł',opc:true},{id:'cs',l:'Musująca: liczba sztuk',v:'16',u:'szt.',opc:true},{id:'k',l:'Ile tabletek na kurację',v:'12',u:'szt.'}],
- f:v=>{const N=['Zwykła','Markowa','Musująca'],it=[[v.ac,v.as],[v.bc,v.bs],[v.cc,v.cs]].map((x,i)=>({n:N[i],c:x[0],s:x[1]})).filter(x=>x.c>0&&x.s>0);
+ in:[{id:'ac',l:'Paracetamol Zentiva (20 szt.): cena opakowania',v:'2,99',u:'zł',opc:true},{id:'as',l:'Paracetamol Zentiva (20 szt.): liczba sztuk',v:'20',u:'szt.',opc:true},{id:'bc',l:'Apap (24 szt.): cena opakowania',v:'10,99',u:'zł',opc:true},{id:'bs',l:'Apap (24 szt.): liczba sztuk',v:'24',u:'szt.',opc:true},{id:'cc',l:'Efferalgan musujący (16 szt.): cena opakowania',v:'12,20',u:'zł',opc:true},{id:'cs',l:'Efferalgan musujący (16 szt.): liczba sztuk',v:'16',u:'szt.',opc:true},{id:'k',l:'Ile tabletek na kurację',v:'12',u:'szt.'}],
+ f:v=>{const N=['Paracetamol Zentiva','Apap','Efferalgan musujący'],it=[[v.ac,v.as],[v.bc,v.bs],[v.cc,v.cs]].map((x,i)=>({n:N[i],c:x[0],s:x[1]})).filter(x=>x.c>0&&x.s>0);
   if(!it.length||!(v.k>0))return{l:[],sk:'SPRAWDŹ DANE',sv:0,svt:'–',kol:'red',podKol:'red',pod:'Wpisz cenę i liczbę sztuk przynajmniej jednego opakowania oraz liczbę tabletek na kurację.'};
   it.forEach(x=>{x.p=x.c/x.s;x.u=Math.round(x.c*v.k/x.s*100+1e-9)/100});
   const l=[];it.forEach(x=>{l.push([x.n+': za 1 szt.',zl(x.p)]);l.push([x.n+': kuracja '+f1(v.k)+' szt.',zl(x.u)])});
   if(it.length<2)return{l,sk:'KURACJA',sv:it[0].u,svt:zl(it[0].u),pod:'Dodaj drugie opakowanie, żeby porównać.'};
   const mn=it.reduce((a,b)=>b.u<a.u?b:a),mx=it.reduce((a,b)=>b.u>a.u?b:a),d=Math.round((mx.u-mn.u)*100)/100;
-  return{l,sk:'RÓŻNICA ZA KURACJĘ',sv:d,svt:(d>0?'+':'')+zl(d),kol:d>0?'red':'green',pod:d>0&&mn.u>0?mx.n+' jest '+f2(mx.u/mn.u)+' razy droższa niż '+mn.n+' (najtańsza). Porównuj tylko leki z tą samą substancją i dawką.':'Ceny kuracji są takie same.'}},
+  return{l,sk:'RÓŻNICA ZA KURACJĘ',sv:d,svt:(d>0?'+':'')+zl(d),kol:d>0?'red':'green',pod:d>0&&mn.u>0?'Kuracja: '+mx.n+' kosztuje '+f2(mx.u/mn.u)+' razy więcej niż '+mn.n+' (najtaniej). Porównuj tylko leki z tą samą substancją i dawką.':'Ceny kuracji są takie same.'}},
  w:'cena za 1 szt. = cena opakowania ÷ liczba sztuk; kuracja = cena za 1 szt. × liczba tabletek (zaokrąglona do grosza); różnica = najdroższa kuracja − najtańsza; „razy” = najdroższa ÷ najtańsza',
  s:'Najniższe ceny z aptek internetowych, sprawdzone 24.11.2026: Paracetamol Zentiva 500 mg 20 szt. 2,99 zł (doz.pl), Apap 500 mg 24 tabl. powl. od 10,99 zł i Efferalgan 500 mg 16 tabl. musujących od 12,20 zł (gdziepolek.pl; w aptekach stacjonarnych drożej). Na sztukę: 0,15 / 0,46 / 0,76 zł; 12 szt.: 1,79 / 5,50 / 9,15 zł; 9,15 ÷ 1,79 = 5,11. Dawkowanie dla dorosłych: 500–1000 mg co 4–6 h, maks. 3 g na dobę (ChPL), zgodnie z ulotką. Ceny się zmieniają. Ceny w polach domyślnych (stan na 24.11.2026): Paracetamol Zentiva 500 mg 20 szt. 2,99 zł (DOZ.pl), Apap 500 mg 24 szt. od 10,99 zł i Efferalgan 500 mg 16 szt. od 12,20 zł (gdziepolek.pl). To nie jest porada medyczna.'},
 {id:'zamiennik',krot:'Zamiennik leku',st:"Zamiennik leku – ile oszczędzasz w zł",faq:[["Czym jest zamiennik leku?","To lek z tą samą substancją czynną; w aptece poproś o zamiennik. Procent taniej = (marka − zamiennik) ÷ marka × 100. Ceny przykładowe z lekinfo24.pl i gdziepolek.pl, listopad 2026."]],cat:5,nr:3,t:'Zamiennik leku: ile oszczędzasz',k:'lek leki apteka zamiennik generyk ibuprofen paracetamol krople przeziębienie',
@@ -319,10 +321,10 @@ const KALK=[
  f:v=>{const d=v.m-v.z;return{l:[['Taniej za opakowanie',zl(d)],['Taniej o',v.m>0?f1(d/v.m*100)+'%':'–']],sk:'OSZCZĘDNOŚĆ/ROK',sv:d*v.n}},
  w:'(marka − zamiennik) ÷ marka × 100 = ile procent taniej',s:'Źródła cen: lekinfo24.pl i gdziepolek.pl, listopad 2026 (ceny przykładowe, w Twojej aptece mogą być inne). W aptece poproś o zamiennik. To nie jest porada medyczna.'},
 {id:'abonament',krot:'Abonament komórkowy',st:"Abonament komórkowy – ile przepłacasz",faq:[["Dlaczego ceny abonamentu po okresie umowy mogą wzrosnąć?","Ceny w przykładzie są po rabatach za e-fakturę i zgody; po okresie umowy mogą wzrosnąć. Koszt = abonament × miesiące + aktywacja."]],cat:4,sl:"^Koszt oferty",t:'Abonament telefonu: ile płacisz za markę',k:'abonament telefon komórkowy internet gb operator play virgin mobile umowa aktywacja sieć',
- i:'Porównaj dwie oferty abonamentu: koszt przez cały okres to abonament razy miesiące plus opłata aktywacyjna. Domyślnie: Play Oferta S (A) i Virgin Mobile S (B), ceny z listopada 2026, przykładowe.',
- in:[{id:'aa',l:'Oferta A: abonament',v:'45',u:'zł/mies.'},{id:'ak',l:'Oferta A: aktywacja',v:'50',u:'zł'},{id:'am',l:'Oferta A: liczba miesięcy',v:'24',u:''},{id:'ba',l:'Oferta B: abonament',v:'20',u:'zł/mies.'},{id:'bk',l:'Oferta B: aktywacja',v:'30',u:'zł'},{id:'bm',l:'Oferta B: liczba miesięcy',v:'24',u:''}],
- pre:[['Play S (A) vs Virgin Mobile S (B)',{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}]],
- f:v=>{const A=v.aa*v.am+v.ak,B=v.ba*v.bm+v.bk,d=A-B,tan=d>=0?'B':'A',pr=(d>=0?A:B)>0?f1(Math.abs(d)/(d>=0?A:B)*100)+'%':'–';return{l:[['Koszt oferty A ('+f1(v.am)+' mies.)',zl(A)],['Koszt oferty B ('+f1(v.bm)+' mies.)',zl(B)],['Taniej oferta '+tan+' o',pr]],sk:v.am===v.bm?'RÓŻNICA ZA '+f1(v.am)+' MIES.':'RÓŻNICA ZA OKRES UMOWY',sv:Math.abs(d)}},
+ i:'Porównaj dwie oferty abonamentu: koszt przez cały okres to abonament razy miesiące plus opłata aktywacyjna. Domyślnie: Play Oferta S i Virgin Mobile S, ceny z listopada 2026.',
+ in:[{id:'aa',l:'Play Oferta S: abonament',v:'45',u:'zł/mies.'},{id:'ak',l:'Play Oferta S: aktywacja',v:'50',u:'zł'},{id:'am',l:'Play Oferta S: liczba miesięcy',v:'24',u:''},{id:'ba',l:'Virgin Mobile S: abonament',v:'20',u:'zł/mies.'},{id:'bk',l:'Virgin Mobile S: aktywacja',v:'30',u:'zł'},{id:'bm',l:'Virgin Mobile S: liczba miesięcy',v:'24',u:''}],
+ pre:[['Play S vs Virgin Mobile S',{aa:'45',ak:'50',am:'24',ba:'20',bk:'30',bm:'24'}]],
+ f:v=>{const A=v.aa*v.am+v.ak,B=v.ba*v.bm+v.bk,d=A-B,tan=d>=0?'Virgin Mobile S':'Play Oferta S',pr=(d>=0?A:B)>0?f1(Math.abs(d)/(d>=0?A:B)*100)+'%':'–';return{l:[['Koszt oferty Play S ('+f1(v.am)+' mies.)',zl(A)],['Koszt oferty Virgin Mobile S ('+f1(v.bm)+' mies.)',zl(B)],['Taniej: '+tan+' o',pr]],sk:v.am===v.bm?'RÓŻNICA ZA '+f1(v.am)+' MIES.':'RÓŻNICA ZA OKRES UMOWY',sv:Math.abs(d)}},
  w:'abonament × miesiące + aktywacja; różnica = koszt A − koszt B; procent = różnica ÷ droższa oferta × 100',s:'Ceny z listopada 2026, przykładowe: Play Oferta S (umowa 24 mies.) i Virgin Mobile S (bez umowy terminowej), ceny po rabatach za e-fakturę i zgody, bez telefonu. Virgin Mobile to marka Play (ta sama sieć). Po okresie umowy ceny mogą wzrosnąć. Ceny w polach domyślnych (stan na 24.11.2026): Play Oferta S 45 zł/mies. (aktywacja 50 zł), Virgin Mobile S 20 zł/mies. (aktywacja 30 zł). To nie jest porada.'}
 ];
 // N161: słowo do baneru „Ile naprawdę kosztuje …?” (pole bw kalkulatora; max 16 znaków z „?”, liczba pojedyncza). Osobna mapa, żeby nie ruszać wierszy KALK (lastmod w sitemap).
@@ -361,11 +363,47 @@ const ZDANIA={
  podroz:r=>{const m=/^NAJTAŃSZE: ([^,]+)/.exec(r.sk||'');if(!m)return null;const n=m[1].toLowerCase();return ZD(n.charAt(0).toUpperCase()+n.slice(1)+' wyjdzie najtaniej:',r.sv,'tam i z powrotem','green')},
  'allegro-smart':r=>!/RÓŻNICA/.test(r.sk)?null:ujemne(r)?ZD('Ze Smart! rocznym zaoszczędzisz',Math.abs(r.sv),'rocznie','green','w porównaniu z płaceniem za dostawy'):ZD('Smart! roczny kosztuje',Math.abs(r.sv),'więcej niż dostawy','red'),
  pizza:r=>ujemne(r)?ZD('W domu wydasz',Math.abs(r.sv),'mniej rocznie','green','niż zamawiając przez Pyszne.pl / Glovo'):ZD('W domu wydasz',Math.abs(r.sv),'więcej rocznie','red','niż zamawiając przez Pyszne.pl / Glovo'),
- opakowanie:(r,v)=>{const m=/OPAKOWANIE (\d) ZAMIAST (\d)/.exec(r.sk||'');if(m){const qa=v['q'+m[1]],qb=v['q'+m[2]],kto=qa>qb?'Większe':qa<qb?'Mniejsze':'Opakowanie '+m[1];return ZD(kto+(kto.length>9?'':' opakowanie')+' oszczędzi',Math.abs(r.sv),'rocznie','green','opakowanie '+m[1]+' zamiast '+m[2])}const n=/NAJTAŃSZE: OPAKOWANIE (\d)/.exec(r.sk||'');return n?ZD('Najtańsze jest opakowanie '+n[1]+':',r.svt,'','green'):null},
+ opakowanie:(r,v)=>{const m=/OPAKOWANIE (\d) ZAMIAST (\d)/.exec(r.sk||'');if(m){const qa=v['q'+m[1]],qb=v['q'+m[2]],kto=qa>qb?'Większe':qa<qb?'Mniejsze':'Opakowanie '+m[1];return ZD(kto+(kto.length>9?'':' opakowanie')+' oszczędzi',Math.abs(r.sv),'rocznie','green',OPAK_NAZ[m[1]-1]+' zamiast '+OPAK_NAZ[m[2]-1])}const n=/NAJTAŃSZE: OPAKOWANIE (\d)/.exec(r.sk||'');return n?ZD('Najtańsze jest opakowanie '+n[1]+':',r.svt,'','green'):null},
  'lek-dawka':r=>/RÓŻNICA/.test(r.sk)?ZD('Najtańsza wersja oszczędzi',r.sv,'na kuracji','green'):/^KURACJA/.test(r.sk)?ZD('Kuracja kosztuje',r.sv,''):null,
  zamiennik:r=>ZD('Zamiennikiem zaoszczędzisz',r.sv,'rocznie','green'),
  abonament:(r,v)=>{const n=v.am===v.bm?v.am:null,lata=n&&n%12===0?n/12:null,okr=!n?'za okres umowy':lata===1?'przez rok':lata?'przez '+lata+(lata>=2&&lata<=4?' lata':' lat'):'przez '+String(n).replace('.',',')+' mies.';return ZD('Tańsza oferta oszczędzi',r.sv,okr,'green')}
 };
 KALK.forEach(c=>{if(ZDANIA[c.id])c.zd=ZDANIA[c.id]});
-window.ILE={ZDANIA,KALK,ODCINKI,CATS,STRONY,num,f2,f1,zl,kwh,yrs};
+// N171: linijka „Przykład” pod wynikiem (prawdziwy przykład: nazwa, źródło, data). {data} = data z „Ceny w polach domyślnych (stan na …)” w źródłach
+// (aktualizuje ją cotygodniowy automat cen), a gdy jej nie ma – d. Kalkulatory bez nazwanego źródła mają „Liczby przykładowe … – bez nazwanego źródła”.
+const PRZYKLADY={
+ 'czuwanie':{t:'Przykład z odc. #1: telewizor w czuwaniu 0,5 W (limit UE, ekoprojekt), prąd 1,10 zł/kWh (przykład).',d:''},
+ 'czajnik':{t:'Przykład z odc. #2: 1 l wody z kranu (15°C), sprawność czajnika 90% i prąd 1,10 zł/kWh – przykładowe.',d:''},
+ 'urzadzenie':{t:'Liczby przykładowe (czajnik 2000 W przez kwadrans dziennie) – bez nazwanego źródła.',d:''},
+ 'pralka':{t:'Liczby przykładowe (0,7 kWh i 50 l na pranie, woda 15 zł/m³) – bez nazwanego źródła.',d:''},
+ 'suszarka':{t:'Przykład z odc. #20: suszarka 8 kg z pompą ciepła ok. 2000 zł, 1,28 kWh na cykl (Electrolux 600 GentleCare, 2026).',d:''},
+ 'g12':{t:'Przykład z odc. #21: Tauron G11 i G12 z dystrybucją (selectra.pl, {data}), 2000 kWh rocznie, 40% w tańszych godzinach.',d:'25.11.2026'},
+ 'led':{t:'Liczby przykładowe (żarówka 60 W, LED 8 W za 15 zł) – bez nazwanego źródła.',d:''},
+ 'lodowka':{t:'Liczby przykładowe (stara 400 kWh/rok, nowa 150 kWh/rok za 2000 zł) – bez nazwanego źródła.',d:''},
+ 'telefon':{t:'Przykład z odc. #5: typowa bateria 5000 mAh, 3,85 V; straty ładowania 20% (przykład).',d:''},
+ 'ogrzewanie':{t:'Przykład z odc. #7: dom 15 000 kWh ciepła rocznie, ceny paliw z listopada 2026 (kb.pl, taryfa ORLEN + PSG).',d:''},
+ 'lampki':{t:'Przykład z odc. #10: lampki 27,7 W (100 LED 6 W + kurtyna 500 LED 21,7 W; MediaMarkt, Murator Dom), 24 h przez 37 dni.',d:''},
+ 'airfryer':{t:'Przykład z odc. #12: kurczak – piekarnik 1,0 kWh, airfryer 0,3 kWh (test Stiftung Warentest), 4 razy w tygodniu.',d:''},
+ 'choinka':{t:'Przykład z odc. #11: jodła kaukaska ok. 130 zł (Castorama, Radio Kielce), sztuczna 180 cm ok. 260 zł – ceny z grudnia 2025.',d:''},
+ 'obnizka':{t:'Przykład z odc. #13: obudowa komputera z Black Friday 2025 – 369 → 189 zł, najniższa cena z 30 dni 199 zł.',d:''},
+ 'stopien':{t:'Przykład z odc. #15: dom na gaz, 15 000 kWh ciepła (jak w #7) – 4895 zł rocznie; 1°C ≈ 6% (KAPE, Viessmann).',d:''},
+ 'gwarancja':{t:'Przykład z odc. #16: sprzęt za 2000 zł, ochrona do 5 lat za 20% ceny (RTV Euro AGD, Media Expert), naprawa ok. 400 zł (cenauslug.pl, 2026).',d:''},
+ 'dostawa':{t:'Przykład z odc. #17: Media Markt – darmowa dostawa od 99 zł, kurier 14,99 zł (mediamarkt.pl, {data}); koszyk 60 zł.',d:'24.11.2026'},
+ 'streaming':{t:'Przykład z odc. #18: Netflix Podstawowy, HBO Max Podstawowy, Disney+ Standard, Amazon Prime – ceny ze stron serwisów, {data}.',d:'24.11.2026'},
+ 'bnpl':{t:'Przykład z odc. #14: 1000 zł spłacone 14 dni po terminie, odsetki maks. 18,5% rocznie (listopad 2026); raty – przykład Allegro Pay (14.07.2026).',d:''},
+ 'dojazd':{t:'Cena paliwa: średnia krajowa Pb95 (autocentrum.pl, sprawdzana co tydzień); trasa i spalanie przykładowe – bez nazwanego źródła.',d:''},
+ 'sto-km':{t:'Cena paliwa: średnia krajowa Pb95 (autocentrum.pl, sprawdzana co tydzień); spalanie 7 l i 15 000 km przykładowe – bez nazwanego źródła.',d:''},
+ 'opony':{t:'Przykład z odc. #9: opony 205/55 R16 klasy średniej – mediana z oponeo.pl (15.11.2026), wymiana 160 zł (kb.pl).',d:''},
+ 'lpg':{t:'Przykład z odc. #6: benzyna 6,20 zł/l i LPG 3,10 zł/l (listopad 2026), 15 000 km rocznie, instalacja 3500 zł.',d:''},
+ 'auto-czy-bilet':{t:'Cena paliwa: średnia krajowa Pb95 (autocentrum.pl, sprawdzana co tydzień); km, parkowanie i bilet przykładowe – bez nazwanego źródła.',d:''},
+ 'podroz':{t:'Przykład z odc. #22: Warszawa–Kraków na święta, 2 dorosłych + 2 dzieci – PKP Intercity i FlixBus, ceny z 25.11.2026.',d:''},
+ 'allegro-smart':{t:'Przykład z odc. #23: Smart! 59,90 zł/rok i 14,99 zł/mies., Paczkomat bez Smart 10,95 zł (Allegro Pomoc, {data}); 12 paczek w roku.',d:'25.11.2026'},
+ 'pizza':{t:'Przykład: 2 duże margherity – koszyk Pyszne.pl i aplikacja sieci (26.11.2026), składniki z Frisco.pl ({data}).',d:'26.11.2026'},
+ 'opakowanie':{t:'Przykład z odc. #24: kapsułki Finish Ultimate Lemon 39 i 55 szt., Finish Ultimate Plus 35 szt. (Rossmann.pl, ceny regularne, {data}); 1 kapsułka dziennie.',d:'26.11.2026'},
+ 'lek-dawka':{t:'Przykład z odc. #19: paracetamol 500 mg – Paracetamol Zentiva, Apap, Efferalgan musujący (apteki internetowe, {data}); kuracja 12 tabletek.',d:'24.11.2026'},
+ 'zamiennik':{t:'Przykład z odc. #3: ibuprofen 200 mg, 50 tabl. – lek znanej marki 49,50 zł, zamiennik 11,30 zł (lekinfo24.pl, gdziepolek.pl, listopad 2026).',d:''},
+ 'abonament':{t:'Przykład z odc. #8: Play Oferta S i Virgin Mobile S – ceny po rabatach za e-fakturę i zgody ({data}).',d:'24.11.2026'}
+};
+KALK.forEach(c=>{if(PRZYKLADY[c.id])c.prz=PRZYKLADY[c.id]});
+window.ILE={PRZYKLADY,ZDANIA,KALK,ODCINKI,CATS,STRONY,num,f2,f1,zl,kwh,yrs};
 })();

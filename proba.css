@@ -378,3 +378,7 @@ html{scrollbar-gutter:stable}   /* N166: krótka strona (404) bez paska przewija
 .pmsg.ok{color:#166534}.pmsg.zle{color:#B91C1C}
 .pinf{margin:8px 0 0;text-align:center;font-size:13px;color:var(--mut)}
 @media(min-width:960px){.pomysl form{max-width:640px;margin:0 auto}}
+/* N171: linijka „Przykład …” pod wynikiem */
+.przyk{margin:14px auto 0;max-width:720px;text-align:center;font-size:13.5px;line-height:1.45;color:var(--mut)}
+.przyk.twoje{font-weight:700;color:var(--tekst)}
+.przyk:empty{display:none}

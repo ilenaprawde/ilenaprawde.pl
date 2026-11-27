@@ -23,7 +23,8 @@
  };
  // ---- dopisek pod zdaniem (r.pod): zostaje tylko, gdy dodaje coś nowego; null = usuń, funkcja = przytnij ----
  const POD = {
-  dostawa: () => null,                                                        // „Przepłacasz 24,01 zł.” = zdanie
+  dostawa: () => null,
+  pizza: () => null,                                                          // N171: „Ceny z przykładowego lokalu… Wpisz swoje.” = linijka „Przykład”                                                        // „Przepłacasz 24,01 zł.” = zdanie
   'allegro-smart': () => null,                                                // „Roczny Smart zwraca się przy 6. paczce” = wykres progu
   g12: t => t.replace(/\s*Próg opłacalności:[^.]*\.\s*$/, ''),              // próg jest na wykresie; „bo …” zostaje
   podroz: t => t.replace(/^Dla .*?najtaniej wychodzi:[^.]*\.\s*/, '')      // kto najtańszy = zdanie; zostają zastrzeżenia
@@ -102,6 +103,14 @@
   const sp = $('spod');
   if (sp && POD[c.id] && z && z.a) { const t = POD[c.id](r.pod || ''); if (!t) sp.hidden = true; else { sp.hidden = false; sp.textContent = t; } }
   const opb = $('op'); if (opb && BEZ_OP[c.id] && W.querySelector('.prog')) opb.hidden = true;
+  // N171: linijka „Przykład: … (źródło, data). Wpisz swoje.” – po zmianie pól przez użytkownika „Twoje liczby.”
+  const pz = $('przyk');
+  if (pz && c.prz) {
+   const zm = c.in.some(x => { const e = $('f_' + x.id); if (!e) return false; return x.chk ? (e.checked ? '1' : '0') !== x.v : x.opt ? e.value !== String(x.v) : !(num(e.value) === num(x.v)); });
+   const dc = (/Ceny w polach domyślnych \(stan na (\d{2}\.\d{2}\.\d{4})\)/.exec(c.s || '') || [])[1] || c.prz.d;
+   pz.textContent = zm ? 'Twoje liczby.' : c.prz.t.replace('{data}', dc) + ' Wpisz swoje.';
+   pz.classList.toggle('twoje', zm);
+  }
   // suma paragonu
   const ps = $('psuma'); if (ps) { ps.innerHTML = ''; ps.appendChild(el('span', 'l', r.sk || '')); ps.appendChild(el('span', 'fill')); ps.appendChild(el('span', 'r', r.svt || (r.sv != null ? I.zl(r.sv) : ''))); }
  }
