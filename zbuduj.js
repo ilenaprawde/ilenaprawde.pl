@@ -400,8 +400,43 @@ ${BEACON}
 `);
 }
 
-// ---------- N160: baner (HTML/CSS) – wąski na kalkulatorach, pełny na stronę główną (podgląd /proba/glowna-baner/) ----------
-const baner = pelny => `<a class="baner ${pelny ? 'baner-p' : 'baner-w'}" href="/" aria-label="Ile Naprawdę – strona główna"><span class="bin"><span class="bl" aria-hidden="true"></span><span class="bt"><mark>ILE NAPRAWDĘ</mark></span>${pelny ? `<span class="bh">Codziennie liczę, ile coś naprawdę kosztuje.<br>Bez straszenia, ze wzorem i źródłem.</span><span class="pie" aria-hidden="true">KALKULATORY</span>` : ''}<span class="bl" aria-hidden="true"></span></span></a>`;
+// ---------- N161: baner premium (wzór baner_premium_v6) + intro raz dziennie – tylko strony /proba/ ----------
+// Słowa: dane/baner_slowa.json (automat fabryki co rano: ruch 7 dni + YouTube 7 dni + słowo sezonowe); brak pliku = lista z wzoru v6.
+const BW_DOMYSLNE = ['codzienne życie?', 'prąd?', 'pizza?', 'dojazd do pracy?', 'Netflix?', 'ogrzewanie?', 'kawa na mieście?', 'tankowanie?', 'Allegro Smart?', 'Wigilia?'];
+const bwLista = () => { try { const j = JSON.parse(fs.readFileSync('dane/baner_slowa.json', 'utf8')); if (Array.isArray(j.slowa) && j.slowa.length >= 2) return j.slowa; } catch (e) {} return BW_DOMYSLNE; };
+const JSHEAD = `<script>document.documentElement.classList.add('js')</script>`;
+// intro: nakładka (display:none bez JS – Google widzi zwykłą stronę); raz dziennie na urządzenie, ?intro=1 wymusza
+const INTRO = `<div class="intro" id="intro" aria-hidden="true"><div class="ilogo"><span>ILE</span><span class="q">?</span><span class="n">&nbsp;NAPRAWDĘ</span></div></div>
+<script>(function(){var el=document.getElementById('intro'),d=new Date(),dz=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(),pokaz=false;
+try{if(/[?&]intro=1(&|$)/.test(location.search))pokaz=true;else if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&localStorage.getItem('in_intro')!==dz)pokaz=true;if(pokaz)localStorage.setItem('in_intro',dz)}catch(e){pokaz=false}
+function koniec(){if(!el.parentNode)return;el.remove();document.dispatchEvent(new Event('intro-koniec'))}
+if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classList.add('on');
+var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
+el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>`;
+const banerPremium = ({ kalk = null } = {}) => {
+  const L = bwLista(), stop = kalk && kalk.bw ? kalk.bw : null;
+  const dane = JSON.stringify({ L, stop }).replace(/</g, '\\u003c');
+  return `<header class="ban${kalk ? ' k' : ''}" id="ban">${kalk ? '<a class="bback" href="/">← wszystkie rachunki</a>' : ''}<div class="bin">
+<a class="ey" href="/">ILE NAPRAWDĘ</a>
+<p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>${esc(stop || L[0])}</span></span></span></p>
+${kalk ? '' : '<p class="bsub">Codziennie liczę. Ze wzorem i źródłem.</p>'}</div></header>
+<script>(function(){var D=${dane},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
+ruch=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var L=D.stop?D.L.filter(function(x){return x!==D.stop}).slice(0,3).concat(D.stop):D.L.slice();
+if(!D.stop&&L.length>1)L.push(L[0]);
+w.innerHTML='';L.forEach(function(t){var s=document.createElement('span');s.textContent=t;w.appendChild(s)});
+var m=document.createElement('span');m.style.cssText='visibility:hidden;position:absolute;white-space:nowrap';var dl=D.L.concat(D.stop||[]).reduce(function(a,b){return b.length>a.length?b:a},'');
+var mx=0;D.L.concat(D.stop||[]).forEach(function(t){m.textContent=t;box.appendChild(m);mx=Math.max(mx,m.getBoundingClientRect().width);m.remove()});
+box.style.width=(Math.ceil(mx)+28)+'px';
+var i=0,n=L.length-1,T=D.stop?1100:2400,widoczny=true,tm=null;
+function krok(){i++;w.style.transition='transform .35s cubic-bezier(.6,0,.2,1)';w.style.transform='translateY(-'+(i*1.3)+'em)';
+ if(D.stop){if(i>=n){clearInterval(tm);tm=null}}else if(i===n)setTimeout(function(){w.style.transition='none';i=0;w.style.transform='translateY(0)'},380)}
+function steruj(){var ok=widoczny&&document.visibilityState==='visible';if(ok&&!tm&&(!D.stop||i<n))tm=setInterval(krok,T);if(!ok&&tm){clearInterval(tm);tm=null}}
+function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transform='translateY(-'+(n*1.3)+'em)'}return}
+ if('IntersectionObserver' in window)new IntersectionObserver(function(e){widoczny=e[0].isIntersecting;steruj()}).observe(ban);
+ document.addEventListener('visibilitychange',steruj);steruj()}
+if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>`;
+};
 // ---------- N156: próba nowego wyglądu – /proba/pizza/ (noindex, poza sitemap; liczy ta sama funkcja z dane.js) ----------
 {
   const c = KALK.find(k => k.id === 'pizza');
@@ -420,11 +455,12 @@ const baner = pelny => `<a class="baner ${pelny ? 'baner-p' : 'baner-w'}" href="
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta name="theme-color" content="#F5F3EE">
 <link rel="stylesheet" href="/proba.css?v=${VP.css}">
+${JSHEAD}
 </head>
 <body class="dz-zakupy">
-${baner(false)}
-<div class="top"><a class="back" href="/">← wszystkie rachunki</a></div>
-<main class="col">
+${INTRO}
+${banerPremium({ kalk: c })}
+<main class="col nad">
 <section class="card hero" aria-labelledby="h1">
  <div class="dzial">${ikona}<span>Zakupy</span></div>
  <h1 id="h1">${esc(c.st)}</h1>
@@ -475,10 +511,12 @@ zapisz('proba/glowna-baner/index.html', `<!doctype html>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta name="theme-color" content="#F5F3EE">
 <link rel="stylesheet" href="/proba.css?v=${V('proba.css')}">
+${JSHEAD}
 </head>
 <body class="dz-zakupy">
-${baner(true)}
-<main class="col"><section class="card"><h2>Podgląd pełnego baneru</h2><p class="pyt">To jest wersja na stronę główną (na razie tylko próba). Na kalkulatorach jest wąska: sam pasek „ILE NAPRAWDĘ”.</p><a class="cta" href="/proba/pizza/">Zobacz wąską wersję na kalkulatorze →</a></section></main>
+${INTRO}
+${banerPremium()}
+<main class="col nad"><section class="card"><h2>Podgląd baneru strony głównej</h2><p class="pyt">Wersja na stronę główną (na razie tylko próba): słowa zmieniają się co 2,4 s w kółko. Na kalkulatorze baner jest niższy i zatrzymuje się na temacie strony.</p><a class="cta" href="/proba/pizza/">Zobacz wersję na kalkulatorze →</a></section></main>
 </body>
 </html>
 `);

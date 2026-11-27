@@ -9,12 +9,38 @@
 <link rel="canonical" href="https://ilenaprawde.pl/kalkulatory/pizza/">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta name="theme-color" content="#F5F3EE">
-<link rel="stylesheet" href="/proba.css?v=4375349a">
+<link rel="stylesheet" href="/proba.css?v=1da4afa0">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="dz-zakupy">
-<a class="baner baner-w" href="/" aria-label="Ile Naprawdę – strona główna"><span class="bin"><span class="bl" aria-hidden="true"></span><span class="bt"><mark>ILE NAPRAWDĘ</mark></span><span class="bl" aria-hidden="true"></span></span></a>
-<div class="top"><a class="back" href="/">← wszystkie rachunki</a></div>
-<main class="col">
+<div class="intro" id="intro" aria-hidden="true"><div class="ilogo"><span>ILE</span><span class="q">?</span><span class="n">&nbsp;NAPRAWDĘ</span></div></div>
+<script>(function(){var el=document.getElementById('intro'),d=new Date(),dz=d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(),pokaz=false;
+try{if(/[?&]intro=1(&|$)/.test(location.search))pokaz=true;else if(!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)&&localStorage.getItem('in_intro')!==dz)pokaz=true;if(pokaz)localStorage.setItem('in_intro',dz)}catch(e){pokaz=false}
+function koniec(){if(!el.parentNode)return;el.remove();document.dispatchEvent(new Event('intro-koniec'))}
+if(!pokaz){window.__intro=false;el.remove();return}window.__intro=true;el.classList.add('on');
+var t=setTimeout(koniec,2050);function pomin(){clearTimeout(t);el.classList.add('off');setTimeout(koniec,160);removeEventListener('keydown',pomin)}
+el.addEventListener('click',pomin);el.addEventListener('touchstart',pomin,{passive:true});addEventListener('keydown',pomin)})()</script>
+<header class="ban k" id="ban"><a class="bback" href="/">← wszystkie rachunki</a><div class="bin">
+<a class="ey" href="/">ILE NAPRAWDĘ</a>
+<p class="bh1">Ile naprawdę kosztuje<br><span class="box" id="box"><span class="w" id="bw"><span>pizza?</span></span></span></p>
+</div></header>
+<script>(function(){var D={"L":["codzienne życie?","gwarancja?","oświetlenie?","airfryer?","zakup na raty?","choinka?","ogrzewanie?","komplet opon?","abonament?","promocja?","Black Friday?"],"stop":"pizza?"},box=document.getElementById('box'),w=document.getElementById('bw'),ban=document.getElementById('ban'),
+ruch=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var L=D.stop?D.L.filter(function(x){return x!==D.stop}).slice(0,3).concat(D.stop):D.L.slice();
+if(!D.stop&&L.length>1)L.push(L[0]);
+w.innerHTML='';L.forEach(function(t){var s=document.createElement('span');s.textContent=t;w.appendChild(s)});
+var m=document.createElement('span');m.style.cssText='visibility:hidden;position:absolute;white-space:nowrap';var dl=D.L.concat(D.stop||[]).reduce(function(a,b){return b.length>a.length?b:a},'');
+var mx=0;D.L.concat(D.stop||[]).forEach(function(t){m.textContent=t;box.appendChild(m);mx=Math.max(mx,m.getBoundingClientRect().width);m.remove()});
+box.style.width=(Math.ceil(mx)+28)+'px';
+var i=0,n=L.length-1,T=D.stop?1100:2400,widoczny=true,tm=null;
+function krok(){i++;w.style.transition='transform .35s cubic-bezier(.6,0,.2,1)';w.style.transform='translateY(-'+(i*1.3)+'em)';
+ if(D.stop){if(i>=n){clearInterval(tm);tm=null}}else if(i===n)setTimeout(function(){w.style.transition='none';i=0;w.style.transform='translateY(0)'},380)}
+function steruj(){var ok=widoczny&&document.visibilityState==='visible';if(ok&&!tm&&(!D.stop||i<n))tm=setInterval(krok,T);if(!ok&&tm){clearInterval(tm);tm=null}}
+function start(){ban.classList.add('go');if(!ruch){if(D.stop){i=n;w.style.transform='translateY(-'+(n*1.3)+'em)'}return}
+ if('IntersectionObserver' in window)new IntersectionObserver(function(e){widoczny=e[0].isIntersecting;steruj()}).observe(ban);
+ document.addEventListener('visibilitychange',steruj);steruj()}
+if(window.__intro)document.addEventListener('intro-koniec',start,{once:true});else start()})()</script>
+<main class="col nad">
 <section class="card hero" aria-labelledby="h1">
  <div class="dzial"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44 6 10c11-6 25-6 36 0L24 44Z" fill="var(--akc-tlo)" stroke="var(--akc)" stroke-width="3" stroke-linejoin="round"/><path d="M8.5 14.5c10-5 21-5 31 0" fill="none" stroke="var(--akc)" stroke-width="3" stroke-linecap="round"/><circle cx="19" cy="20" r="3.2" fill="var(--akc)"/><circle cx="29" cy="22" r="3.2" fill="var(--akc)"/><circle cx="24" cy="31" r="3.2" fill="var(--akc)"/></svg><span>Zakupy</span></div>
  <h1 id="h1">Pizza: Pyszne, aplikacja sieci czy w domu?</h1>
@@ -52,7 +78,7 @@
 </main>
 <div class="lepki" id="lepki" aria-hidden="true"><b id="lk-k">−978 zł rocznie</b><span id="lk-n">W domu</span></div>
 <noscript><p class="stopka">Kalkulator wymaga włączonego JavaScriptu.</p></noscript>
-<script src="/dane.js?v=07daef49"></script>
+<script src="/dane.js?v=eee12fc2"></script>
 <script src="/proba.js?v=99f69fb6"></script>
 </body>
 </html>

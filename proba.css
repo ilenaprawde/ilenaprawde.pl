@@ -115,20 +115,41 @@ details>summary::-webkit-details-marker{display:none}
 .rst{display:block;margin:14px auto 0;font:inherit;font-size:15px;font-weight:700;background:transparent;color:var(--akc);border:2px solid var(--akc);border-radius:12px;padding:10px 18px;cursor:pointer}
 .rst:hover,.rst:focus-visible{background:var(--akc);color:#fff}
 .rst[hidden]{display:none}
-/* N160: baner – pasek paragonu na całą szerokość (HTML/CSS), bez pól nad i pod paskiem */
-.baner{--z:6px;display:block;position:relative;background:#FAF5E8;color:var(--tusz);text-decoration:none;font-family:var(--mono);padding:12px 16px;margin:var(--z) 0;filter:drop-shadow(0 1px 2px #0000002e)}
-.baner::before,.baner::after{content:"";position:absolute;left:0;right:0;height:var(--z);pointer-events:none;background-repeat:repeat-x;background-size:14px var(--z)}
-.baner::before{top:calc(var(--z) * -1 + 1px);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 6'%3E%3Cpath d='M0 6 7 0 14 6Z' fill='%23FAF5E8'/%3E%3C/svg%3E")}
-.baner::after{bottom:calc(var(--z) * -1 + 1px);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 6'%3E%3Cpath d='M0 0 7 6 14 0Z' fill='%23FAF5E8'/%3E%3C/svg%3E")}
-.baner:focus-visible{outline:3px solid var(--akc);outline-offset:-3px}
-.bin{display:block;max-width:720px;margin:0 auto;position:relative}
-.bl{display:block;border-top:2px dashed var(--tusz);height:0}
-.bt{display:block;padding:4px 0;text-align:center}
-.bt mark{display:inline-block;background:#FFE04A;color:var(--tusz);font-weight:700;font-size:22px;line-height:1.25;letter-spacing:.02em;padding:1px 10px;border-radius:4px;transform:rotate(-1deg)}
-.bh{display:block;margin:4px 0 10px;text-align:center;font-size:14px;line-height:1.5}
-.pie{display:block;width:max-content;margin:0 auto 12px;border:3px solid #B93A35;border-radius:8px;color:#B93A35;font-weight:700;font-size:14px;letter-spacing:.04em;padding:4px 12px;transform:rotate(-5deg)}
-.baner-p{padding:20px 16px}
-.baner-p .bt{padding:14px 0 6px}
-.baner-p .bt mark{font-size:clamp(24px,7.6vw,46px);padding:4px 14px}
-.baner-p .bh{font-size:clamp(11.5px,3.15vw,17px)}
-@media(min-width:720px){.baner-w .bt mark{font-size:26px}.baner-p .bin{display:grid;grid-template-columns:1fr auto;column-gap:24px;align-items:center}.baner-p .bl{grid-column:1/-1}.baner-p .bt{text-align:left}.baner-p .bh{text-align:left;grid-column:1}.baner-p .pie{grid-column:2;grid-row:2/4;margin:0}}
+/* N161: baner premium (wzór baner_premium_v6) – ciemne tło, siatka kropek, słowa jak tablica odjazdów */
+.ban{background:#0F1115;position:relative;text-align:center;color:#F4EFE3;padding:38px 20px 58px}
+.ban.k{padding:34px 20px 50px}
+.ban::before{content:"";position:absolute;inset:0;background-image:radial-gradient(#ffffff18 1px,transparent 1px);background-size:18px 18px;-webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);pointer-events:none}
+.ban .bin{position:relative;max-width:720px;margin:0 auto}
+.bback{position:absolute;left:16px;top:12px;font-size:13px;color:#C9C3B6;text-decoration:none;z-index:1}
+.bback:hover,.bback:focus-visible{color:#fff;text-decoration:underline}
+.ey{display:inline-block;font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:5px;color:#FFE04A;text-decoration:none;padding:2px 0 2px 5px}
+.ey:focus-visible,.bback:focus-visible{outline:2px solid #FFE04A;outline-offset:3px}
+.bh1{font-size:31px;line-height:1.15;font-weight:800;margin:12px 0 0;letter-spacing:-1px}
+.k .bh1{font-size:25px}
+.box{display:inline-block;margin-top:8px;background:#FFE04A;color:#0F1115;border-radius:7px;padding:0 14px;height:1.3em;line-height:1.3em;overflow:hidden;position:relative;white-space:nowrap;box-sizing:border-box;vertical-align:top}
+.box .w{display:block;will-change:transform}
+.box .w>span{display:block;height:1.3em}
+.bsub{font-size:13px;color:#B5AFA3;margin:16px 0 0}
+.js .ban .ey,.js .ban .bsub{opacity:0}
+.js .ban .bh1{opacity:0;transform:translateY(10px)}
+.ban.go .ey{animation:bfi .5s .1s forwards}.ban.go .bh1{animation:bup .6s .25s cubic-bezier(.2,.8,.2,1) forwards}.ban.go .bsub{animation:bfi .6s .7s forwards}
+@keyframes bfi{to{opacity:1}}@keyframes bup{to{opacity:1;transform:none}}
+@media(min-width:720px){.bh1{font-size:40px}.k .bh1{font-size:30px}.ban{padding:48px 20px 66px}.ban.k{padding:40px 20px 56px}.ey{font-size:12px}}
+/* pierwsza karta nachodzi na baner o 26 px */
+.col.nad{margin-top:-26px;position:relative;z-index:1;padding-top:0}
+.col.nad>.card:first-child{box-shadow:0 10px 30px #0F111522}
+/* N161: intro (raz dziennie) – nakładka; treść strony jest pod spodem w HTML */
+.intro{display:none}
+.intro.on{display:flex;position:fixed;inset:0;z-index:100;background:#0F1115;align-items:center;justify-content:center;cursor:pointer;animation:iout .45s 1.6s ease-in forwards}
+.ilogo{display:flex;align-items:center;background:#FFE04A;color:#0F1115;font-family:var(--mono);font-weight:700;font-size:clamp(34px,11vw,64px);letter-spacing:.02em;line-height:1;padding:.18em .32em;border-radius:10px;white-space:nowrap;animation:ipop .4s cubic-bezier(.2,1.4,.4,1) both,iglow .55s .05s ease-out both,izoom .5s 1.42s cubic-bezier(.6,0,.9,.4) forwards}
+.ilogo .q{display:inline-block;overflow:hidden;max-width:1ch;animation:iq .25s .5s ease-in forwards}
+.ilogo .n{display:inline-block;overflow:hidden;max-width:0;animation:in .5s .72s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes ipop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes iglow{0%{box-shadow:0 0 0 0 #FFE04A00}35%{box-shadow:0 0 60px 18px #FFE04Acc}100%{box-shadow:0 0 0 0 #FFE04A00}}
+@keyframes iq{to{max-width:0;opacity:0}}
+@keyframes in{to{max-width:9.5ch}}
+@keyframes izoom{to{transform:scale(9);opacity:0}}
+@keyframes iout{to{opacity:0;visibility:hidden}}
+.intro.off{animation:iout .15s forwards!important}
+@media(prefers-reduced-motion:reduce){.intro{display:none!important}}
+@media(prefers-reduced-motion:reduce){.js .ban .ey,.js .ban .bsub,.js .ban .bh1{opacity:1;transform:none}}
