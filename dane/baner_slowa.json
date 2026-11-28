@@ -1,107 +1,191 @@
 {
- "data": "2026-11-27",
+ "data": "2026-11-28",
  "tryb": "ranking",
  "slowa": [
   "codzienne życie?",
-  "gwarancja?",
-  "oświetlenie?",
+  "dostawa?",
+  "1°C w domu?",
   "airfryer?",
   "zakup na raty?",
   "choinka?",
   "ogrzewanie?",
+  "oświetlenie?",
   "komplet opon?",
-  "abonament?",
   "promocja?",
   "Black Friday?"
  ],
  "sezon": "Black Friday?",
  "film_wczoraj": {
-  "nr": 16,
-  "id": "gwarancja",
-  "slowo": "gwarancja?"
+  "nr": 17,
+  "id": "dostawa",
+  "slowo": "dostawa?"
  },
  "zrodla": {
-  "ruch": "ruch_2026-11-27.json",
-  "yt": "yt_2026-11-27.json"
+  "ruch": "ruch_2026-11-28.json",
+  "yt": "yt_2026-11-28.json"
  },
  "wyniki": {
-  "lampki": {
-   "strona": 10,
-   "yt": 146,
-   "razem": 156,
-   "slowo": "oświetlenie?"
+  "stopien": {
+   "strona": 4,
+   "yt": 224,
+   "razem": 228,
+   "slowo": "1°C w domu?"
   },
   "airfryer": {
    "strona": 6,
-   "yt": 90,
-   "razem": 96,
+   "yt": 91,
+   "razem": 97,
    "slowo": "airfryer?"
   },
   "bnpl": {
-   "strona": 6,
+   "strona": 8,
    "yt": 86,
-   "razem": 92,
+   "razem": 94,
    "slowo": "zakup na raty?"
   },
   "choinka": {
-   "strona": 0,
+   "strona": 6,
    "yt": 85,
-   "razem": 85,
+   "razem": 91,
    "slowo": "choinka?"
   },
   "ogrzewanie": {
-   "strona": 0,
-   "yt": 55,
-   "razem": 55,
+   "strona": 3,
+   "yt": 38,
+   "razem": 41,
    "slowo": "ogrzewanie?"
   },
+  "lampki": {
+   "strona": 7,
+   "yt": 12,
+   "razem": 19,
+   "slowo": "oświetlenie?"
+  },
   "opony": {
-   "strona": 0,
-   "yt": 31,
-   "razem": 31,
+   "strona": 2,
+   "yt": 15,
+   "razem": 17,
    "slowo": "komplet opon?"
   },
-  "abonament": {
-   "strona": 0,
-   "yt": 11,
-   "razem": 11,
-   "slowo": "abonament?"
-  },
   "obnizka": {
-   "strona": 0,
+   "strona": 3,
    "yt": 11,
-   "razem": 11,
+   "razem": 14,
    "slowo": "promocja?"
   },
+  "abonament": {
+   "strona": 2,
+   "yt": 10,
+   "razem": 12,
+   "slowo": "abonament?"
+  },
+  "lek-dawka": {
+   "strona": 12,
+   "yt": 0,
+   "razem": 12,
+   "slowo": "tabletka?"
+  },
+  "dostawa": {
+   "strona": 11,
+   "yt": 0,
+   "razem": 11,
+   "slowo": "dostawa?"
+  },
   "lpg": {
-   "strona": 0,
-   "yt": 9,
-   "razem": 9,
+   "strona": 1,
+   "yt": 10,
+   "razem": 11,
    "slowo": "tankowanie?"
   },
+  "telefon": {
+   "strona": 6,
+   "yt": 5,
+   "razem": 11,
+   "slowo": "ładowanie?"
+  },
+  "pizza": {
+   "strona": 10,
+   "yt": 0,
+   "razem": 10,
+   "slowo": "pizza?"
+  },
   "streaming": {
+   "strona": 8,
+   "yt": 0,
+   "razem": 8,
+   "slowo": "Netflix?"
+  },
+  "suszarka": {
+   "strona": 7,
+   "yt": 0,
+   "razem": 7,
+   "slowo": "suszarka?"
+  },
+  "zamiennik": {
+   "strona": 5,
+   "yt": 2,
+   "razem": 7,
+   "slowo": "lek z apteki?"
+  },
+  "gwarancja": {
    "strona": 6,
    "yt": 0,
    "razem": 6,
-   "slowo": "Netflix?"
+   "slowo": "gwarancja?"
   },
-  "zamiennik": {
-   "strona": 0,
-   "yt": 6,
-   "razem": 6,
-   "slowo": "lek z apteki?"
-  },
-  "telefon": {
-   "strona": 0,
-   "yt": 5,
+  "opakowanie": {
+   "strona": 5,
+   "yt": 0,
    "razem": 5,
-   "slowo": "ładowanie?"
+   "slowo": "duże opakowanie?"
+  },
+  "allegro-smart": {
+   "strona": 3,
+   "yt": 0,
+   "razem": 3,
+   "slowo": "Allegro Smart?"
+  },
+  "czajnik": {
+   "strona": 3,
+   "yt": 0,
+   "razem": 3,
+   "slowo": "czajnik?"
+  },
+  "g12": {
+   "strona": 3,
+   "yt": 0,
+   "razem": 3,
+   "slowo": "prąd?"
+  },
+  "auto-czy-bilet": {
+   "strona": 2,
+   "yt": 0,
+   "razem": 2,
+   "slowo": "podróż autem?"
+  },
+  "podroz": {
+   "strona": 2,
+   "yt": 0,
+   "razem": 2,
+   "slowo": "podróż?"
   },
   "czuwanie": {
    "strona": 0,
    "yt": 1,
    "razem": 1,
    "slowo": "tryb czuwania?"
+  },
+  "dojazd": {
+   "strona": 1,
+   "yt": 0,
+   "razem": 1,
+   "slowo": "dojazd do pracy?"
+  },
+  "lodowka": {
+   "strona": 1,
+   "yt": 0,
+   "razem": 1,
+   "slowo": "lodówka?"
   }
  }
 }
